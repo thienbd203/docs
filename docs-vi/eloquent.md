@@ -870,9 +870,9 @@ Flight::where('active', 1)
 <a name="examining-attribute-changes"></a>
 #### Examining Attribute Changes
 
-Eloquent provides the `isDirty`, `isClean`, and `wasChanged` methods to examine the internal state of your model and determine how its attributes have changed from when the model was originally retrieved.
+Eloquent cung cấp `isDirty`, `isClean`, và `wasChanged` methods để examine internal state của model của bạn và determine cách attributes của nó đã changed từ khi model được originally retrieved.
 
-The `isDirty` method determines if any of the model's attributes have been changed since the model was retrieved. You may pass a specific attribute name or an array of attributes to the `isDirty` method to determine if any of the attributes are "dirty". The `isClean` method will determine if an attribute has remained unchanged since the model was retrieved. This method also accepts an optional attribute argument:
+`isDirty` method determines nếu bất kỳ model's attributes nào đã changed kể từ khi model được retrieved. Bạn có thể pass một specific attribute name hoặc một array của attributes vào `isDirty` method để determine nếu bất kỳ attributes nào là "dirty". `isClean` method sẽ determine nếu một attribute đã remained unchanged kể từ khi model được retrieved. Method này cũng accepts một optional attribute argument:
 
 ```php
 use App\Models\User;
@@ -901,7 +901,7 @@ $user->isDirty(); // false
 $user->isClean(); // true
 ```
 
-The `wasChanged` method determines if any attributes were changed when the model was last saved within the current request cycle. If needed, you may pass an attribute name to see if a particular attribute was changed:
+`wasChanged` method determines nếu bất kỳ attributes nào đã changed khi model được last saved trong current request cycle. Nếu cần thiết, bạn có thể pass một attribute name để xem nếu một particular attribute đã changed:
 
 ```php
 $user = User::create([
@@ -921,7 +921,7 @@ $user->wasChanged('first_name'); // false
 $user->wasChanged(['first_name', 'title']); // true
 ```
 
-The `getOriginal` method returns an array containing the original attributes of the model regardless of any changes to the model since it was retrieved. If needed, you may pass a specific attribute name to get the original value of a particular attribute:
+`getOriginal` method returns một array chứa original attributes của model bất kể bất kỳ changes nào đến model kể từ khi nó được retrieved. Nếu cần thiết, bạn có thể pass một specific attribute name để get original value của một particular attribute:
 
 ```php
 $user = User::find(1);
@@ -936,7 +936,7 @@ $user->getOriginal('name'); // John
 $user->getOriginal(); // Array of original attributes...
 ```
 
-The `getChanges` method returns an array containing the attributes that changed when the model was last saved, while the `getPrevious` method returns an array containing the original attribute values before the model was last saved:
+`getChanges` method returns một array chứa attributes đã changed khi model được last saved, trong khi `getPrevious` method returns một array chứa original attribute values trước khi model được last saved:
 
 ```php
 $user = User::find(1);
@@ -971,7 +971,7 @@ $user->getPrevious();
 <a name="mass-assignment"></a>
 ### Mass Assignment
 
-You may use the `create` method to "save" a new model using a single PHP statement. The inserted model instance will be returned to you by the method:
+Bạn có thể sử dụng `create` method để "save" một new model sử dụng một single PHP statement. Inserted model instance sẽ được returned cho bạn bởi method:
 
 ```php
 use App\Models\Flight;
@@ -981,11 +981,11 @@ $flight = Flight::create([
 ]);
 ```
 
-However, before using the `create` method, you will need to specify either a `Fillable` or `Guarded` attribute on your model class. These attributes are required because all Eloquent models are protected against mass assignment vulnerabilities by default.
+Tuy nhiên, trước khi sử dụng `create` method, bạn sẽ cần specify một `Fillable` hoặc `Guarded` attribute trên model class của bạn. Những attributes này được required vì tất cả Eloquent models được protected chống mass assignment vulnerabilities theo mặc định.
 
-A mass assignment vulnerability occurs when a user passes an unexpected HTTP request field and that field changes a column in your database that you did not expect. For example, a malicious user might send an `is_admin` parameter through an HTTP request, which is then passed to your model's `create` method, allowing the user to escalate themselves to an administrator.
+Một mass assignment vulnerability xảy ra khi một user passes một unexpected HTTP request field và field đó changes một column trong database của bạn mà bạn không expect. Ví dụ, một malicious user có thể send một `is_admin` parameter qua một HTTP request, mà sau đó được passed vào model's `create` method của bạn, cho phép user escalate themselves thành một administrator.
 
-So, to get started, you should define which model attributes you want to make mass assignable. You may do this using the `Fillable` attribute on the model. For example, let's make the `name` attribute of our `Flight` model mass assignable:
+Vì vậy, để bắt đầu, bạn nên define những model attributes bạn muốn make mass assignable. Bạn có thể làm điều này sử dụng `Fillable` attribute trên model. Ví dụ, hãy làm `name` attribute của `Flight` model của chúng ta mass assignable:
 
 ```php
 <?php
@@ -1002,22 +1002,22 @@ class Flight extends Model
 }
 ```
 
-Once you have specified which attributes are mass assignable, you may use the `create` method to insert a new record in the database. The `create` method returns the newly created model instance:
+Khi bạn đã specified những attributes là mass assignable, bạn có thể sử dụng `create` method để insert một new record vào database. `create` method returns newly created model instance:
 
 ```php
 $flight = Flight::create(['name' => 'London to Paris']);
 ```
 
-If you already have a model instance, you may use the `fill` method to populate it with an array of attributes:
+Nếu bạn đã có một model instance, bạn có thể sử dụng `fill` method để populate nó với một array của attributes:
 
 ```php
 $flight->fill(['name' => 'Amsterdam to Frankfurt']);
 ```
 
 <a name="mass-assignment-json-columns"></a>
-#### Mass Assignment and JSON Columns
+#### Mass Assignment và JSON Columns
 
-When assigning JSON columns, each column's mass assignable key must be specified in your model's `Fillable` attribute. For security, Laravel does not support updating nested JSON attributes when using the `Guarded` attribute:
+Khi assigning JSON columns, mỗi column's mass assignable key phải được specified trong model's `Fillable` attribute của bạn. Để đảm bảo security, Laravel không support updating nested JSON attributes khi sử dụng `Guarded` attribute:
 
 ```php
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -1032,7 +1032,7 @@ class Flight extends Model
 <a name="allowing-mass-assignment"></a>
 #### Allowing Mass Assignment
 
-If you would like to make all of your attributes mass assignable, you may use the `Unguarded` attribute on your model. If you choose to unguard your model, you should take special care to always hand-craft the arrays passed to Eloquent's `fill`, `create`, and `update` methods:
+Nếu bạn muốn make tất cả attributes của bạn mass assignable, bạn có thể sử dụng `Unguarded` attribute trên model của bạn. Nếu bạn chọn để unguard model của bạn, bạn nên take special care để luôn hand-craft arrays được passed vào Eloquent's `fill`, `create`, và `update` methods:
 
 ```php
 <?php
@@ -1052,9 +1052,9 @@ class Flight extends Model
 <a name="mass-assignment-exceptions"></a>
 #### Mass Assignment Exceptions
 
-By default, attributes that are not included in the `Fillable` attribute are silently discarded when performing mass-assignment operations. In production, this is expected behavior; however, during local development it can lead to confusion as to why model changes are not taking effect.
+Theo mặc định, attributes không được included trong `Fillable` attribute được silently discarded khi performing mass-assignment operations. Trong production, đây là expected behavior; tuy nhiên, trong local development nó có thể lead đến confusion về lý do model changes không taking effect.
 
-If you wish, you may instruct Laravel to throw an exception when attempting to fill an unfillable attribute by invoking the `preventSilentlyDiscardingAttributes` method. Typically, this method should be invoked in the `boot` method of your application's `AppServiceProvider` class:
+Nếu bạn muốn, bạn có thể instruct Laravel để throw một exception khi attempting để fill một unfillable attribute bằng cách invoking `preventSilentlyDiscardingAttributes` method. Thông thường, method này nên được invoked trong `boot` method của application's `AppServiceProvider` class của bạn:
 
 ```php
 use Illuminate\Database\Eloquent\Model;
@@ -1071,7 +1071,7 @@ public function boot(): void
 <a name="upserts"></a>
 ### Upserts
 
-Eloquent's `upsert` method may be used to update or create records in a single, atomic operation. The method's first argument consists of the values to insert or update, while the second argument lists the column(s) that uniquely identify records within the associated table. The method's third and final argument is an array of the columns that should be updated if a matching record already exists in the database. The `upsert` method will automatically set the `created_at` and `updated_at` timestamps if timestamps are enabled on the model:
+Eloquent's `upsert` method có thể được sử dụng để update hoặc create records trong một single, atomic operation. Method's first argument consists của values để insert hoặc update, trong khi second argument lists column(s) uniquely identify records trong associated table. Method's third và final argument là một array của columns nên được updated nếu một matching record đã tồn tại trong database. `upsert` method sẽ automatically set `created_at` và `updated_at` timestamps nếu timestamps được enabled trên model:
 
 ```php
 Flight::upsert([
@@ -1081,12 +1081,12 @@ Flight::upsert([
 ```
 
 > [!WARNING]
-> All databases except SQL Server require the columns in the second argument of the `upsert` method to have a "primary" or "unique" index. In addition, the MariaDB and MySQL database drivers ignore the second argument of the `upsert` method and always use the "primary" and "unique" indexes of the table to detect existing records.
+> Tất cả databases ngoại trừ SQL Server require columns trong second argument của `upsert` method để có một "primary" hoặc "unique" index. Ngoài ra, MariaDB và MySQL database drivers ignore second argument của `upsert` method và luôn sử dụng "primary" và "unique" indexes của table để detect existing records.
 
 <a name="deleting-models"></a>
-## Deleting Models
+## Xóa Models
 
-To delete a model, you may call the `delete` method on the model instance:
+Để delete một model, bạn có thể call `delete` method trên model instance:
 
 ```php
 use App\Models\Flight;
@@ -1096,7 +1096,7 @@ $flight = Flight::find(1);
 $flight->delete();
 ```
 
-If you would like to delete the model within a database transaction, you may use the `deleteOrFail` method. If an exception is thrown during the delete, the transaction will automatically be rolled back:
+Nếu bạn muốn delete model trong một database transaction, bạn có thể sử dụng `deleteOrFail` method. Nếu một exception được thrown trong delete, transaction sẽ automatically được rolled back:
 
 ```php
 $flight->deleteOrFail();
@@ -1105,7 +1105,7 @@ $flight->deleteOrFail();
 <a name="deleting-an-existing-model-by-its-primary-key"></a>
 #### Deleting an Existing Model by its Primary Key
 
-In the example above, we are retrieving the model from the database before calling the `delete` method. However, if you know the primary key of the model, you may delete the model without explicitly retrieving it by calling the `destroy` method. In addition to accepting the single primary key, the `destroy` method will accept multiple primary keys, an array of primary keys, or a [collection](/docs/{{version}}/collections) of primary keys:
+Trong example trên, chúng ta đang retrieving model từ database trước khi calling `delete` method. Tuy nhiên, nếu bạn biết primary key của model, bạn có thể delete model mà không explicitly retrieving nó bằng cách calling `destroy` method. Ngoài việc accepting single primary key, `destroy` method sẽ accept multiple primary keys, một array của primary keys, hoặc một [collection](/docs/{{version}}/collections) của primary keys:
 
 ```php
 Flight::destroy(1);
@@ -1117,37 +1117,37 @@ Flight::destroy([1, 2, 3]);
 Flight::destroy(collect([1, 2, 3]));
 ```
 
-If you are utilizing [soft deleting models](#soft-deleting), you may permanently delete models via the `forceDestroy` method:
+Nếu bạn đang utilizing [soft deleting models](#soft-deleting), bạn có thể permanently delete models qua `forceDestroy` method:
 
 ```php
 Flight::forceDestroy(1);
 ```
 
 > [!WARNING]
-> The `destroy` method loads each model individually and calls the `delete` method so that the `deleting` and `deleted` events are properly dispatched for each model.
+> `destroy` method loads mỗi model individually và calls `delete` method để `deleting` và `deleted` events được properly dispatched cho mỗi model.
 
 <a name="deleting-models-using-queries"></a>
 #### Deleting Models Using Queries
 
-Of course, you may build an Eloquent query to delete all models matching your query's criteria. In this example, we will delete all flights that are marked as inactive. Like mass updates, mass deletes will not dispatch model events for the models that are deleted:
+Tất nhiên, bạn có thể build một Eloquent query để delete tất cả models matching query's criteria của bạn. Trong example này, chúng ta sẽ delete tất cả flights được marked như inactive. Như mass updates, mass deletes sẽ không dispatch model events cho models được deleted:
 
 ```php
 $deleted = Flight::where('active', 0)->delete();
 ```
 
-To delete all models in a table, you should execute a query without adding any conditions:
+Để delete tất cả models trong một table, bạn nên execute một query mà không adding bất kỳ conditions:
 
 ```php
 $deleted = Flight::query()->delete();
 ```
 
 > [!WARNING]
-> When executing a mass delete statement via Eloquent, the `deleting` and `deleted` model events will not be dispatched for the deleted models. This is because the models are never actually retrieved when executing the delete statement.
+> Khi executing một mass delete statement qua Eloquent, `deleting` và `deleted` model events sẽ không được dispatched cho deleted models. Điều này là vì models không bao giờ actually retrieved khi executing delete statement.
 
 <a name="soft-deleting"></a>
 ### Soft Deleting
 
-In addition to actually removing records from your database, Eloquent can also "soft delete" models. When models are soft deleted, they are not actually removed from your database. Instead, a `deleted_at` attribute is set on the model indicating the date and time at which the model was "deleted". To enable soft deletes for a model, add the `Illuminate\Database\Eloquent\SoftDeletes` trait to the model:
+Ngoài việc actually removing records từ database của bạn, Eloquent cũng có thể "soft delete" models. Khi models được soft deleted, chúng không actually removed từ database của bạn. Thay vào đó, một `deleted_at` attribute được set trên model indicating date và time tại đó model được "deleted". Để enable soft deletes cho một model, add `Illuminate\Database\Eloquent\SoftDeletes` trait vào model:
 
 ```php
 <?php
@@ -1166,7 +1166,7 @@ class Flight extends Model
 > [!NOTE]
 > The `SoftDeletes` trait will automatically cast the `deleted_at` attribute to a `DateTime` / `Carbon` instance for you.
 
-You should also add the `deleted_at` column to your database table. The Laravel [schema builder](/docs/{{version}}/migrations) contains a helper method to create this column:
+Bạn cũng nên add `deleted_at` column vào database table của bạn. Laravel [schema builder](/docs/{{version}}/migrations) chứa một helper method để create column này:
 
 ```php
 use Illuminate\Database\Schema\Blueprint;
@@ -1181,9 +1181,9 @@ Schema::table('flights', function (Blueprint $table) {
 });
 ```
 
-Now, when you call the `delete` method on the model, the `deleted_at` column will be set to the current date and time. However, the model's database record will be left in the table. When querying a model that uses soft deletes, the soft deleted models will automatically be excluded from all query results.
+Bây giờ, khi bạn call `delete` method trên model, `deleted_at` column sẽ được set đến current date và time. Tuy nhiên, model's database record sẽ được left trong table. Khi querying một model sử dụng soft deletes, soft deleted models sẽ automatically được excluded từ tất cả query results.
 
-To determine if a given model instance has been soft deleted, you may use the `trashed` method:
+Để determine nếu một given model instance đã được soft deleted, bạn có thể sử dụng `trashed` method:
 
 ```php
 if ($flight->trashed()) {
@@ -1194,13 +1194,13 @@ if ($flight->trashed()) {
 <a name="restoring-soft-deleted-models"></a>
 #### Restoring Soft Deleted Models
 
-Sometimes you may wish to "un-delete" a soft deleted model. To restore a soft deleted model, you may call the `restore` method on a model instance. The `restore` method will set the model's `deleted_at` column to `null`:
+Đôi khi bạn có thể muốn "un-delete" một soft deleted model. Để restore một soft deleted model, bạn có thể call `restore` method trên một model instance. `restore` method sẽ set model's `deleted_at` column đến `null`:
 
 ```php
 $flight->restore();
 ```
 
-You may also use the `restore` method in a query to restore multiple models. Again, like other "mass" operations, this will not dispatch any model events for the models that are restored:
+Bạn cũng có thể sử dụng `restore` method trong một query để restore multiple models. Một lần nữa, như các "mass" operations khác, điều này sẽ không dispatch bất kỳ model events nào cho models được restored:
 
 ```php
 Flight::withTrashed()
@@ -1208,7 +1208,7 @@ Flight::withTrashed()
     ->restore();
 ```
 
-The `restore` method may also be used when building [relationship](/docs/{{version}}/eloquent-relationships) queries:
+`restore` method cũng có thể được sử dụng khi building [relationship](/docs/{{version}}/eloquent-relationships) queries:
 
 ```php
 $flight->history()->restore();
@@ -1217,13 +1217,13 @@ $flight->history()->restore();
 <a name="permanently-deleting-models"></a>
 #### Permanently Deleting Models
 
-Sometimes you may need to truly remove a model from your database. You may use the `forceDelete` method to permanently remove a soft deleted model from the database table:
+Đôi khi bạn có thể cần truly remove một model từ database của bạn. Bạn có thể sử dụng `forceDelete` method để permanently remove một soft deleted model từ database table:
 
 ```php
 $flight->forceDelete();
 ```
 
-You may also use the `forceDelete` method when building Eloquent relationship queries:
+Bạn cũng có thể sử dụng `forceDelete` method khi building Eloquent relationship queries:
 
 ```php
 $flight->history()->forceDelete();
@@ -1235,7 +1235,7 @@ $flight->history()->forceDelete();
 <a name="including-soft-deleted-models"></a>
 #### Including Soft Deleted Models
 
-As noted above, soft deleted models will automatically be excluded from query results. However, you may force soft deleted models to be included in a query's results by calling the `withTrashed` method on the query:
+Như noted ở trên, soft deleted models sẽ automatically được excluded từ query results. Tuy nhiên, bạn có thể force soft deleted models được included trong query's results bằng cách calling `withTrashed` method trên query:
 
 ```php
 use App\Models\Flight;
@@ -1245,7 +1245,7 @@ $flights = Flight::withTrashed()
     ->get();
 ```
 
-The `withTrashed` method may also be called when building a [relationship](/docs/{{version}}/eloquent-relationships) query:
+`withTrashed` method cũng có thể được called khi building một [relationship](/docs/{{version}}/eloquent-relationships) query:
 
 ```php
 $flight->history()->withTrashed()->get();
@@ -1254,7 +1254,7 @@ $flight->history()->withTrashed()->get();
 <a name="retrieving-only-soft-deleted-models"></a>
 #### Retrieving Only Soft Deleted Models
 
-The `onlyTrashed` method will retrieve **only** soft deleted models:
+`onlyTrashed` method sẽ retrieve **only** soft deleted models:
 
 ```php
 $flights = Flight::onlyTrashed()
@@ -1265,7 +1265,7 @@ $flights = Flight::onlyTrashed()
 <a name="pruning-models"></a>
 ## Pruning Models
 
-Sometimes you may want to periodically delete models that are no longer needed. To accomplish this, you may add the `Illuminate\Database\Eloquent\Prunable` or `Illuminate\Database\Eloquent\MassPrunable` trait to the models you would like to periodically prune. After adding one of the traits to the model, implement a `prunable` method which returns an Eloquent query builder that resolves the models that are no longer needed:
+Đôi khi bạn có thể muốn periodically delete models không còn needed. Để accomplish điều này, bạn có thể add `Illuminate\Database\Eloquent\Prunable` hoặc `Illuminate\Database\Eloquent\MassPrunable` trait vào models bạn muốn periodically prune. Sau khi adding một trong traits vào model, implement một `prunable` method mà returns một Eloquent query builder resolves models không còn needed:
 
 ```php
 <?php
@@ -1290,7 +1290,7 @@ class Flight extends Model
 }
 ```
 
-When marking models as `Prunable`, you may also define a `pruning` method on the model. This method will be called before the model is deleted. This method can be useful for deleting any additional resources associated with the model, such as stored files, before the model is permanently removed from the database:
+Khi marking models như `Prunable`, bạn cũng có thể define một `pruning` method trên model. Method này sẽ được called trước khi model được deleted. Method này có thể useful để delete bất kỳ additional resources associated với model, như stored files, trước khi model được permanently removed từ database:
 
 ```php
 /**
@@ -1302,7 +1302,7 @@ protected function pruning(): void
 }
 ```
 
-After configuring your prunable model, you should schedule the `model:prune` Artisan command in your application's `routes/console.php` file. You are free to choose the appropriate interval at which this command should be run:
+Sau khi configuring prunable model của bạn, bạn nên schedule `model:prune` Artisan command trong application's `routes/console.php` file của bạn. Bạn được free để chọn appropriate interval tại đó command này nên được run:
 
 ```php
 use Illuminate\Support\Facades\Schedule;
@@ -1310,7 +1310,7 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('model:prune')->daily();
 ```
 
-Behind the scenes, the `model:prune` command will automatically detect "Prunable" models within your application's `app/Models` directory. If your models are in a different location, you may use the `--model` option to specify the model class names:
+Behind the scenes, `model:prune` command sẽ automatically detect "Prunable" models trong application's `app/Models` directory của bạn. Nếu models của bạn ở một different location, bạn có thể sử dụng `--model` option để specify model class names:
 
 ```php
 Schedule::command('model:prune', [
@@ -1318,7 +1318,7 @@ Schedule::command('model:prune', [
 ])->daily();
 ```
 
-If you wish to exclude certain models from being pruned while pruning all other detected models, you may use the `--except` option:
+Nếu bạn muốn exclude certain models từ being pruned trong khi pruning tất cả other detected models, bạn có thể sử dụng `--except` option:
 
 ```php
 Schedule::command('model:prune', [
@@ -1326,19 +1326,19 @@ Schedule::command('model:prune', [
 ])->daily();
 ```
 
-You may test your `prunable` query by executing the `model:prune` command with the `--pretend` option. When pretending, the `model:prune` command will simply report how many records would be pruned if the command were to actually run:
+Bạn có thể test `prunable` query của bạn bằng cách executing `model:prune` command với `--pretend` option. Khi pretending, `model:prune` command sẽ đơn giản report bao nhiêu records sẽ được pruned nếu command được actually run:
 
 ```shell
 php artisan model:prune --pretend
 ```
 
 > [!WARNING]
-> Soft deleting models will be permanently deleted (`forceDelete`) if they match the prunable query.
+> Soft deleting models sẽ được permanently deleted (`forceDelete`) nếu chúng match prunable query.
 
 <a name="mass-pruning"></a>
 #### Mass Pruning
 
-When models are marked with the `Illuminate\Database\Eloquent\MassPrunable` trait, models are deleted from the database using mass-deletion queries. Therefore, the `pruning` method will not be invoked, nor will the `deleting` and `deleted` model events be dispatched. This is because the models are never actually retrieved before deletion, thus making the pruning process much more efficient:
+Khi models được marked với `Illuminate\Database\Eloquent\MassPrunable` trait, models được deleted từ database sử dụng mass-deletion queries. Do đó, `pruning` method sẽ không được invoked, cũng như `deleting` và `deleted` model events sẽ không được dispatched. Điều này là vì models không bao giờ actually retrieved trước khi deletion, do đó làm pruning process efficient hơn nhiều:
 
 ```php
 <?php
@@ -1366,7 +1366,7 @@ class Flight extends Model
 <a name="replicating-models"></a>
 ## Replicating Models
 
-You may create an unsaved copy of an existing model instance using the `replicate` method. This method is particularly useful when you have model instances that share many of the same attributes:
+Bạn có thể create một unsaved copy của một existing model instance sử dụng `replicate` method. Method này đặc biệt useful khi bạn có model instances share nhiều của cùng attributes:
 
 ```php
 use App\Models\Address;
@@ -1386,7 +1386,7 @@ $billing = $shipping->replicate()->fill([
 $billing->save();
 ```
 
-To exclude one or more attributes from being replicated to the new model, you may pass an array to the `replicate` method:
+Để exclude một hoặc nhiều attributes từ being replicated đến new model, bạn có thể pass một array đến `replicate` method:
 
 ```php
 $flight = Flight::create([
@@ -1408,12 +1408,12 @@ $flight = $flight->replicate([
 <a name="global-scopes"></a>
 ### Global Scopes
 
-Global scopes allow you to add constraints to all queries for a given model. Laravel's own [soft delete](#soft-deleting) functionality utilizes global scopes to only retrieve "non-deleted" models from the database. Writing your own global scopes can provide a convenient, easy way to make sure every query for a given model receives certain constraints.
+Global scopes allow bạn để add constraints đến tất cả queries cho một given model. Laravel's own [soft delete](#soft-deleting) functionality utilizes global scopes để chỉ retrieve "non-deleted" models từ database. Writing your own global scopes có thể provide một convenient, easy way để make sure mỗi query cho một given model receives certain constraints.
 
 <a name="generating-scopes"></a>
 #### Generating Scopes
 
-To generate a new global scope, you may invoke the `make:scope` Artisan command, which will place the generated scope in your application's `app/Models/Scopes` directory:
+Để generate một new global scope, bạn có thể invoke `make:scope` Artisan command, mà sẽ place generated scope trong application's `app/Models/Scopes` directory của bạn:
 
 ```shell
 php artisan make:scope AncientScope
@@ -1422,7 +1422,7 @@ php artisan make:scope AncientScope
 <a name="writing-global-scopes"></a>
 #### Writing Global Scopes
 
-Writing a global scope is simple. First, use the `make:scope` command to generate a class that implements the `Illuminate\Database\Eloquent\Scope` interface. The `Scope` interface requires you to implement one method: `apply`. The `apply` method may add `where` constraints or other types of clauses to the query as needed:
+Writing một global scope là đơn giản. Đầu tiên, sử dụng `make:scope` command để generate một class implements `Illuminate\Database\Eloquent\Scope` interface. `Scope` interface requires bạn để implement một method: `apply`. `apply` method có thể add `where` constraints hoặc other types của clauses đến query khi cần thiết:
 
 ```php
 <?php
@@ -1446,12 +1446,12 @@ class AncientScope implements Scope
 ```
 
 > [!NOTE]
-> If your global scope is adding columns to the select clause of the query, you should use the `addSelect` method instead of `select`. This will prevent the unintentional replacement of the query's existing select clause.
+> Nếu global scope của bạn đang adding columns đến select clause của query, bạn nên sử dụng `addSelect` method thay vì `select`. Điều này sẽ prevent unintentional replacement của query's existing select clause.
 
 <a name="applying-global-scopes"></a>
 #### Applying Global Scopes
 
-To assign a global scope to a model, you may simply place the `ScopedBy` attribute on the model:
+Để assign một global scope đến một model, bạn có thể đơn giản place `ScopedBy` attribute trên model:
 
 ```php
 <?php
@@ -1468,7 +1468,7 @@ class User extends Model
 }
 ```
 
-Or, you may manually register the global scope by overriding the model's `booted` method and invoke the model's `addGlobalScope` method. The `addGlobalScope` method accepts an instance of your scope as its only argument:
+Hoặc, bạn có thể manually register global scope bằng cách overriding model's `booted` method và invoke model's `addGlobalScope` method. `addGlobalScope` method accepts một instance của scope của bạn như its only argument:
 
 ```php
 <?php
@@ -1490,7 +1490,7 @@ class User extends Model
 }
 ```
 
-After adding the scope in the example above to the `App\Models\User` model, a call to the `User::all()` method will execute the following SQL query:
+Sau khi adding scope trong example trên đến `App\Models\User` model, một call đến `User::all()` method sẽ execute following SQL query:
 
 ```sql
 select * from `users` where `created_at` < 0021-02-18 00:00:00
@@ -1499,7 +1499,7 @@ select * from `users` where `created_at` < 0021-02-18 00:00:00
 <a name="anonymous-global-scopes"></a>
 #### Anonymous Global Scopes
 
-Eloquent also allows you to define global scopes using closures, which is particularly useful for simple scopes that do not warrant a separate class of their own. When defining a global scope using a closure, you should provide a scope name of your own choosing as the first argument to the `addGlobalScope` method:
+Eloquent cũng allows bạn để define global scopes sử dụng closures, mà đặc biệt useful cho simple scopes không warrant một separate class của riêng chúng. Khi defining một global scope sử dụng một closure, bạn nên provide một scope name của riêng bạn như first argument đến `addGlobalScope` method:
 
 ```php
 <?php
@@ -1526,30 +1526,30 @@ class User extends Model
 <a name="removing-global-scopes"></a>
 #### Removing Global Scopes
 
-If you would like to remove a global scope for a given query, you may use the `withoutGlobalScope` method. This method accepts the class name of the global scope as its only argument:
+Nếu bạn muốn remove một global scope cho một given query, bạn có thể sử dụng `withoutGlobalScope` method. Method này accepts class name của global scope như its only argument:
 
 ```php
 User::withoutGlobalScope(AncientScope::class)->get();
 ```
 
-Or, if you defined the global scope using a closure, you should pass the string name that you assigned to the global scope:
+Hoặc, nếu bạn defined global scope sử dụng một closure, bạn nên pass string name mà bạn assigned đến global scope:
 
 ```php
 User::withoutGlobalScope('ancient')->get();
 ```
 
-If you would like to remove several or even all of the query's global scopes, you may use the `withoutGlobalScopes` and `withoutGlobalScopesExcept` methods:
+Nếu bạn muốn remove several hoặc thậm chí tất cả của query's global scopes, bạn có thể sử dụng `withoutGlobalScopes` và `withoutGlobalScopesExcept` methods:
 
 ```php
-// Remove all of the global scopes...
+// Remove tất cả của global scopes...
 User::withoutGlobalScopes()->get();
 
-// Remove some of the global scopes...
+// Remove một số của global scopes...
 User::withoutGlobalScopes([
     FirstScope::class, SecondScope::class
 ])->get();
 
-// Remove all global scopes except the given ones...
+// Remove tất cả global scopes ngoại trừ given ones...
 User::withoutGlobalScopesExcept([
     SecondScope::class,
 ])->get();
@@ -1558,9 +1558,9 @@ User::withoutGlobalScopesExcept([
 <a name="local-scopes"></a>
 ### Local Scopes
 
-Local scopes allow you to define common sets of query constraints that you may easily re-use throughout your application. For example, you may need to frequently retrieve all users that are considered "popular". To define a scope, add the `Scope` attribute to an Eloquent method.
+Local scopes allow bạn để define common sets của query constraints mà bạn có thể easily re-use throughout application của bạn. Ví dụ, bạn có thể cần frequently retrieve tất cả users được considered "popular". Để define một scope, add `Scope` attribute đến một Eloquent method.
 
-Scopes should always return the same query builder instance or `void`:
+Scopes nên luôn return cùng query builder instance hoặc `void`:
 
 ```php
 <?php
@@ -1596,7 +1596,7 @@ class User extends Model
 <a name="utilizing-a-local-scope"></a>
 #### Utilizing a Local Scope
 
-Once the scope has been defined, you may call the scope methods when querying the model. You can even chain calls to various scopes:
+Khi scope đã được defined, bạn có thể call scope methods khi querying model. Bạn thậm chí có thể chain calls đến various scopes:
 
 ```php
 use App\Models\User;
@@ -1604,7 +1604,7 @@ use App\Models\User;
 $users = User::popular()->active()->orderBy('created_at')->get();
 ```
 
-Combining multiple Eloquent model scopes via an `or` query operator may require the use of closures to achieve the correct [logical grouping](/docs/{{version}}/queries#logical-grouping):
+Combining multiple Eloquent model scopes qua một `or` query operator có thể require sử dụng closures để achieve correct [logical grouping](/docs/{{version}}/queries#logical-grouping):
 
 ```php
 $users = User::popular()->orWhere(function (Builder $query) {
@@ -1612,7 +1612,7 @@ $users = User::popular()->orWhere(function (Builder $query) {
 })->get();
 ```
 
-However, since this can be cumbersome, Laravel provides a "higher order" `orWhere` method that allows you to fluently chain scopes together without the use of closures:
+Tuy nhiên, vì điều này có thể cumbersome, Laravel provides một "higher order" `orWhere` method allows bạn để fluently chain scopes cùng nhau mà không sử dụng closures:
 
 ```php
 $users = User::popular()->orWhere->active()->get();
@@ -1621,7 +1621,7 @@ $users = User::popular()->orWhere->active()->get();
 <a name="dynamic-scopes"></a>
 #### Dynamic Scopes
 
-Sometimes you may wish to define a scope that accepts parameters. To get started, just add your additional parameters to your scope method's signature. Scope parameters should be defined after the `$query` parameter:
+Đôi khi bạn có thể muốn define một scope accepts parameters. Để bắt đầu, chỉ cần add additional parameters của bạn đến scope method's signature của bạn. Scope parameters nên được defined sau `$query` parameter:
 
 ```php
 <?php
@@ -1645,18 +1645,18 @@ class User extends Model
 }
 ```
 
-Once the expected arguments have been added to your scope method's signature, you may pass the arguments when calling the scope:
+Khi expected arguments đã được added đến scope method's signature của bạn, bạn có thể pass arguments khi calling scope:
 
 ```php
 $users = User::ofType('admin')->get();
 ```
 
-Attributed scope methods should be `protected`. When calling an attributed scope from within the model class, call the scope through a query builder instance, such as `static::query()->ofType('admin')`, to ensure the call is routed through Eloquent's scope handling.
+Attributed scope methods nên là `protected`. Khi calling một attributed scope từ trong model class, call scope qua một query builder instance, như `static::query()->ofType('admin')`, để ensure call được routed qua Eloquent's scope handling.
 
 <a name="pending-attributes"></a>
 ### Pending Attributes
 
-If you would like to use scopes to create models that have the same attributes as those used to constrain the scope, you may use the `withAttributes` method when building the scope query:
+Nếu bạn muốn sử dụng scopes để create models có cùng attributes như những được sử dụng để constrain scope, bạn có thể sử dụng `withAttributes` method khi building scope query:
 
 ```php
 <?php
@@ -1682,7 +1682,7 @@ class Post extends Model
 }
 ```
 
-The `withAttributes` method will add `where` conditions to the query using the given attributes, and it will also add the given attributes to any models created via the scope:
+`withAttributes` method sẽ add `where` conditions đến query sử dụng given attributes, và nó cũng sẽ add given attributes đến bất kỳ models được created qua scope:
 
 ```php
 $draft = Post::draft()->create(['title' => 'In Progress']);
@@ -1690,7 +1690,7 @@ $draft = Post::draft()->create(['title' => 'In Progress']);
 $draft->hidden; // true
 ```
 
-To instruct the `withAttributes` method to not add `where` conditions to the query, you may set the `asConditions` argument to `false`:
+Để instruct `withAttributes` method để không add `where` conditions đến query, bạn có thể set `asConditions` argument đến `false`:
 
 ```php
 $query->withAttributes([
@@ -1701,7 +1701,7 @@ $query->withAttributes([
 <a name="comparing-models"></a>
 ## Comparing Models
 
-Sometimes you may need to determine if two models are the "same" or not. The `is` and `isNot` methods may be used to quickly verify two models have the same primary key, table, and database connection or not:
+Đôi khi bạn có thể cần determine nếu hai models là "same" hoặc không. `is` và `isNot` methods có thể được sử dụng để quickly verify hai models có cùng primary key, table, và database connection hoặc không:
 
 ```php
 if ($post->is($anotherPost)) {
@@ -1713,7 +1713,7 @@ if ($post->isNot($anotherPost)) {
 }
 ```
 
-The `is` and `isNot` methods are also available when using the `belongsTo`, `hasOne`, `morphTo`, and `morphOne` [relationships](/docs/{{version}}/eloquent-relationships). This method is particularly helpful when you would like to compare a related model without issuing a query to retrieve that model:
+`is` và `isNot` methods cũng available khi sử dụng `belongsTo`, `hasOne`, `morphTo`, và `morphOne` [relationships](/docs/{{version}}/eloquent-relationships). Method này đặc biệt helpful khi bạn muốn compare một related model mà không issuing một query để retrieve model đó:
 
 ```php
 if ($post->author()->is($user)) {
@@ -1725,13 +1725,13 @@ if ($post->author()->is($user)) {
 ## Events
 
 > [!NOTE]
-> Want to broadcast your Eloquent events directly to your client-side application? Check out Laravel's [model event broadcasting](/docs/{{version}}/broadcasting#model-broadcasting).
+> Muốn broadcast Eloquent events của bạn trực tiếp đến client-side application của bạn? Check out Laravel's [model event broadcasting](/docs/{{version}}/broadcasting#model-broadcasting).
 
-Eloquent models dispatch several events, allowing you to hook into the following moments in a model's lifecycle: `retrieved`, `creating`, `created`, `updating`, `updated`, `saving`, `saved`, `deleting`, `deleted`, `trashed`, `forceDeleting`, `forceDeleted`, `restoring`, `restored`, and `replicating`.
+Eloquent models dispatch several events, allowing bạn để hook vào following moments trong model's lifecycle: `retrieved`, `creating`, `created`, `updating`, `updated`, `saving`, `saved`, `deleting`, `deleted`, `trashed`, `forceDeleting`, `forceDeleted`, `restoring`, `restored`, và `replicating`.
 
-The `retrieved` event will dispatch when an existing model is retrieved from the database. When a new model is saved for the first time, the `creating` and `created` events will dispatch. The `updating` / `updated` events will dispatch when an existing model is modified and the `save` method is called. The `saving` / `saved` events will dispatch when a model is created or updated - even if the model's attributes have not been changed. Event names ending with `-ing` are dispatched before any changes to the model are persisted, while events ending with `-ed` are dispatched after the changes to the model are persisted.
+`retrieved` event sẽ dispatch khi một existing model được retrieved từ database. Khi một new model được saved lần đầu tiên, `creating` và `created` events sẽ dispatch. `updating` / `updated` events sẽ dispatch khi một existing model được modified và `save` method được called. `saving` / `saved` events sẽ dispatch khi một model được created hoặc updated - ngay cả khi model's attributes không được changed. Event names ending với `-ing` được dispatched trước bất kỳ changes đến model được persisted, trong khi events ending với `-ed` được dispatched sau khi changes đến model được persisted.
 
-To start listening to model events, define a `$dispatchesEvents` property on your Eloquent model. This property maps various points of the Eloquent model's lifecycle to your own [event classes](/docs/{{version}}/events). Each model event class should expect to receive an instance of the affected model via its constructor:
+Để bắt đầu listening đến model events, define một `$dispatchesEvents` property trên Eloquent model của bạn. Property này maps various points của Eloquent model's lifecycle đến [event classes](/docs/{{version}}/events) của riêng bạn. Mỗi model event class nên expect để receive một instance của affected model qua constructor của nó:
 
 ```php
 <?php
@@ -1759,15 +1759,15 @@ class User extends Authenticatable
 }
 ```
 
-After defining and mapping your Eloquent events, you may use [event listeners](/docs/{{version}}/events#defining-listeners) to handle the events.
+Sau khi defining và mapping Eloquent events của bạn, bạn có thể sử dụng [event listeners](/docs/{{version}}/events#defining-listeners) để handle events.
 
 > [!WARNING]
-> When issuing a mass update or delete query via Eloquent, the `saved`, `updated`, `deleting`, and `deleted` model events will not be dispatched for the affected models. This is because the models are never actually retrieved when performing mass updates or deletes.
+> Khi issuing một mass update hoặc delete query qua Eloquent, `saved`, `updated`, `deleting`, và `deleted` model events sẽ không được dispatched cho affected models. Điều này là vì models không bao giờ actually retrieved khi performing mass updates hoặc deletes.
 
 <a name="events-using-closures"></a>
 ### Using Closures
 
-Instead of using custom event classes, you may register closures that execute when various model events are dispatched. Typically, you should register these closures in the `booted` method of your model:
+Thay vì sử dụng custom event classes, bạn có thể register closures execute khi various model events được dispatched. Thông thường, bạn nên register những closures này trong `booted` method của model của bạn:
 
 ```php
 <?php
@@ -1790,7 +1790,7 @@ class User extends Model
 }
 ```
 
-If needed, you may utilize [queueable anonymous event listeners](/docs/{{version}}/events#queueable-anonymous-event-listeners) when registering model events. This will instruct Laravel to execute the model event listener in the background using your application's [queue](/docs/{{version}}/queues):
+Nếu cần thiết, bạn có thể utilize [queueable anonymous event listeners](/docs/{{version}}/events#queueable-anonymous-event-listeners) khi registering model events. Điều này sẽ instruct Laravel để execute model event listener trong background sử dụng application's [queue](/docs/{{version}}/queues) của bạn:
 
 ```php
 use function Illuminate\Events\queueable;
@@ -1806,13 +1806,13 @@ static::created(queueable(function (User $user) {
 <a name="defining-observers"></a>
 #### Defining Observers
 
-If you are listening for many events on a given model, you may use observers to group all of your listeners into a single class. Observer classes have method names which reflect the Eloquent events you wish to listen for. Each of these methods receives the affected model as their only argument. The `make:observer` Artisan command is the easiest way to create a new observer class:
+Nếu bạn đang listening cho nhiều events trên một given model, bạn có thể sử dụng observers để group tất cả listeners của bạn vào một single class. Observer classes có method names reflect Eloquent events bạn muốn listen for. Mỗi trong những methods này receives affected model như only argument của họ. `make:observer` Artisan command là easiest way để create một new observer class:
 
 ```shell
 php artisan make:observer UserObserver --model=User
 ```
 
-This command will place the new observer in your `app/Observers` directory. If this directory does not exist, Artisan will create it for you. Your fresh observer will look like the following:
+Command này sẽ place new observer trong `app/Observers` directory của bạn. Nếu directory này không tồn tại, Artisan sẽ create nó cho bạn. Fresh observer của bạn sẽ trông như sau:
 
 ```php
 <?php
@@ -1865,7 +1865,7 @@ class UserObserver
 }
 ```
 
-To register an observer, you may place the `ObservedBy` attribute on the corresponding model:
+Để register một observer, bạn có thể place `ObservedBy` attribute trên corresponding model:
 
 ```php
 use App\Observers\UserObserver;
@@ -1878,7 +1878,7 @@ class User extends Authenticatable
 }
 ```
 
-Or, you may manually register an observer by invoking the `observe` method on the model you wish to observe. You may register observers in the `boot` method of your application's `AppServiceProvider` class:
+Hoặc, bạn có thể manually register một observer bằng cách invoking `observe` method trên model bạn muốn observe. Bạn có thể register observers trong `boot` method của application's `AppServiceProvider` class của bạn:
 
 ```php
 use App\Models\User;
@@ -1894,12 +1894,12 @@ public function boot(): void
 ```
 
 > [!NOTE]
-> There are additional events an observer can listen to, such as `saving` and `retrieved`. These events are described within the [events](#events) documentation.
+> Có additional events một observer có thể listen to, như `saving` và `retrieved`. Những events được described trong [events](#events) documentation.
 
 <a name="observers-and-database-transactions"></a>
-#### Observers and Database Transactions
+#### Observers và Database Transactions
 
-When models are being created within a database transaction, you may want to instruct an observer to only execute its event handlers after the database transaction is committed. You may accomplish this by implementing the `ShouldHandleEventsAfterCommit` interface on your observer. If a database transaction is not in progress, the event handlers will execute immediately:
+Khi models đang được created trong một database transaction, bạn có thể muốn instruct một observer để chỉ execute event handlers của nó sau khi database transaction được committed. Bạn có thể accomplish điều này bằng cách implementing `ShouldHandleEventsAfterCommit` interface trên observer của bạn. Nếu một database transaction không in progress, event handlers sẽ execute immediately:
 
 ```php
 <?php
@@ -1924,7 +1924,7 @@ class UserObserver implements ShouldHandleEventsAfterCommit
 <a name="muting-events"></a>
 ### Muting Events
 
-You may occasionally need to temporarily "mute" all events fired by a model. You may achieve this using the `withoutEvents` method. The `withoutEvents` method accepts a closure as its only argument. Any code executed within this closure will not dispatch model events, and any value returned by the closure will be returned by the `withoutEvents` method:
+Đôi khi bạn có thể cần temporarily "mute" tất cả events fired bởi một model. Bạn có thể achieve điều này sử dụng `withoutEvents` method. `withoutEvents` method accepts một closure như only argument của nó. Bất kỳ code executed trong closure này sẽ không dispatch model events, và bất kỳ value returned bởi closure sẽ được returned bởi `withoutEvents` method:
 
 ```php
 use App\Models\User;
@@ -1939,7 +1939,7 @@ $user = User::withoutEvents(function () {
 <a name="saving-a-single-model-without-events"></a>
 #### Saving a Single Model Without Events
 
-Sometimes you may wish to "save" a given model without dispatching any events. You may accomplish this using the `saveQuietly` method:
+Đôi khi bạn có thể muốn "save" một given model mà không dispatching bất kỳ events. Bạn có thể accomplish điều này sử dụng `saveQuietly` method:
 
 ```php
 $user = User::findOrFail(1);
@@ -1949,7 +1949,7 @@ $user->name = 'Victoria Faith';
 $user->saveQuietly();
 ```
 
-You may also "update", "delete", "soft delete", "restore", and "replicate" a given model without dispatching any events:
+Bạn cũng có thể "update", "delete", "soft delete", "restore", và "replicate" một given model mà không dispatching bất kỳ events:
 
 ```php
 $user->deleteQuietly();
