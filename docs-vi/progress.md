@@ -74,6 +74,22 @@
 ||| broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
+### Priority 6: Official Packages - 1/11 (9.1%)
+
+|||| File | Trạng thái | Translator | Reviewer | Notes |
+||||------|------------|------------|----------|-------|
+|||| cashier-paddle.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| dusk.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| fortify.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| horizon.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| passport.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| sanctum.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| scout.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| telescope.md | ✅ Hoàn thành | thienbd203 | - | - |
+|||| valet.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| sail.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| octane.md | ⏳ Chưa bắt đầu | - | - | - |
+
 ### Priority 7: AI Features - 4/4 (100%) ✅
 
 ||| File | Trạng thái | Translator | Reviewer | Notes |
@@ -135,5 +151,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (40 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 7: 4/4 ✅, Priority 8: 6/8) - contracts.md, providers.md, facades.md, pagination.md, container.md, http-client.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (41 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 1/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - telescope.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
