@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 24 files (24%)
+- **Đã dịch:** 25 files (25%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~75 files (75%)
+- **Cần dịch:** ~74 files (74%)
 - **Để dịch sau:** 1 file (blade.md - file quá dài 2090 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -50,7 +50,7 @@
 ||||| passwords.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| verification.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 4: Testing - 4/5 (80%)
+### Priority 4: Testing - 5/5 (100%) ✅
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
@@ -58,7 +58,7 @@
 ||||| http-tests.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| console-tests.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||| mocking.md | ⏳ Chưa bắt đầu | - | - | - |
+||||| mocking.md | ✅ Hoàn thành | thienbd203 | - | - |
 
 ### Priority 5: Advanced Features - 0/9 (0%)
 
@@ -80,7 +80,7 @@
 - Tuần 1: 14 files (readme, installation, configuration, structure, routing, controllers, requests, responses, views, database, queries, migrations, seeding, authentication, authorization, csrf, encryption)
 - Tuần 2: 3 files (hashing, passwords, verification)
 - Tuần 3: 3 files (eloquent-collections, eloquent-mutators, eloquent.md)
-- Tuần 4: 4 files (testing.md, http-tests.md, console-tests.md, database-testing.md)
+- Tuần 4: 5 files (testing.md, http-tests.md, console-tests.md, database-testing.md, mocking.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -107,5 +107,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (24 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 4/5)
+**Last Updated:** 2026-06-11 (25 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 5/5 ✅)
 **Next Update:** Khi có file mới hoàn thành
