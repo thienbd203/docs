@@ -55,7 +55,7 @@ Các khái niệm cốt lõi đằng sau broadcasting rất đơn giản: client
 <a name="supported-drivers"></a>
 #### Supported Drivers
 
-By default, Laravel includes three server-side broadcasting drivers for you to choose from: [Laravel Reverb](https://reverb.laravel.com), [Pusher Channels](https://pusher.com/channels), and [Ably](https://ably.com).
+Theo mặc định, Laravel bao gồm ba driver broadcasting phía server để bạn chọn: [Laravel Reverb](https://reverb.laravel.com), [Pusher Channels](https://pusher.com/channels), và [Ably](https://ably.com).
 
 > [!NOTE]
 > Before diving into event broadcasting, make sure you have read Laravel's documentation on [events and listeners](/docs/{{version}}/events).
@@ -73,12 +73,12 @@ Lệnh `install:broadcasting` sẽ nhắc bạn chọn dịch vụ event broadca
 
 Laravel supports several broadcast drivers out of the box: [Laravel Reverb](/docs/{{version}}/reverb), [Pusher Channels](https://pusher.com/channels), [Ably](https://ably.com), and a `log` driver for local development and debugging. Additionally, a `null` driver is included which allows you to disable broadcasting during testing. A configuration example is included for each of these drivers in the `config/broadcasting.php` configuration file.
 
-All of your application's event broadcasting configuration is stored in the `config/broadcasting.php` configuration file. Don't worry if this file does not exist in your application; it will be created when you run the `install:broadcasting` Artisan command.
+Tất cả cấu hình event broadcasting của ứng dụng của bạn được lưu trữ trong file cấu hình `config/broadcasting.php`. Đừng lo lắng nếu file này không tồn tại trong ứng dụng của bạn; nó sẽ được tạo khi bạn chạy lệnh Artisan `install:broadcasting`.
 
 <a name="quickstart-next-steps"></a>
 #### Next Steps
 
-Once you have enabled event broadcasting, you're ready to learn more about [defining broadcast events](#defining-broadcast-events) and [listening for events](#listening-for-events). If you're using Laravel's React, Vue, or Svelte [starter kits](/docs/{{version}}/starter-kits), you may listen for events using Echo's [useEcho hook](#using-react-or-vue).
+Sau khi bạn đã bật event broadcasting, bạn đã sẵn sàng để tìm hiểu thêm về [defining broadcast events](#defining-broadcast-events) và [listening for events](#listening-for-events). Nếu bạn đang sử dụng [starter kits](/docs/{{version}}/starter-kits) React, Vue, hoặc Svelte của Laravel, bạn có thể lắng nghe các sự kiện sử dụng [useEcho hook](#using-react-or-vue) của Echo.
 
 > [!NOTE]
 > Before broadcasting any events, you should first configure and run a [queue worker](/docs/{{version}}/queues). All event broadcasting is done via queued jobs so that the response time of your application is not seriously affected by events being broadcast.
@@ -93,7 +93,7 @@ Event broadcasting được thực hiện bởi một driver broadcasting phía 
 <a name="reverb"></a>
 ### Reverb
 
-To quickly enable support for Laravel's broadcasting features while using Reverb as your event broadcaster, invoke the `install:broadcasting` Artisan command with the `--reverb` option. This Artisan command will install Reverb's required Composer and NPM packages and update your application's `.env` file with the appropriate variables:
+Để nhanh chóng bật hỗ trợ cho các tính năng broadcasting của Laravel khi sử dụng Reverb như event broadcaster của bạn, hãy gọi lệnh Artisan `install:broadcasting` với tùy chọn `--reverb`. Lệnh Artisan này sẽ cài đặt các packages Composer và NPM cần thiết của Reverb và cập nhật file `.env` của ứng dụng của bạn với các biến thích hợp:
 
 ```shell
 php artisan install:broadcasting --reverb
@@ -102,13 +102,13 @@ php artisan install:broadcasting --reverb
 <a name="reverb-manual-installation"></a>
 #### Manual Installation
 
-When running the `install:broadcasting` command, you will be prompted to install [Laravel Reverb](/docs/{{version}}/reverb). Of course, you may also install Reverb manually using the Composer package manager:
+Khi chạy lệnh `install:broadcasting`, bạn sẽ được nhắc cài đặt [Laravel Reverb](/docs/{{version}}/reverb). Tất nhiên, bạn cũng có thể cài đặt Reverb thủ công sử dụng Composer package manager:
 
 ```shell
 composer require laravel/reverb
 ```
 
-Once the package is installed, you may run Reverb's installation command to publish the configuration, add Reverb's required environment variables, and enable event broadcasting in your application:
+Sau khi package được cài đặt, bạn có thể chạy lệnh cài đặt của Reverb để publish cấu hình, thêm các biến môi trường cần thiết của Reverb, và bật event broadcasting trong ứng dụng của bạn:
 
 ```shell
 php artisan reverb:install
@@ -119,7 +119,7 @@ You can find detailed Reverb installation and usage instructions in the [Reverb 
 <a name="pusher-channels"></a>
 ### Pusher Channels
 
-To quickly enable support for Laravel's broadcasting features while using Pusher as your event broadcaster, invoke the `install:broadcasting` Artisan command with the `--pusher` option. This Artisan command will prompt you for your Pusher credentials, install the Pusher PHP and JavaScript SDKs, and update your application's `.env` file with the appropriate variables:
+Để nhanh chóng bật hỗ trợ cho các tính năng broadcasting của Laravel khi sử dụng Pusher như event broadcaster của bạn, hãy gọi lệnh Artisan `install:broadcasting` với tùy chọn `--pusher`. Lệnh Artisan này sẽ nhắc bạn nhập thông tin xác thực Pusher, cài đặt các SDK PHP và JavaScript của Pusher, và cập nhật file `.env` của ứng dụng của bạn với các biến thích hợp:
 
 ```shell
 php artisan install:broadcasting --pusher
@@ -128,7 +128,7 @@ php artisan install:broadcasting --pusher
 <a name="pusher-manual-installation"></a>
 #### Manual Installation
 
-To install Pusher support manually, you should install the Pusher Channels PHP SDK using the Composer package manager:
+Để cài đặt hỗ trợ Pusher thủ công, bạn nên cài đặt Pusher Channels PHP SDK sử dụng Composer package manager:
 
 ```shell
 composer require pusher/pusher-php-server
@@ -146,9 +146,9 @@ PUSHER_SCHEME="https"
 PUSHER_APP_CLUSTER="mt1"
 ```
 
-The `config/broadcasting.php` file's `pusher` configuration also allows you to specify additional `options` that are supported by Channels, such as the cluster.
+Cấu hình `pusher` trong file `config/broadcasting.php` cũng cho phép bạn chỉ định các `options` bổ sung được hỗ trợ bởi Channels, chẳng hạn như cluster.
 
-Then, set the `BROADCAST_CONNECTION` environment variable to `pusher` in your application's `.env` file:
+Sau đó, đặt environment variable `BROADCAST_CONNECTION` thành `pusher` trong file `.env` của ứng dụng của bạn:
 
 ```ini
 BROADCAST_CONNECTION=pusher
@@ -162,7 +162,7 @@ Finally, you are ready to install and configure [Laravel Echo](#client-side-inst
 > [!NOTE]
 > The documentation below discusses how to use Ably in "Pusher compatibility" mode. However, the Ably team recommends and maintains a broadcaster and Echo client that is able to take advantage of the unique capabilities offered by Ably. For more information on using the Ably maintained drivers, please [consult Ably's Laravel broadcaster documentation](https://github.com/ably/laravel-broadcaster).
 
-To quickly enable support for Laravel's broadcasting features while using [Ably](https://ably.com) as your event broadcaster, invoke the `install:broadcasting` Artisan command with the `--ably` option. This Artisan command will prompt you for your Ably credentials, install the Ably PHP and JavaScript SDKs, and update your application's `.env` file with the appropriate variables:
+Để nhanh chóng bật hỗ trợ cho các tính năng broadcasting của Laravel khi sử dụng [Ably](https://ably.com) như event broadcaster của bạn, hãy gọi lệnh Artisan `install:broadcasting` với tùy chọn `--ably`. Lệnh Artisan này sẽ nhắc bạn nhập thông tin xác thực Ably, cài đặt các SDK PHP và JavaScript của Ably, và cập nhật file `.env` của ứng dụng của bạn với các biến thích hợp:
 
 ```shell
 php artisan install:broadcasting --ably
@@ -173,7 +173,7 @@ php artisan install:broadcasting --ably
 <a name="ably-manual-installation"></a>
 #### Manual Installation
 
-To install Ably support manually, you should install the Ably PHP SDK using the Composer package manager:
+Để cài đặt hỗ trợ Ably thủ công, bạn nên cài đặt Ably PHP SDK sử dụng Composer package manager:
 
 ```shell
 composer require ably/ably-php
@@ -185,7 +185,7 @@ Next, you should configure your Ably credentials in the `config/broadcasting.php
 ABLY_KEY=your-ably-key
 ```
 
-Then, set the `BROADCAST_CONNECTION` environment variable to `ably` in your application's `.env` file:
+Sau đó, đặt environment variable `BROADCAST_CONNECTION` thành `ably` trong file `.env` của ứng dụng của bạn:
 
 ```ini
 BROADCAST_CONNECTION=ably
@@ -201,18 +201,18 @@ Finally, you are ready to install and configure [Laravel Echo](#client-side-inst
 
 [Laravel Echo](https://github.com/laravel/echo) is a JavaScript library that makes it painless to subscribe to channels and listen for events broadcast by your server-side broadcasting driver.
 
-When installing Laravel Reverb via the `install:broadcasting` Artisan command, Reverb and Echo's scaffolding and configuration will be injected into your application automatically. However, if you wish to manually configure Laravel Echo, you may do so by following the instructions below.
+Khi cài đặt Laravel Reverb qua lệnh Artisan `install:broadcasting`, scaffolding và cấu hình của Reverb và Echo sẽ được tự động inject vào ứng dụng của bạn. Tuy nhiên, nếu bạn muốn cấu hình Laravel Echo thủ công, bạn có thể làm như vậy bằng cách làm theo hướng dẫn dưới đây.
 
 <a name="reverb-client-manual-installation"></a>
 #### Manual Installation
 
-To manually configure Laravel Echo for your application's frontend, first install the `pusher-js` package since Reverb utilizes the Pusher protocol for WebSocket subscriptions, channels, and messages:
+Để cấu hình Laravel Echo thủ công cho frontend của ứng dụng, trước tiên cài đặt package `pusher-js` vì Reverb sử dụng giao thức Pusher cho WebSocket subscriptions, channels, và messages:
 
 ```shell
 npm install --save-dev laravel-echo pusher-js
 ```
 
-Once Echo is installed, you are ready to create a fresh Echo instance in your application's JavaScript. A great place to do this is at the bottom of the `resources/js/app.js` file that is included with the Laravel framework:
+Sau khi Echo được cài đặt, bạn đã sẵn sàng để tạo một instance Echo mới trong JavaScript của ứng dụng. Một nơi tuyệt vời để làm điều này là ở cuối file `resources/js/app.js` được bao gồm với Laravel framework:
 
 ```js tab=JavaScript
 import Echo from 'laravel-echo';
@@ -287,18 +287,18 @@ npm run build
 
 [Laravel Echo](https://github.com/laravel/echo) is a JavaScript library that makes it painless to subscribe to channels and listen for events broadcast by your server-side broadcasting driver.
 
-When installing broadcasting support via the `install:broadcasting --pusher` Artisan command, Pusher and Echo's scaffolding and configuration will be injected into your application automatically. However, if you wish to manually configure Laravel Echo, you may do so by following the instructions below.
+Khi cài đặt hỗ trợ broadcasting qua lệnh Artisan `install:broadcasting --pusher`, scaffolding và cấu hình của Pusher và Echo sẽ được tự động inject vào ứng dụng của bạn. Tuy nhiên, nếu bạn muốn cấu hình Laravel Echo thủ công, bạn có thể làm như vậy bằng cách làm theo hướng dẫn dưới đây.
 
 <a name="pusher-client-manual-installation"></a>
 #### Manual Installation
 
-To manually configure Laravel Echo for your application's frontend, first install the `laravel-echo` and `pusher-js` packages which utilize the Pusher protocol for WebSocket subscriptions, channels, and messages:
+Để cấu hình Laravel Echo thủ công cho frontend của ứng dụng, trước tiên cài đặt các packages `laravel-echo` và `pusher-js` sử dụng giao thức Pusher cho WebSocket subscriptions, channels, và messages:
 
 ```shell
 npm install --save-dev laravel-echo pusher-js
 ```
 
-Once Echo is installed, you are ready to create a fresh Echo instance in your application's `resources/js/app.js` file:
+Sau khi Echo được cài đặt, bạn đã sẵn sàng để tạo một instance Echo mới trong file `resources/js/app.js` của ứng dụng:
 
 ```js tab=JavaScript
 import Echo from 'laravel-echo';
@@ -378,7 +378,7 @@ VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
 VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 ```
 
-Once you have adjusted the Echo configuration according to your application's needs, you may compile your application's assets:
+Sau khi bạn đã điều chỉnh cấu hình Echo theo nhu cầu của ứng dụng, bạn có thể compile các assets của ứng dụng:
 
 ```shell
 npm run build
@@ -390,7 +390,7 @@ npm run build
 <a name="using-an-existing-client-instance"></a>
 #### Using an Existing Client Instance
 
-If you already have a pre-configured Pusher Channels client instance that you would like Echo to utilize, you may pass it to Echo via the `client` configuration option:
+Nếu bạn đã có một instance client Pusher Channels được cấu hình trước mà bạn muốn Echo sử dụng, bạn có thể truyền nó cho Echo qua tùy chọn cấu hình `client`:
 
 ```js
 import Echo from 'laravel-echo';
@@ -415,7 +415,7 @@ window.Echo = new Echo({
 
 [Laravel Echo](https://github.com/laravel/echo) is a JavaScript library that makes it painless to subscribe to channels and listen for events broadcast by your server-side broadcasting driver.
 
-When installing broadcasting support via the `install:broadcasting --ably` Artisan command, Ably and Echo's scaffolding and configuration will be injected into your application automatically. However, if you wish to manually configure Laravel Echo, you may do so by following the instructions below.
+Khi cài đặt hỗ trợ broadcasting qua lệnh Artisan `install:broadcasting --ably`, scaffolding và cấu hình của Ably và Echo sẽ được tự động inject vào ứng dụng của bạn. Tuy nhiên, nếu bạn muốn cấu hình Laravel Echo thủ công, bạn có thể làm như vậy bằng cách làm theo hướng dẫn dưới đây.
 
 <a name="ably-client-manual-installation"></a>
 #### Manual Installation
@@ -428,7 +428,7 @@ npm install --save-dev laravel-echo pusher-js
 
 **Before continuing, you should enable Pusher protocol support in your Ably application settings. You may enable this feature within the "Protocol Adapter Settings" portion of your Ably application's settings dashboard.**
 
-Once Echo is installed, you are ready to create a fresh Echo instance in your application's `resources/js/app.js` file:
+Sau khi Echo được cài đặt, bạn đã sẵn sàng để tạo một instance Echo mới trong file `resources/js/app.js` của ứng dụng:
 
 ```js tab=JavaScript
 import Echo from 'laravel-echo';
@@ -487,7 +487,7 @@ configureEcho({
 
 You may have noticed our Ably Echo configuration references a `VITE_ABLY_PUBLIC_KEY` environment variable. This variable's value should be your Ably public key. Your public key is the portion of your Ably key that occurs before the `:` character.
 
-Once you have adjusted the Echo configuration according to your needs, you may compile your application's assets:
+Sau khi bạn đã điều chỉnh cấu hình Echo theo nhu cầu của bạn, bạn có thể compile các assets của ứng dụng:
 
 ```shell
 npm run dev
@@ -519,7 +519,7 @@ OrderShipmentStatusUpdated::dispatch($order);
 <a name="the-shouldbroadcast-interface"></a>
 #### The `ShouldBroadcast` Interface
 
-When a user is viewing one of their orders, we don't want them to have to refresh the page to view status updates. Instead, we want to broadcast the updates to the application as they are created. So, we need to mark the `OrderShipmentStatusUpdated` event with the `ShouldBroadcast` interface. This will instruct Laravel to broadcast the event when it is fired:
+Khi một người dùng đang xem một trong các đơn hàng của họ, chúng ta không muốn họ phải refresh trang để xem các cập nhật trạng thái. Thay vào đó, chúng ta muốn broadcast các cập nhật đến ứng dụng khi chúng được tạo. Vì vậy, chúng ta cần đánh dấu sự kiện `OrderShipmentStatusUpdated` với interface `ShouldBroadcast`. Điều này sẽ chỉ dẫn Laravel broadcast sự kiện khi nó được kích hoạt:
 
 ```php
 <?php
@@ -544,7 +544,7 @@ class OrderShipmentStatusUpdated implements ShouldBroadcast
 }
 ```
 
-The `ShouldBroadcast` interface requires our event to define a `broadcastOn` method. This method is responsible for returning the channels that the event should broadcast on. An empty stub of this method is already defined on generated event classes, so we only need to fill in its details. We only want the creator of the order to be able to view status updates, so we will broadcast the event on a private channel that is tied to the order:
+Interface `ShouldBroadcast` yêu cầu sự kiện của chúng ta định nghĩa một phương thức `broadcastOn`. Phương thức này chịu trách nhiệm trả về các channels mà sự kiện nên broadcast trên. Một stub trống của phương thức này đã được định nghĩa trên các class sự kiện được tạo, vì vậy chúng ta chỉ cần điền vào chi tiết của nó. Chúng ta chỉ muốn người tạo đơn hàng có thể xem các cập nhật trạng thái, vì vậy chúng ta sẽ broadcast sự kiện trên một private channel được gắn với đơn hàng:
 
 ```php
 use Illuminate\Broadcasting\Channel;
@@ -559,7 +559,7 @@ public function broadcastOn(): Channel
 }
 ```
 
-If you wish the event to broadcast on multiple channels, you may return an `array` instead:
+Nếu bạn muốn sự kiện broadcast trên nhiều channels, bạn có thể trả về một `array` thay vì:
 
 ```php
 use Illuminate\Broadcasting\PrivateChannel;
@@ -592,14 +592,14 @@ Broadcast::channel('orders.{orderId}', function (User $user, int $orderId) {
 });
 ```
 
-The `channel` method accepts two arguments: the name of the channel and a callback which returns `true` or `false` indicating whether the user is authorized to listen on the channel.
+Phương thức `channel` chấp nhận hai đối số: tên của channel và một callback trả về `true` hoặc `false` chỉ định liệu người dùng có được authorize để lắng nghe trên channel hay không.
 
-All authorization callbacks receive the currently authenticated user as their first argument and any additional wildcard parameters as their subsequent arguments. In this example, we are using the `{orderId}` placeholder to indicate that the "ID" portion of the channel name is a wildcard.
+Tất cả các authorization callbacks nhận người dùng được xác thực hiện tại làm đối số đầu tiên của họ và bất kỳ tham số wildcard bổ sung nào làm các đối số tiếp theo của họ. Trong ví dụ này, chúng ta đang sử dụng placeholder `{orderId}` để chỉ định rằng phần "ID" của tên channel là một wildcard.
 
 <a name="listening-for-event-broadcasts"></a>
 #### Listening for Event Broadcasts
 
-Next, all that remains is to listen for the event in our JavaScript application. We can do this using [Laravel Echo](#client-side-installation). Laravel Echo's built-in React, Vue, and Svelte hooks make it simple to get started, and, by default, all of the event's public properties will be included on the broadcast event:
+Tiếp theo, tất cả những gì còn lại là lắng nghe sự kiện trong ứng dụng JavaScript của chúng ta. Chúng ta có thể làm điều này sử dụng [Laravel Echo](#client-side-installation). Các hooks React, Vue, và Svelte tích hợp của Laravel Echo làm cho việc bắt đầu trở nên đơn giản, và theo mặc định, tất cả các thuộc tính public của sự kiện sẽ được bao gồm trên sự kiện broadcast:
 
 ```js tab=React
 import { useEcho } from "@laravel/echo-react";
@@ -787,7 +787,7 @@ class OrderShipmentStatusUpdated implements ShouldBroadcastNow
 <a name="broadcast-conditions"></a>
 ### Broadcast Conditions
 
-Sometimes you want to broadcast your event only if a given condition is true. You may define these conditions by adding a `broadcastWhen` method to your event class:
+Đôi khi bạn muốn broadcast event của bạn chỉ khi một điều kiện nhất định là true. Bạn có thể định nghĩa các điều kiện này bằng cách thêm một phương thức `broadcastWhen` vào class event của bạn:
 
 ```php
 /**
@@ -802,9 +802,9 @@ public function broadcastWhen(): bool
 <a name="broadcasting-and-database-transactions"></a>
 #### Broadcasting and Database Transactions
 
-When broadcast events are dispatched within database transactions, they may be processed by the queue before the database transaction has committed. When this happens, any updates you have made to models or database records during the database transaction may not yet be reflected in the database. In addition, any models or database records created within the transaction may not exist in the database. If your event depends on these models, unexpected errors can occur when the job that broadcasts the event is processed.
+Khi broadcast events được dispatch trong database transactions, chúng có thể được xử lý bởi queue trước khi database transaction đã commit. Khi điều này xảy ra, bất kỳ updates nào bạn đã thực hiện cho models hoặc database records trong database transaction có thể chưa được phản ánh trong database. Ngoài ra, bất kỳ models hoặc database records nào được tạo trong transaction có thể không tồn tại trong database. Nếu event của bạn phụ thuộc vào các models này, các lỗi unexpected có thể xảy ra khi job broadcast event được xử lý.
 
-If your queue connection's `after_commit` configuration option is set to `false`, you may still indicate that a particular broadcast event should be dispatched after all open database transactions have been committed by implementing the `ShouldDispatchAfterCommit` interface on the event class:
+Nếu tùy chọn cấu hình `after_commit` của queue connection của bạn được đặt thành `false`, bạn vẫn có thể chỉ định rằng một broadcast event cụ thể nên được dispatch sau khi tất cả các database transactions mở đã được commit bằng cách implement interface `ShouldDispatchAfterCommit` trên class event:
 
 ```php
 <?php
@@ -822,14 +822,14 @@ class ServerCreated implements ShouldBroadcast, ShouldDispatchAfterCommit
 ```
 
 > [!NOTE]
-> To learn more about working around these issues, please review the documentation regarding [queued jobs and database transactions](/docs/{{version}}/queues#jobs-and-database-transactions).
+> Để biết thêm thông tin về cách giải quyết các vấn đề này, hãy xem tài liệu về [queued jobs và database transactions](/docs/{{version}}/queues#jobs-and-database-transactions).
 
 <a name="authorizing-channels"></a>
 ## Authorizing Channels
 
-Private channels require you to authorize that the currently authenticated user can actually listen on the channel. This is accomplished by making an HTTP request to your Laravel application with the channel name and allowing your application to determine if the user can listen on that channel. When using [Laravel Echo](#client-side-installation), the HTTP request to authorize subscriptions to private channels will be made automatically.
+Private channels yêu cầu bạn authorize rằng user hiện tại được xác thực có thể thực sự listen trên channel. Điều này được thực hiện bằng cách thực hiện một HTTP request đến ứng dụng Laravel của bạn với tên channel và cho phép ứng dụng của bạn xác định xem user có thể listen trên channel đó hay không. Khi sử dụng [Laravel Echo](#client-side-installation), HTTP request để authorize subscriptions đến private channels sẽ được thực hiện tự động.
 
-When broadcasting is installed Laravel attempts to automatically register the `/broadcasting/auth` route to handle authorization requests. If Laravel fails to automatically register these routes, you may register them manually in your application's `/bootstrap/app.php` file:
+Khi broadcasting được cài đặt, Laravel cố gắng tự động register route `/broadcasting/auth` để xử lý các authorization requests. Nếu Laravel không thể tự động register các routes này, bạn có thể register chúng thủ công trong file `/bootstrap/app.php` của ứng dụng của bạn:
 
 ```php
 ->withRouting(
@@ -842,7 +842,7 @@ When broadcasting is installed Laravel attempts to automatically register the `/
 <a name="defining-authorization-callbacks"></a>
 ### Defining Authorization Callbacks
 
-Next, we need to define the logic that will actually determine if the currently authenticated user can listen to a given channel. This is done in the `routes/channels.php` file that was created by the `install:broadcasting` Artisan command. In this file, you may use the `Broadcast::channel` method to register channel authorization callbacks:
+Tiếp theo, chúng ta cần định nghĩa logic thực sự xác định xem user hiện tại được xác thực có thể listen trên một channel nhất định hay không. Điều này được thực hiện trong file `routes/channels.php` được tạo bởi lệnh Artisan `install:broadcasting`. Trong file này, bạn có thể sử dụng phương thức `Broadcast::channel` để register các channel authorization callbacks:
 
 ```php
 use App\Models\User;
@@ -852,11 +852,11 @@ Broadcast::channel('orders.{orderId}', function (User $user, int $orderId) {
 });
 ```
 
-The `channel` method accepts two arguments: the name of the channel and a callback which returns `true` or `false` indicating whether the user is authorized to listen on the channel.
+Phương thức `channel` chấp nhận hai đối số: tên của channel và một callback trả về `true` hoặc `false` chỉ định xem user có được authorize để listen trên channel hay không.
 
-All authorization callbacks receive the currently authenticated user as their first argument and any additional wildcard parameters as their subsequent arguments. In this example, we are using the `{orderId}` placeholder to indicate that the "ID" portion of the channel name is a wildcard.
+Tất cả authorization callbacks nhận user hiện tại được xác thực làm đối số đầu tiên của chúng và bất kỳ tham số wildcard bổ sung nào làm các đối số tiếp theo của chúng. Trong ví dụ này, chúng ta đang sử dụng placeholder `{orderId}` để chỉ định rằng phần "ID" của tên channel là một wildcard.
 
-You may view a list of your application's broadcast authorization callbacks using the `channel:list` Artisan command:
+Bạn có thể xem danh sách các broadcast authorization callbacks của ứng dụng của bạn sử dụng lệnh Artisan `channel:list`:
 
 ```shell
 php artisan channel:list
@@ -865,7 +865,7 @@ php artisan channel:list
 <a name="authorization-callback-model-binding"></a>
 #### Authorization Callback Model Binding
 
-Just like HTTP routes, channel routes may also take advantage of implicit and explicit [route model binding](/docs/{{version}}/routing#route-model-binding). For example, instead of receiving a string or numeric order ID, you may request an actual `Order` model instance:
+Giống như HTTP routes, channel routes cũng có thể tận dụng implicit và explicit [route model binding](/docs/{{version}}/routing#route-model-binding). Ví dụ, thay vì nhận một string hoặc numeric order ID, bạn có thể request một instance `Order` model thực tế:
 
 ```php
 use App\Models\Order;
@@ -877,12 +877,12 @@ Broadcast::channel('orders.{order}', function (User $user, Order $order) {
 ```
 
 > [!WARNING]
-> Unlike HTTP route model binding, channel model binding does not support automatic [implicit model binding scoping](/docs/{{version}}/routing#implicit-model-binding-scoping). However, this is rarely a problem because most channels can be scoped based on a single model's unique, primary key.
+> Khác với HTTP route model binding, channel model binding không hỗ trợ automatic [implicit model binding scoping](/docs/{{version}}/routing#implicit-model-binding-scoping). Tuy nhiên, điều này hiếm khi là một vấn đề vì hầu hết các channels có thể được scoped dựa trên một unique, primary key của một model duy nhất.
 
 <a name="authorization-callback-authentication"></a>
 #### Authorization Callback Authentication
 
-Private and presence broadcast channels authenticate the current user via your application's default authentication guard. If the user is not authenticated, channel authorization is automatically denied and the authorization callback is never executed. However, you may assign multiple, custom guards that should authenticate the incoming request if necessary:
+Private và presence broadcast channels authenticate user hiện tại qua default authentication guard của ứng dụng của bạn. Nếu user không được xác thực, channel authorization bị tự động deny và authorization callback không bao giờ được thực thi. Tuy nhiên, bạn có thể gán nhiều, custom guards nên authenticate incoming request nếu cần thiết:
 
 ```php
 Broadcast::channel('channel', function () {
@@ -893,7 +893,7 @@ Broadcast::channel('channel', function () {
 <a name="defining-channel-classes"></a>
 ### Defining Channel Classes
 
-If your application is consuming many different channels, your `routes/channels.php` file could become bulky. So, instead of using closures to authorize channels, you may use channel classes. To generate a channel class, use the `make:channel` Artisan command. This command will place a new channel class in the `App/Broadcasting` directory.
+Nếu ứng dụng của bạn đang tiêu thụ nhiều channels khác nhau, file `routes/channels.php` của bạn có thể trở nên cồng kềnh. Vì vậy, thay vì sử dụng closures để authorize channels, bạn có thể sử dụng channel classes. Để tạo một channel class, hãy sử dụng lệnh Artisan `make:channel`. Lệnh này sẽ đặt một channel class mới trong thư mục `App/Broadcasting`.
 
 ```shell
 php artisan make:channel OrderChannel
@@ -907,7 +907,7 @@ use App\Broadcasting\OrderChannel;
 Broadcast::channel('orders.{order}', OrderChannel::class);
 ```
 
-Finally, you may place the authorization logic for your channel in the channel class' `join` method. This `join` method will house the same logic you would have typically placed in your channel authorization closure. You may also take advantage of channel model binding:
+Cuối cùng, bạn có thể đặt authorization logic cho channel của bạn trong phương thức `join` của channel class. Phương thức `join` này sẽ chứa cùng logic mà bạn thường sẽ đặt trong channel authorization closure của bạn. Bạn cũng có thể tận dụng channel model binding:
 
 ```php
 <?php
@@ -935,7 +935,7 @@ class OrderChannel
 ```
 
 > [!NOTE]
-> Like many other classes in Laravel, channel classes will automatically be resolved by the [service container](/docs/{{version}}/container). So, you may type-hint any dependencies required by your channel in its constructor.
+> Giống như nhiều classes khác trong Laravel, channel classes sẽ tự động được resolve bởi [service container](/docs/{{version}}/container). Vì vậy, bạn có thể type-hint bất kỳ dependencies nào cần thiết bởi channel của bạn trong constructor của nó.
 
 <a name="broadcasting-events"></a>
 ## Broadcasting Events
