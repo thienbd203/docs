@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 7 files (7%)
+- **Đã dịch:** 8 files (8%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~93 files (93%)
+- **Cần dịch:** ~92 files (92%)
 
 ## 🎯 Tiến độ theo Priority
 
@@ -24,12 +24,12 @@
 || views.md | ⏳ Chưa bắt đầu | - | - | - |
 || blade.md | ⏳ Chưa bắt đầu | - | - | - |
 
-### Priority 2: Database & ORM - 1/8 (12.5%)
+### Priority 2: Database & ORM - 2/8 (25%)
 
 || File | Trạng thái | Translator | Reviewer | Notes |
 ||------|------------|------------|----------|-------|
 || database.md | ✅ Hoàn thành | thienbd203 | - | - |
-|| queries.md | ⏳ Chưa bắt đầu | - | - | - |
+|| queries.md | ✅ Hoàn thành | thienbd203 | - | - |
 || migrations.md | ⏳ Chưa bắt đầu | - | - | - |
 || seeding.md | ⏳ Chưa bắt đầu | - | - | - |
 || eloquent.md | ⏳ Chưa bắt đầu | - | - | - |
@@ -127,5 +127,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (readme.md, installation.md, configuration.md, structure.md, routing.md, controllers.md, database.md completed)
+**Last Updated:** 2026-06-11 (readme.md, installation.md, configuration.md, structure.md, routing.md, controllers.md, database.md, queries.md completed)
 **Next Update:** Khi có file mới hoàn thành
