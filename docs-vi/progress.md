@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 29 files (29%)
+- **Đã dịch:** 30 files (30%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~70 files (70%)
+- **Cần dịch:** ~69 files (69%)
 - **Để dịch sau:** 2 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -60,7 +60,7 @@
 ||||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| mocking.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 5: Advanced Features - 4/9 (44.4%)
+### Priority 5: Advanced Features - 5/9 (55.6%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -69,7 +69,7 @@
 ||||||| queues.md | ⏸ Để dịch sau | - | - | File quá dài (3487 dòng) - sẽ dịch sau |
 ||||||| cache.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| filesystem.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| mail.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| mail.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| notifications.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| broadcasting.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| scheduling.md | ⏳ Chưa bắt đầu | - | - | - |
@@ -82,7 +82,7 @@
 - Tuần 3: 3 files (eloquent-collections, eloquent-mutators, eloquent.md)
 - Tuần 4: 5 files (testing.md, http-tests.md, console-tests.md, database-testing.md, mocking.md)
 - Tuần 5: 2 files (middleware.md, events.md)
-- Tuần 6: 2 files (cache.md, filesystem.md)
+- Tuần 6: 3 files (cache.md, filesystem.md, mail.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -110,5 +110,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (29 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 5/5 ✅, Priority 5: 4/9)
+**Last Updated:** 2026-06-11 (30 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 5/5 ✅, Priority 5: 5/9)
 **Next Update:** Khi có file mới hoàn thành
