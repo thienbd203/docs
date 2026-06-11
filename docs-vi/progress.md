@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 44 files (44%)
+- **Đã dịch:** 45 files (45%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~53 files (53%)
+- **Cần dịch:** ~52 files (52%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -151,5 +151,43 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (44 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 4/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - valet.md đã được dịch hoàn thành
+### Priority 10: Miscellaneous - 1/30 (3.3%)
+
+|||| File | Trạng thái | Translator | Reviewer | Notes |
+||||------|------------|------------|----------|-------|
+|||| pint.md | ✅ Hoàn thành | thienbd203 | - | - |
+|||| pennant.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| precognition.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| pulse.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| reverb.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| folio.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| envoy.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| processes.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| prompts.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| session.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| localization.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| package-development.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| search.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| eloquent-resources.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| eloquent-serialization.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| eloquent-factories.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
+|||| console-tests.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
+|||| http-tests.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
+|||| mocking.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
+|||| testing.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
+|||| deployment.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| errors.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| logging.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| frontend.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| starter-kits.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| upgrade.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| releases.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| urls.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| documentation.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| contributions.md | ⏳ Chưa bắt đầu | - | - | - |
+
+---
+
+**Last Updated:** 2026-06-12 (45 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 4/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - pint.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
