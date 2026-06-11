@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 48 files (48%)
+- **Đã dịch:** 49 files (49%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~49 files (49%)
+- **Cần dịch:** ~48 files (48%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -74,7 +74,7 @@
 |||| broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 6: Official Packages - 7/11 (63.6%)
+### Priority 6: Official Packages - 8/11 (72.7%)
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
@@ -84,7 +84,7 @@
 ||||| horizon.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| passport.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||| sanctum.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||| scout.md | ⏳ Chưa bắt đầu | - | - | - |
+||||| scout.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| telescope.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| valet.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| sail.md | ✅ Hoàn thành | thienbd203 | - | - |
@@ -124,7 +124,7 @@
 - Tuần 7: 3 files (notifications.md, broadcasting.md, scheduling.md)
 - Tuần 8: 1 file (mcp.md)
 - Tuần 9: 6 files (contracts.md, providers.md, facades.md, pagination.md, container.md, http-client.md)
-- Tuần 10: 3 files (octane.md, horizon.md, fortify.md)
+- Tuần 10: 4 files (octane.md, horizon.md, fortify.md, scout.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -190,5 +190,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (48 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 7/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - fortify.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (49 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - scout.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
