@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 46 files (46%)
+- **Đã dịch:** 47 files (47%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~51 files (51%)
+- **Cần dịch:** ~50 files (50%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -74,14 +74,14 @@
 |||| broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 6: Official Packages - 5/11 (45.5%)
+### Priority 6: Official Packages - 6/11 (54.5%)
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
 ||||| cashier-paddle.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||| dusk.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||| fortify.md | ⏳ Chưa bắt đầu | - | - | - |
-||||| horizon.md | ⏳ Chưa bắt đầu | - | - | - |
+||||| horizon.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| passport.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||| sanctum.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||| scout.md | ⏳ Chưa bắt đầu | - | - | - |
@@ -124,7 +124,7 @@
 - Tuần 7: 3 files (notifications.md, broadcasting.md, scheduling.md)
 - Tuần 8: 1 file (mcp.md)
 - Tuần 9: 6 files (contracts.md, providers.md, facades.md, pagination.md, container.md, http-client.md)
-- Tuần 10: 1 file (octane.md)
+- Tuần 10: 2 files (octane.md, horizon.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -152,7 +152,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 2/30 (6.7%)
+### Priority 10: Miscellaneous - 1/30 (3.3%)
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
@@ -190,5 +190,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (46 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 5/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 2/30) - reverb.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (47 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 6/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - horizon.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
