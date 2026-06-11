@@ -6,6 +6,9 @@ site_url: https://thienbd203.github.io/docs/
 repo_name: thienbd203/docs
 repo_url: https://github.com/thienbd203/docs
 
+docs_dir: .
+site_dir: site
+
 theme:
   name: material
   language: en
