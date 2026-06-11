@@ -111,5 +111,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (30 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9)
+**Last Updated:** 2026-06-11 (30 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9) - notifications.md và broadcasting.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
