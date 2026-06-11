@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 43 files (43%)
+- **Đã dịch:** 44 files (44%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~54 files (54%)
+- **Cần dịch:** ~53 files (53%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -74,7 +74,7 @@
 ||| broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 6: Official Packages - 3/11 (27.3%)
+### Priority 6: Official Packages - 4/11 (36.4%)
 
 |||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||------|------------|------------|----------|-------|
@@ -86,7 +86,7 @@
 |||| sanctum.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| scout.md | ⏳ Chưa bắt đầu | - | - | - |
 |||| telescope.md | ✅ Hoàn thành | thienbd203 | - | - |
-|||| valet.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| valet.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| sail.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| octane.md | ⏳ Chưa bắt đầu | - | - | - |
 
@@ -151,5 +151,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (43 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 3/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - sanctum.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (44 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 4/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - valet.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
