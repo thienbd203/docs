@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 26 files (26%)
+- **Đã dịch:** 27 files (27%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~73 files (73%)
+- **Cần dịch:** ~72 files (72%)
 - **Để dịch sau:** 1 file (blade.md - file quá dài 2090 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -60,12 +60,12 @@
 |||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| mocking.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 5: Advanced Features - 1/9 (11.1%)
+### Priority 5: Advanced Features - 2/9 (22.2%)
 
 |||||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||||------|------------|------------|----------|-------|
 |||||| middleware.md | ✅ Hoàn thành | thienbd203 | - | - |
-|||||| events.md | ⏳ Chưa bắt đầu | - | - | - |
+|||||| events.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| queues.md | ⏳ Chưa bắt đầu | - | - | - |
 |||||| cache.md | ⏳ Chưa bắt đầu | - | - | - |
 |||||| filesystem.md | ⏳ Chưa bắt đầu | - | - | - |
@@ -81,7 +81,7 @@
 - Tuần 2: 3 files (hashing, passwords, verification)
 - Tuần 3: 3 files (eloquent-collections, eloquent-mutators, eloquent.md)
 - Tuần 4: 5 files (testing.md, http-tests.md, console-tests.md, database-testing.md, mocking.md)
-- Tuần 5: 1 file (middleware.md)
+- Tuần 5: 2 files (middleware.md, events.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -108,5 +108,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (26 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 5/5 ✅, Priority 5: 1/9)
+**Last Updated:** 2026-06-11 (27 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7, Priority 4: 5/5 ✅, Priority 5: 2/9)
 **Next Update:** Khi có file mới hoàn thành
