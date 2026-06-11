@@ -152,7 +152,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 1/30 (3.3%)
+### Priority 10: Miscellaneous - 3/30 (10%)
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
@@ -190,5 +190,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (47 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 6/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - horizon.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (47 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 6/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 3/30) - pint.md, reverb.md, envoy.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
