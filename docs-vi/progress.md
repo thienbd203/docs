@@ -4,8 +4,8 @@
 
 - **Tổng số files:** ~100 files
 - **Đã dịch:** 30 files (30%)
-- **Đang dịch:** 0 files
-- **Cần dịch:** ~69 files (69%)
+- **Đang dịch:** 3 files (notifications.md, broadcasting.md, scheduling.md)
+- **Cần dịch:** ~66 files (66%)
 - **Để dịch sau:** 2 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -60,7 +60,7 @@
 ||||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| mocking.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 5: Advanced Features - 5/9 (55.6%)
+### Priority 5: Advanced Features - 8/9 (88.9%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -70,9 +70,9 @@
 ||||||| cache.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| filesystem.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| mail.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| notifications.md | ⏳ Chưa bắt đầu | - | - | - |
-||||||| broadcasting.md | ⏳ Chưa bắt đầu | - | - | - |
-||||||| scheduling.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| notifications.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Generating Notifications, Sending Notifications, Queueing Notifications, Database Notifications | |
+||||||| broadcasting.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Quickstart, Server Side Installation, Concept Overview | |
+||||||| scheduling.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Defining Schedules, Scheduling Artisan Commands, Scheduling Queued Jobs, Scheduling Shell Commands | |
 
 ## 📈 Thống kê
 
