@@ -1,0 +1,149 @@
+site_name: Laravel Documentation
+site_description: Tài liệu Laravel Framework
+site_author: Laravel Community
+site_url: https://thienbd203.github.io/docs/
+
+repo_name: thienbd203/docs
+repo_url: https://github.com/thienbd203/docs
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: readme.md
+  - Getting Started:
+      - Installation: installation.md
+      - Configuration: configuration.md
+      - Directory Structure: structure.md
+      - Frontend: frontend.md
+      - Deployment: deployment.md
+  - Architecture:
+      - Container: container.md
+      - Providers: providers.md
+      - Facades: facades.md
+      - Contracts: contracts.md
+  - The Basics:
+      - Routing: routing.md
+      - Middleware: middleware.md
+      - Controllers: controllers.md
+      - Requests: requests.md
+      - Responses: responses.md
+      - Views: views.md
+      - Blade: blade.md
+      - Validation: validation.md
+      - Errors: errors.md
+      - Logging: logging.md
+  - Database:
+      - Database: database.md
+      - Query Builder: queries.md
+      - Migrations: migrations.md
+      - Seeding: seeding.md
+      - Redis: redis.md
+  - Eloquent:
+      - Eloquent: eloquent.md
+      - Relationships: eloquent-relationships.md
+      - Collections: eloquent-collections.md
+      - Mutators: eloquent-mutators.md
+      - Resources: eloquent-resources.md
+      - Serialization: eloquent-serialization.md
+      - Factories: eloquent-factories.md
+  - Security:
+      - Authentication: authentication.md
+      - Authorization: authorization.md
+      - Verification: verification.md
+      - CSRF: csrf.md
+      - Encryption: encryption.md
+      - Hashing: hashing.md
+  - Advanced:
+      - Artisan: artisan.md
+      - Queue: queues.md
+      - Cache: cache.md
+      - Events: events.md
+      - Mail: mail.md
+      - Notifications: notifications.md
+      - Broadcasting: broadcasting.md
+      - Cache: cache.md
+      - Filesystem: filesystem.md
+      - Helpers: helpers.md
+      - HTTP Client: http-client.md
+      - Localization: localization.md
+      - Package Development: packages.md
+      - Scheduling: scheduling.md
+      - Session: session.md
+      - Testing: testing.md
+      - HTTP Tests: http-tests.md
+  - AI:
+      - AI: ai.md
+      - AI SDK: ai-sdk.md
+      - MCP: mcp.md
+      - Boost: boost.md
+  - Official Packages:
+      - Cashier Paddle: cashier-paddle.md
+      - Dusk: dusk.md
+      - Fortify: fortify.md
+      - Horizon: horizon.md
+      - Passport: passport.md
+      - Sanctum: sanctum.md
+      - Scout: scout.md
+      - Telescope: telescope.md
+      - Valet: valet.md
+      - Sail: sail.md
+      - Octane: octane.md
+  - Tools:
+      - Collections: collections.md
+      - Strings: strings.md
+      - Processes: processes.md
+      - HTTP Client: http-client.md
+      - Pagination: pagination.md
+      - Vite: vite.md
