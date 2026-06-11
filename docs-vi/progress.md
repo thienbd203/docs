@@ -152,7 +152,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 1/30 (3.3%)
+### Priority 10: Miscellaneous - 2/30 (6.7%)
 
 ||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||------|------------|------------|----------|-------|
@@ -190,5 +190,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (46 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 5/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 1/30) - octane.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (46 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 5/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 2/30) - reverb.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
