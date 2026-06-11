@@ -71,7 +71,7 @@
 ||||||| filesystem.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| mail.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| notifications.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Generating Notifications, Sending Notifications, Queueing Notifications, Database Notifications, Mail Notifications (đang tiếp tục) | |
-||||||| broadcasting.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Quickstart, Server Side Installation, Concept Overview | |
+||||||| broadcasting.md | 🔄 Đang dịch | thienbd203 | - | Đã dịch phần Introduction, Quickstart, Server Side Installation, Concept Overview, Defining Broadcast Events (đang tiếp tục) | |
 ||||||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - | |
 
 ## 📈 Thống kê
