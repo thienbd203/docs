@@ -3,19 +3,19 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 2 files (2%)
+- **Đã dịch:** 3 files (3%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~98 files (98%)
+- **Cần dịch:** ~97 files (97%)
 
 ## 🎯 Tiến độ theo Priority
 
-### Priority 1: Cốt lõi (Must-have) - 2/10 (20%)
+### Priority 1: Cốt lõi (Must-have) - 3/10 (30%)
 
 | File | Trạng thái | Translator | Reviewer | Notes |
 |------|------------|------------|----------|-------|
 | readme.md | ✅ Hoàn thành | thienbd203 | - | - |
 | installation.md | ✅ Hoàn thành | thienbd203 | - | Một số phần less critical giữ nguyên tiếng Anh |
-| configuration.md | ⏳ Chưa bắt đầu | - | - | - |
+| configuration.md | ✅ Hoàn thành | thienbd203 | - | - |
 | structure.md | ⏳ Chưa bắt đầu | - | - | - |
 | routing.md | ⏳ Chưa bắt đầu | - | - | - |
 | controllers.md | ⏳ Chưa bắt đầu | - | - | - |
@@ -127,5 +127,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (readme.md, installation.md completed)
+**Last Updated:** 2026-06-11 (readme.md, installation.md, configuration.md completed)
 **Next Update:** Khi có file mới hoàn thành
