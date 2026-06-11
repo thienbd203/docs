@@ -15,39 +15,26 @@ Document này quy định các nguyên tắc và hướng dẫn khi dịch tài 
 
 ### 1. Thuật ngữ kỹ thuật
 
-**GIỮ NGUYÊN TIẾNG ANH:**
+**GIỮ NGUYÊN TIẾNG ANH (Technical Terms):**
 - Tên framework, library, package: Laravel, PHP, Composer, npm, etc.
 - Tên commands: `php artisan`, `composer install`, `npm run dev`
 - Tên file và đường dẫn: `composer.json`, `app/Http/Controllers`
 - Tên functions, classes, methods: `Route::get()`, `User::find()`
-- Tên database terms: Table, Column, Index, Migration
+- Tên Laravel-specific terms: Eloquent, Blade, Artisan, Facade, Middleware, Controller, Model, View, Route, etc.
+- Tên database terms: Table, Column, Index, Migration, Seeder, Factory
 - Tên HTTP terms: GET, POST, PUT, DELETE, Request, Response
-- Tên Laravel-specific terms: Eloquent, Blade, Artisan, Facade, Middleware, etc.
+- Tên authentication/security terms: Authentication, Authorization, CSRF, Encryption, Hashing
 - Tên programming concepts: Array, String, Integer, Boolean, Object, Class, etc.
 - Tên tools và services: GitHub, Git, Docker, Redis, MySQL, etc.
 - Tên abbreviations: API, HTTP, HTTPS, JSON, XML, SQL, CLI, etc.
+- **Các term kỹ thuật phổ biến:** Documentation, Configuration, Installation, Deployment, Database, Routing, Middleware, Controller, View, Model, Migration, Seed, Queue, Cache, Event, Listener, Provider, Service Provider
 
-**DỊCH SANG TIẾNG VIỆT:**
-- Documentation → Tài liệu
-- Configuration → Cấu hình
-- Installation → Cài đặt
-- Deployment → Triển khai
-- Authentication → Xác thực
-- Authorization → Phân quyền
-- Database → Cơ sở dữ liệu
-- Routing → Định tuyến
-- Middleware → Phần mềm trung gian (hoặc giữ nguyên "Middleware")
-- Controller → Bộ điều khiển (hoặc giữ nguyên "Controller")
-- View → Giao diện / View
-- Model → Mô hình / Model
-- Migration → Di chuyển / Migration
-- Seed → Dữ liệu mẫu / Seed
-- Queue → Hàng đợi
-- Cache → Bộ nhớ đệm
-- Event → Sự kiện
-- Listener → Bộ lắng nghe
-- Provider → Nhà cung cấp
-- Service Provider → Nhà cung cấp dịch vụ
+**LÝ DO GIỮ NGUYÊN:**
+- Quen thuộc với developers Việt Nam
+- Tự nhiên hơn khi đọc technical docs
+- Dễ search khi làm việc với code
+- Consistent với global Laravel community
+- Tránh việc dịch không chuẩn gây hiểu nhầm
 
 ### 2. Phong cách dịch thuật
 
@@ -159,53 +146,63 @@ Document này quy định các nguyên tắc và hướng dẫn khi dịch tài 
 
 ## 📚 Term List (Glossary)
 
-### Laravel Core Terms:
-| Tiếng Anh | Tiếng Việt | Ghi chú |
-|-----------|------------|---------|
-| Laravel | Laravel | Giữ nguyên |
-| Artisan | Artisan | Giữ nguyên |
-| Eloquent | Eloquent | Giữ nguyên |
-| Blade | Blade | Giữ nguyên |
-| Facade | Facade | Giữ nguyên |
-| Middleware | Middleware | Có thể dịch "Phần mềm trung gian" |
-| Service Container | Service Container | Giữ nguyên hoặc "Container dịch vụ" |
-| Service Provider | Service Provider | "Nhà cung cấp dịch vụ" |
-| Route | Route | Giữ nguyên hoặc "Định tuyến" |
-| Controller | Controller | Giữ nguyên hoặc "Bộ điều khiển" |
-| Model | Model | Giữ nguyên hoặc "Mô hình" |
-| View | View | Giữ nguyên hoặc "Giao diện" |
-| Migration | Migration | Giữ nguyên hoặc "Di chuyển" |
-| Seeder | Seeder | Giữ nguyên hoặc "Dữ liệu mẫu" |
-| Factory | Factory | Giữ nguyên hoặc "Factory" |
-| Request | Request | Giữ nguyên hoặc "Yêu cầu" |
-| Response | Response | Giữ nguyên hoặc "Phản hồi" |
+### Laravel Core Terms (LUÔN LUÔN GIỮ NGUYÊN):
+| Term | Category |
+|------|----------|
+| Laravel | Framework |
+| Artisan | CLI Tool |
+| Eloquent | ORM |
+| Blade | Template Engine |
+| Facade | Design Pattern |
+| Middleware | HTTP Middleware |
+| Service Container | Dependency Injection |
+| Service Provider | Bootstrap Component |
+| Route | Routing |
+| Controller | MVC Pattern |
+| Model | MVC Pattern |
+| View | MVC Pattern |
+| Migration | Database |
+| Seeder | Database |
+| Factory | Testing/Database |
+| Request | HTTP |
+| Response | HTTP |
 
-### General Technical Terms:
-| Tiếng Anh | Tiếng Việt |
-|-----------|------------|
-| Framework | Framework |
-| Package | Package / Gói |
-| Library | Library / Thư viện |
-| Dependency | Dependency / Phụ thuộc |
-| Configuration | Cấu hình |
-| Environment | Environment / Môi trường |
-| Database | Database / Cơ sở dữ liệu |
-| Authentication | Xác thực |
-| Authorization | Phân quyền |
-| Session | Session / Phiên làm việc |
-| Cookie | Cookie |
-| Cache | Cache / Bộ nhớ đệm |
-| Queue | Queue / Hàng đợi |
-| Event | Event / Sự kiện |
-| Listener | Listener / Bộ lắng nghe |
-| Broadcast | Broadcast / Phát sóng |
-| API | API |
-| HTTP | HTTP |
-| HTTPS | HTTPS |
-| JSON | JSON |
-| XML | XML |
-| CLI | CLI |
-| SSH | SSH |
+### General Technical Terms (LUÔN LUÔN GIỮ NGUYÊN):
+| Term | Category |
+|------|----------|
+| Framework | Development |
+| Package | Dependency |
+| Library | Dependency |
+| Dependency | Development |
+| Configuration | Development |
+| Environment | Development |
+| Database | Data Storage |
+| Authentication | Security |
+| Authorization | Security |
+| Session | State Management |
+| Cookie | HTTP |
+| Cache | Performance |
+| Queue | Background Jobs |
+| Event | Architecture |
+| Listener | Event Handling |
+| Broadcast | Real-time |
+| API | Architecture |
+| HTTP | Protocol |
+| HTTPS | Protocol |
+| JSON | Data Format |
+| XML | Data Format |
+| CLI | Interface |
+| SSH | Protocol |
+
+### Terms Có Thể Dịch (Context-dependent):
+| Term | Tiếng Việt | Context |
+|------|-----------|---------|
+| Documentation | Tài liệu | Khi nói về quá trình tạo docs |
+| Deployment | Triển khai | Khi nói về process |
+| Installation | Cài đặt | Khi nói về process |
+| Upgrade | Nâng cấp | Khi nói về process |
+
+**NOTE:** Hầu hết các technical terms nên giữ nguyên tiếng Anh. Chỉ dịch khi nói về process/action, không phải về concept/kỹ thuật.
 
 ## 🤝 Contributing
 
@@ -224,6 +221,7 @@ Nếu có thắc mắc về quy tắc dịch thuật, hãy:
 
 ---
 
-**Version:** 1.0
+**Version:** 1.1
 **Last Updated:** 2026-06-11
 **Maintainer:** thienbd203
+**Changes:** Updated to keep most technical terms in English for better readability and consistency with developer community

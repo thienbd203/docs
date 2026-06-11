@@ -78,24 +78,34 @@ Ghi chú bất kỳ vấn đề hoặc câu hỏi trong quá trình dịch:
 ## 🚀 Quick Reference
 
 ### Các term LUÔN LUÔN giữ nguyên tiếng Anh:
+**Laravel Core:**
 - Laravel, PHP, Composer, npm, yarn
 - Artisan, Eloquent, Blade, Facade
 - Route, Controller, Model, View
 - Migration, Seeder, Factory
 - Request, Response, Middleware
-- HTTP, HTTPS, API, JSON, XML, SQL
-- Git, GitHub, Docker, Redis, MySQL
+- Service Container, Service Provider
 
-### Các term THƯỜNG dịch sang tiếng Việt:
-- Documentation → Tài liệu
-- Configuration → Cấu hình
-- Installation → Cài đặt
-- Database → Cơ sở dữ liệu
-- Authentication → Xác thực
-- Authorization → Phân quyền
-- Queue → Hàng đợi
-- Cache → Bộ nhớ đệm
-- Event → Sự kiện
+**Technical Terms:**
+- HTTP, HTTPS, API, JSON, XML, SQL, CLI, SSH
+- Database, Authentication, Authorization, Cache, Queue
+- Event, Listener, Broadcast, Session, Cookie
+- Git, GitHub, Docker, Redis, MySQL
+- Configuration, Installation, Deployment, Documentation
+
+**Programming Concepts:**
+- Framework, Package, Library, Dependency
+- Class, Object, Array, String, Integer, Boolean
+- Function, Method, Property, Variable
+- Interface, Abstract, Namespace
+
+### Terms có thể dịch (chỉ khi nói về process):
+- Documentation → Tài liệu (chỉ khi nói về việc tạo docs)
+- Installation → Cài đặt (chỉ khi nói về process)
+- Deployment → Triển khai (chỉ khi nói về process)
+- Upgrade → Nâng cấp (chỉ khi nói về process)
+
+**QUAN TRỌNG:** Hầu hết technical terms nên GIỮ NGUYÊN tiếng Anh!
 
 ### Format rules:
 - GIỮ NGUYÊN tất cả code blocks (```php, ```bash)
@@ -135,5 +145,6 @@ Bản dịch được coi là hoàn thành khi:
 
 ---
 
-**Template Version:** 1.0
+**Template Version:** 1.1
 **Last Updated:** 2026-06-11
+**Changes:** Updated term list to keep most technical terms in English
