@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 30 files (30%)
+- **Đã dịch:** 31 files (31%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~67 files (67%)
+- **Cần dịch:** ~66 files (66%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -74,6 +74,15 @@
 | broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 | scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
+### Priority 7: AI Features - 1/4 (25%)
+
+| File | Trạng thái | Translator | Reviewer | Notes |
+|------|------------|------------|----------|-------|
+| ai.md | ✅ Hoàn thành | thienbd203 | - | - |
+| ai-sdk.md | ⏳ Chưa bắt đầu | - | - | - |
+| mcp.md | ⏳ Chưa bắt đầu | - | - | - |
+| boost.md | ⏳ Chưa bắt đầu | - | - | - |
+
 ## 📈 Thống kê
 
 ### Files hoàn thành theo tuần:
@@ -111,5 +120,5 @@
 
 ---
 
-**Last Updated:** 2026-06-11 (30 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9) - notifications.md và broadcasting.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-11 (31 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 7: 1/4) - ai.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
