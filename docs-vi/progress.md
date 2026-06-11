@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 34 files (34%)
+- **Đã dịch:** 39 files (39%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~63 files (63%)
+- **Cần dịch:** ~58 files (58%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -83,6 +83,19 @@
 || mcp.md | ✅ Hoàn thành | thienbd203 | - | File dài (1976 dòng) - đã dịch hoàn thành |
 || boost.md | ✅ Hoàn thành | thienbd203 | - | - |
 
+### Priority 8: Tools & Utilities - 5/8 (62.5%)
+
+|| File | Trạng thái | Translator | Reviewer | Notes |
+||------|------------|------------|----------|-------|
+|| contracts.md | ✅ Hoàn thành | thienbd203 | - | - |
+|| providers.md | ✅ Hoàn thành | thienbd203 | - | - |
+|| facades.md | ✅ Hoàn thành | thienbd203 | - | - |
+|| pagination.md | ✅ Hoàn thành | thienbd203 | - | - |
+|| container.md | ✅ Hoàn thành | thienbd203 | - | - |
+|| helpers.md | ⏳ Chưa bắt đầu | - | - | File dài (3815 dòng) |
+|| strings.md | ⏳ Chưa bắt đầu | - | - | File dài (4042 dòng) |
+|| http-client.md | ⏳ Chưa bắt đầu | - | - | - |
+
 ## 📈 Thống kê
 
 ### Files hoàn thành theo tuần:
@@ -94,6 +107,7 @@
 - Tuần 6: 3 files (cache.md, filesystem.md, mail.md)
 - Tuần 7: 3 files (notifications.md, broadcasting.md, scheduling.md)
 - Tuần 8: 1 file (mcp.md)
+- Tuần 9: 5 files (contracts.md, providers.md, facades.md, pagination.md, container.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -121,5 +135,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (34 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 7: 4/4 ✅) - mcp.md đã được dịch hoàn thành, Priority 7 hoàn thành 100%
+**Last Updated:** 2026-06-12 (39 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 7: 4/4 ✅, Priority 8: 5/8) - contracts.md, providers.md, facades.md, pagination.md, container.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
