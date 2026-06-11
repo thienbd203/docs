@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 40 files (40%)
+- **Đã dịch:** 42 files (42%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~57 files (57%)
+- **Cần dịch:** ~55 files (55%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -74,7 +74,7 @@
 ||| broadcasting.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||| scheduling.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 6: Official Packages - 1/11 (9.1%)
+### Priority 6: Official Packages - 2/11 (18.2%)
 
 |||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||------|------------|------------|----------|-------|
@@ -87,7 +87,7 @@
 |||| scout.md | ⏳ Chưa bắt đầu | - | - | - |
 |||| telescope.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| valet.md | ⏳ Chưa bắt đầu | - | - | - |
-|||| sail.md | ⏳ Chưa bắt đầu | - | - | - |
+|||| sail.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||| octane.md | ⏳ Chưa bắt đầu | - | - | - |
 
 ### Priority 7: AI Features - 4/4 (100%) ✅
@@ -151,5 +151,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (41 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 1/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - telescope.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (42 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 2/11, Priority 7: 4/4 ✅, Priority 8: 6/8) - sail.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
