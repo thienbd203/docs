@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 80 files (80%)
+- **Đã dịch:** 81 files (81%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -82,7 +82,7 @@
 ||||||| dusk.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| fortify.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| horizon.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| passport.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| passport.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| sanctum.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| scout.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| telescope.md | ✅ Hoàn thành | thienbd203 | - | - |
@@ -145,6 +145,7 @@
 - Tuần 28: 1 file (horizon.md)
 - Tuần 29: 1 file (homestead.md)
 - Tuần 30: 1 file (eloquent-relationships.md - dịch lại hoàn chỉnh)
+- Tuần 31: 1 file (passport.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -172,7 +173,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 26/30 (86.7%)
+### Priority 10: Miscellaneous - 27/30 (90%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -210,5 +211,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (80 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - eloquent-relationships.md đã được dịch lại hoàn chỉnh
+**Last Updated:** 2026-06-12 (81 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - passport.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
