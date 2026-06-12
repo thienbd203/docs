@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 87 files (87%)
+- **Đã dịch:** 88 files (88%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -60,13 +60,13 @@
 |||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| mocking.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 5: Advanced Features - 9/9 (100%)
+### Priority 5: Advanced Features - 9/9 (100%) ✅ HOÀN THÀNH!
 
 |||||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||||------|------------|------------|----------|-------|
 |||||| middleware.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| events.md | ✅ Hoàn thành | thienbd203 | - | - |
-|||||| queues.md | ⏸ Để dịch sau | - | - | File quá dài (3487 dòng) - sẽ dịch sau |
+|||||| queues.md | ✅ Hoàn thành | thienbd203 | - | File quá dài (3487 dòng) - sẽ dịch sau |
 |||||| cache.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| filesystem.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| mail.md | ✅ Hoàn thành | thienbd203 | - | - |
@@ -152,6 +152,7 @@
 - Tuần 35: 1 file (cashier-paddle.md)
 - Tuần 36: 1 file (dusk.md)
 - Tuần 37: 1 file (strings.md)
+- Tuần 38: 1 file (queues.md - Priority 5 HOÀN THÀNH!)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -217,5 +218,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (87 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - strings.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (88 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - queues.md đã được dịch hoàn thành - Priority 5 HOÀN THÀNH!
 **Next Update:** Khi có file mới hoàn thành
