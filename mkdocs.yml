@@ -6,7 +6,7 @@ site_url: https://thienbd203.github.io/docs/
 repo_name: thienbd203/docs
 repo_url: https://github.com/thienbd203/docs
 
-docs_dir: docs-src
+docs_dir: docs-vi
 site_dir: site
 
 theme:
