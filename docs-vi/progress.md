@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 60 files (60%)
+- **Đã dịch:** 61 files (61%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -130,6 +130,7 @@
 - Tuần 13: 1 file (eloquent-resources.md)
 - Tuần 14: 1 file (frontend.md)
 - Tuần 15: 1 file (urls.md)
+- Tuần 16: 1 file (releases.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -157,7 +158,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 12/30 (40%)
+### Priority 10: Miscellaneous - 13/30 (43.3%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -188,12 +189,12 @@
 ||||||| frontend.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| starter-kits.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| upgrade.md | ⏳ Chưa bắt đầu | - | - | - |
-||||||| releases.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| releases.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| urls.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| documentation.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| contributions.md | ⏳ Chưa bắt đầu | - | - | - |
 
 ---
 
-**Last Updated:** 2026-06-12 (60 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - urls.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (61 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - releases.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
