@@ -3,9 +3,9 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 56 files (56%)
+- **Đã dịch:** 57 files (57%)
 - **Đang dịch:** 0 files
-- **Cần dịch:** ~41 files (41%)
+- **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
@@ -154,7 +154,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 8/30 (26.7%)
+### Priority 10: Miscellaneous - 9/30 (30%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -173,7 +173,7 @@
 ||||||| search.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| eloquent-resources.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| eloquent-serialization.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| eloquent-factories.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| eloquent-factories.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
 ||||||| console-tests.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
 ||||||| http-tests.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
@@ -192,5 +192,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (56 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - search.md, errors.md, logging.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (57 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - eloquent-factories.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
