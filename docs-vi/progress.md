@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 78 files (78%)
+- **Đã dịch:** 79 files (79%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -143,6 +143,7 @@
 - Tuần 26: 1 file (pulse.md)
 - Tuần 27: 1 file (valet.md)
 - Tuần 28: 1 file (horizon.md)
+- Tuần 29: 1 file (homestead.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -170,7 +171,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 24/30 (80%)
+### Priority 10: Miscellaneous - 25/30 (83.3%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -208,5 +209,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (78 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - horizon.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (79 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - homestead.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
