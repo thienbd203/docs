@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 81 files (81%)
+- **Đã dịch:** 82 files (82%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -146,6 +146,7 @@
 - Tuần 29: 1 file (homestead.md)
 - Tuần 30: 1 file (eloquent-relationships.md - dịch lại hoàn chỉnh)
 - Tuần 31: 1 file (passport.md)
+- Tuần 32: 1 file (pennant.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -173,12 +174,12 @@
 
 ---
 
-### Priority 10: Miscellaneous - 27/30 (90%)
+### Priority 10: Miscellaneous - 28/30 (93.3%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
 ||||||| pint.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| pennant.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| pennant.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| precognition.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| pulse.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| reverb.md | ✅ Hoàn thành | thienbd203 | - | - |
@@ -211,5 +212,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (81 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - passport.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (82 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - pennant.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
