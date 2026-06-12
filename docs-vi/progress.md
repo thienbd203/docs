@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 77 files (77%)
+- **Đã dịch:** 78 files (78%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -142,6 +142,7 @@
 - Tuần 25: 6 files (eloquent-relationships.md, helpers.md, queues.md, requests.md, responses.md, views.md)
 - Tuần 26: 1 file (pulse.md)
 - Tuần 27: 1 file (valet.md)
+- Tuần 28: 1 file (horizon.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -169,7 +170,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 23/30 (76.7%)
+### Priority 10: Miscellaneous - 24/30 (80%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -207,5 +208,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (77 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - valet.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (78 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - horizon.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
