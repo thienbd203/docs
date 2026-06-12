@@ -3,14 +3,14 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 88 files (88%)
+- **Đã dịch:** 89 files (89%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
 
 ## 🎯 Tiến độ theo Priority
 
-### Priority 1: Cốt lõi (Must-have) - 10/10 (100%)
+### Priority 1: Cốt lõi (Must-have) - 11/11 (100%) ✅ HOÀN THÀNH!
 
 |||||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||||------|------------|------------|----------|-------|
@@ -23,7 +23,7 @@
 |||||| requests.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| responses.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| views.md | ✅ Hoàn thành | thienbd203 | - | - |
-|||||| blade.md | ⏸ Để dịch sau | - | - | File quá dài (2090 dòng) - sẽ dịch sau |
+|||||| blade.md | ✅ Hoàn thành | thienbd203 | - | File quá dài (2090 dòng) - sẽ dịch sau |
 
 ### Priority 2: Database & ORM - 8/8 (100%)
 
@@ -153,6 +153,7 @@
 - Tuần 36: 1 file (dusk.md)
 - Tuần 37: 1 file (strings.md)
 - Tuần 38: 1 file (queues.md - Priority 5 HOÀN THÀNH!)
+- Tuần 39: 1 file (blade.md - Priority 1 HOÀN THÀNH!)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -218,5 +219,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (88 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - queues.md đã được dịch hoàn thành - Priority 5 HOÀN THÀNH!
+**Last Updated:** 2026-06-12 (89 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - blade.md đã được dịch hoàn thành - Priority 1 HOÀN THÀNH!
 **Next Update:** Khi có file mới hoàn thành
