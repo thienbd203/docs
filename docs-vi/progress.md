@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 86 files (86%)
+- **Đã dịch:** 87 files (87%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -99,7 +99,7 @@
 |||||| mcp.md | ✅ Hoàn thành | thienbd203 | - | File dài (1976 dòng) - đã dịch hoàn thành |
 |||||| boost.md | ✅ Hoàn thành | thienbd203 | - | - |
 
-### Priority 8: Tools & Utilities - 6/8 (75%)
+### Priority 8: Tools Priority 8: Tools & Utilities - 6/8 (75%) Utilities - 7/8 (87.5%)
 
 |||||| File | Trạng thái | Translator | Reviewer | Notes |
 ||||||------|------------|------------|----------|-------|
@@ -110,7 +110,7 @@
 |||||| container.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| http-client.md | ✅ Hoàn thành | thienbd203 | - | - |
 |||||| helpers.md | ✅ Hoàn thành | - | - | File dài (3815 dòng) |
-|||||| strings.md | ⏳ Chưa bắt đầu | - | - | File dài (4042 dòng) |
+|||||| strings.md | ✅ Hoàn thành | thienbd203 | - | File dài (4042 dòng) |
 
 ## 📈 Thống kê
 
@@ -151,6 +151,7 @@
 - Tuần 34: 1 file (folio.md - Priority 10 HOÀN THÀNH!)
 - Tuần 35: 1 file (cashier-paddle.md)
 - Tuần 36: 1 file (dusk.md)
+- Tuần 37: 1 file (strings.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -216,5 +217,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (86 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - dusk.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (87 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - strings.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
