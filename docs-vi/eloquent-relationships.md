@@ -1,15 +1,15 @@
 # Eloquent: Relationships
 
-- [Introduction](#introduction)
-- [Defining Relationships](#defining-relationships)
-    - [One to One / Has One](#one-to-one)
-    - [One to Many / Has Many](#one-to-many)
-    - [One to Many (Inverse) / Belongs To](#one-to-many-inverse)
+- [Giới thiệu](#introduction)
+- [Định nghĩa Mối quan hệ](#defining-relationships)
+    - [Một đến Một / Has One](#one-to-one)
+    - [Một đến Nhiều / Has Many](#one-to-many)
+    - [Một đến Nhiều (Nghịch đảo) / Belongs To](#one-to-many-inverse)
     - [Has One of Many](#has-one-of-many)
     - [Has One Through](#has-one-through)
     - [Has Many Through](#has-many-through)
 - [Scoped Relationships](#scoped-relationships)
-- [Many to Many Relationships](#many-to-many)
+- [Mối quan hệ Nhiều đến Nhiều](#many-to-many)
     - [Retrieving Intermediate Table Columns](#retrieving-intermediate-table-columns)
     - [Filtering Queries via Intermediate Table Columns](#filtering-queries-via-intermediate-table-columns)
     - [Ordering Queries via Intermediate Table Columns](#ordering-queries-via-intermediate-table-columns)
@@ -43,9 +43,9 @@
 - [Touching Parent Timestamps](#touching-parent-timestamps)
 
 <a name="introduction"></a>
-## Introduction
+## Giới thiệu
 
-Database tables thường related với nhau. Ví dụ, một blog post có thể có nhiều comments hoặc một order có thể related đến user đã placed nó. Eloquent makes managing và working với những relationships này easy, và supports một variety của common relationships:
+Các bảng database thường liên quan đến nhau. Ví dụ, một bài đăng blog có thể có nhiều bình luận hoặc một đơn hàng có thể liên quan đến người dùng đã đặt nó. Eloquent giúp việc quản lý và làm việc với các mối quan hệ này trở nên dễ dàng, và hỗ trợ nhiều loại mối quan hệ phổ biến:
 
 <div class="content-list" markdown="1">
 
@@ -61,20 +61,20 @@ Database tables thường related với nhau. Ví dụ, một blog post có th�
 </div>
 
 <a name="defining-relationships"></a>
-## Defining Relationships
+## Định nghĩa Mối quan hệ
 
-Eloquent relationships được defined như methods trên Eloquent model classes của bạn. Vì relationships cũng serve như powerful [query builders](/docs/{{version}}/queries), defining relationships như methods provides powerful method chaining và querying capabilities. Ví dụ, chúng ta có thể chain additional query constraints trên `posts` relationship này:
+Các mối quan hệ Eloquent được định nghĩa là các phương thức trên các lớp model Eloquent của bạn. Vì các mối quan hệ cũng đóng vai trò là các [query builder](/docs/{{version}}/queries) mạnh mẽ, việc định nghĩa các mối quan hệ dưới dạng phương thức cung cấp khả năng chuỗi phương thức và truy vấn mạnh mẽ. Ví dụ, chúng ta có thể chuỗi các điều kiện truy vấn bổ sung vào mối quan hệ `posts` này:
 
 ```php
 $user->posts()->where('active', 1)->get();
 ```
 
-Tuy nhiên, trước khi diving quá deep vào sử dụng relationships, hãy học cách define mỗi type của relationship supported bởi Eloquent.
+Tuy nhiên, trước khi đi sâu vào việc sử dụng các mối quan hệ, hãy tìm hiểu cách định nghĩa từng loại mối quan hệ được Eloquent hỗ trợ.
 
 <a name="one-to-one"></a>
-### One to One / Has One
+### Một đến Một / Has One
 
-Một one-to-one relationship là một very basic type của database relationship. Ví dụ, một `User` model có thể được associated với một `Phone` model. Để define relationship này, chúng ta sẽ place một `phone` method trên `User` model. `phone` method nên call `hasOne` method và return result của nó. `hasOne` method available đến model của bạn qua model's `Illuminate\Database\Eloquent\Model` base class:
+Mối quan hệ một-một là một loại mối quan hệ database rất cơ bản. Ví dụ, một model `User` có thể liên kết với một model `Phone`. Để định nghĩa mối quan hệ này, chúng ta sẽ đặt một phương thức `phone` trên model `User`. Phương thức `phone` nên gọi phương thức `hasOne` và trả về kết quả của nó. Phương thức `hasOne` có sẵn cho model của bạn thông qua lớp cơ sở `Illuminate\Database\Eloquent\Model` của model:
 
 ```php
 <?php
@@ -96,28 +96,28 @@ class User extends Model
 }
 ```
 
-First argument passed đến `hasOne` method là name của related model class. Khi relationship được defined, chúng ta có thể retrieve related record sử dụng Eloquent's dynamic properties. Dynamic properties allow bạn để access relationship methods như thể chúng là properties defined trên model:
+Đối số đầu tiên được truyền cho phương thức `hasOne` là tên của lớp model liên quan. Sau khi mối quan hệ được định nghĩa, chúng ta có thể truy xuất bản ghi liên quan bằng cách sử dụng các thuộc tính động của Eloquent. Các thuộc tính động cho phép bạn truy cập các phương thức mối quan hệ như thể chúng là các thuộc tính được định nghĩa trên model:
 
 ```php
 $phone = User::find(1)->phone;
 ```
 
-Eloquent determines foreign key của relationship dựa trên parent model name. Trong case này, `Phone` model được automatically assumed để có một `user_id` foreign key. Nếu bạn muốn override convention này, bạn có thể pass một second argument đến `hasOne` method:
+Eloquent xác định khóa ngoại của mối quan hệ dựa trên tên của model cha. Trong trường hợp này, model `Phone` được giả định tự động có một khóa ngoại `user_id`. Nếu bạn muốn ghi đè quy ước này, bạn có thể truyền đối số thứ hai cho phương thức `hasOne`:
 
 ```php
 return $this->hasOne(Phone::class, 'foreign_key');
 ```
 
-Ngoài ra, Eloquent assumes rằng foreign key nên có một value matching primary key column của parent. Nói cách khác, Eloquent sẽ look cho value của user's `id` column trong `user_id` column của `Phone` record. Nếu bạn muốn relationship để sử dụng một primary key value khác `id` hoặc model's primary key của bạn, bạn có thể pass một third argument đến `hasOne` method:
+Ngoài ra, Eloquent giả định rằng khóa ngoại nên có một giá trị khớp với cột khóa chính của model cha. Nói cách khác, Eloquent sẽ tìm giá trị của cột `id` của người dùng trong cột `user_id` của bản ghi `Phone`. Nếu bạn muốn mối quan hệ sử dụng một giá trị khóa chính khác `id` hoặc khóa chính của model của bạn, bạn có thể truyền đối số thứ ba cho phương thức `hasOne`:
 
 ```php
 return $this->hasOne(Phone::class, 'foreign_key', 'local_key');
 ```
 
 <a name="one-to-one-defining-the-inverse-of-the-relationship"></a>
-#### Defining the Inverse of the Relationship
+#### Định nghĩa Nghịch đảo của Mối quan hệ
 
-Vì vậy, chúng ta có thể access `Phone` model từ `User` model của chúng ta. Tiếp theo, hãy define một relationship trên `Phone` model sẽ let chúng ta access user owns phone. Chúng ta có thể define inverse của một `hasOne` relationship sử dụng `belongsTo` method:
+Vì vậy, chúng ta có thể truy cập model `Phone` từ model `User` của mình. Tiếp theo, hãy định nghĩa một mối quan hệ trên model `Phone` cho phép chúng ta truy cập người dùng sở hữu điện thoại. Chúng ta có thể định nghĩa nghịch đảo của mối quan hệ `hasOne` bằng cách sử dụng phương thức `belongsTo`:
 
 ```php
 <?php
@@ -139,9 +139,9 @@ class Phone extends Model
 }
 ```
 
-Khi invoking `user` method, Eloquent sẽ attempt để find một `User` model có một `id` matches `user_id` column trên `Phone` model.
+Khi gọi phương thức `user`, Eloquent sẽ cố gắng tìm một model `User` có một `id` khớp với cột `user_id` trên model `Phone`.
 
-Eloquent determines foreign key name bằng cách examining name của relationship method và suffixing method name với `_id`. Vì vậy, trong case này, Eloquent assumes rằng `Phone` model có một `user_id` column. Tuy nhiên, nếu foreign key trên `Phone` model không phải `user_id`, bạn có thể pass một custom key name như second argument đến `belongsTo` method:
+Eloquent xác định tên khóa ngoại bằng cách kiểm tra tên của phương thức mối quan hệ và thêm hậu tố `_id` vào tên phương thức. Vì vậy, trong trường hợp này, Eloquent giả định rằng model `Phone` có một cột `user_id`. Tuy nhiên, nếu khóa ngoại trên model `Phone` không phải là `user_id`, bạn có thể truyền tên khóa tùy chỉnh làm đối số thứ hai cho phương thức `belongsTo`:
 
 ```php
 /**
@@ -153,7 +153,7 @@ public function user(): BelongsTo
 }
 ```
 
-Nếu parent model không sử dụng `id` như primary key của nó, hoặc bạn muốn find associated model sử dụng một different column, bạn có thể pass một third argument đến `belongsTo` method specifying parent table's custom key:
+Nếu model cha không sử dụng `id` làm khóa chính của nó, hoặc bạn muốn tìm model liên quan bằng cách sử dụng một cột khác, bạn có thể truyền đối số thứ ba cho phương thức `belongsTo` chỉ định khóa tùy chỉnh của bảng cha:
 
 ```php
 /**
@@ -166,9 +166,9 @@ public function user(): BelongsTo
 ```
 
 <a name="one-to-many"></a>
-### One to Many / Has Many
+### Một đến Nhiều / Has Many
 
-Một one-to-many relationship được sử dụng để define relationships nơi một single model là parent đến một hoặc nhiều child models. Ví dụ, một blog post có thể có một infinite number của comments. Như tất cả other Eloquent relationships, one-to-many relationships được defined bằng cách defining một method trên Eloquent model của bạn:
+Mối quan hệ một-nhiều được sử dụng để định nghĩa các mối quan hệ trong đó một model là cha của một hoặc nhiều model con. Ví dụ, một bài đăng blog có thể có vô số bình luận. Giống như tất cả các mối quan hệ Eloquent khác, các mối quan hệ một-nhiều được định nghĩa bằng cách định nghĩa một phương thức trên model Eloquent của bạn:
 
 ```php
 <?php
@@ -190,9 +190,9 @@ class Post extends Model
 }
 ```
 
-Remember, Eloquent sẽ automatically determine proper foreign key column cho `Comment` model. Theo convention, Eloquent sẽ take "snake case" name của parent model và suffix nó với `_id`. Vì vậy, trong example này, Eloquent sẽ assume foreign key column trên `Comment` model là `post_id`.
+Hãy nhớ rằng, Eloquent sẽ tự động xác định cột khóa ngoại thích hợp cho model `Comment`. Theo quy ước, Eloquent sẽ lấy tên "snake case" của model cha và thêm hậu tố `_id`. Vì vậy, trong ví dụ này, Eloquent sẽ giả định cột khóa ngoại trên model `Comment` là `post_id`.
 
-Khi relationship method đã được defined, chúng ta có thể access [collection](/docs/{{version}}/eloquent-collections) của related comments bằng cách accessing `comments` property. Remember, vì Eloquent provides "dynamic relationship properties", chúng ta có thể access relationship methods như thể chúng được defined như properties trên model:
+Sau khi phương thức mối quan hệ đã được định nghĩa, chúng ta có thể truy cập [collection](/docs/{{version}}/eloquent-collections) của các bình luận liên quan bằng cách truy cập thuộc tính `comments`. Hãy nhớ rằng, vì Eloquent cung cấp "các thuộc tính mối quan hệ động", chúng ta có thể truy cập các phương thức mối quan hệ như thể chúng được định nghĩa là các thuộc tính trên model:
 
 ```php
 use App\Models\Post;
@@ -204,7 +204,7 @@ foreach ($comments as $comment) {
 }
 ```
 
-Since all relationships also serve as query builders, you may add further constraints to the relationship query by calling the `comments` method and continuing to chain conditions onto the query:
+Vì tất cả các mối quan hệ cũng đóng vai trò là query builder, bạn có thể thêm các ràng buộc thêm vào truy vấn mối quan hệ bằng cách gọi phương thức `comments` và tiếp tục chuỗi các điều kiện vào truy vấn:
 
 ```php
 $comment = Post::find(1)->comments()
@@ -212,7 +212,7 @@ $comment = Post::find(1)->comments()
     ->first();
 ```
 
-Like the `hasOne` method, you may also override the foreign and local keys by passing additional arguments to the `hasMany` method:
+Giống như phương thức `hasOne`, bạn cũng có thể ghi đè các khóa ngoại và cục bộ bằng cách truyền các đối số bổ sung cho phương thức `hasMany`:
 
 ```php
 return $this->hasMany(Comment::class, 'foreign_key');
@@ -221,9 +221,9 @@ return $this->hasMany(Comment::class, 'foreign_key', 'local_key');
 ```
 
 <a name="automatically-hydrating-parent-models-on-children"></a>
-#### Automatically Hydrating Parent Models on Children
+#### Tự động Hydrate Model Cha trên Model Con
 
-Even when utilizing Eloquent eager loading, "N + 1" query problems can arise if you try to access the parent model from a child model while looping through the child models:
+Ngay cả khi sử dụng eager loading của Eloquent, các vấn đề truy vấn "N + 1" có thể phát sinh nếu bạn cố gắng truy cập model cha từ một model con trong khi lặp qua các model con:
 
 ```php
 $posts = Post::with('comments')->get();
@@ -235,9 +235,9 @@ foreach ($posts as $post) {
 }
 ```
 
-In the example above, an "N + 1" query problem has been introduced because, even though comments were eager loaded for every `Post` model, Eloquent does not automatically hydrate the parent `Post` on each child `Comment` model.
+Trong ví dụ trên, một vấn đề truy vấn "N + 1" đã được đưa ra vì, mặc dù các bình luận đã được eager load cho mọi model `Post`, Eloquent không tự động hydrate model `Post` cha trên mỗi model `Comment` con.
 
-If you would like Eloquent to automatically hydrate parent models onto their children, you may invoke the `chaperone` method when defining a `hasMany` relationship:
+Nếu bạn muốn Eloquent tự động hydrate các model cha vào các model con của chúng, bạn có thể gọi phương thức `chaperone` khi định nghĩa một mối quan hệ `hasMany`:
 
 ```php
 <?php
@@ -259,7 +259,7 @@ class Post extends Model
 }
 ```
 
-Or, if you would like to opt-in to automatic parent hydration at run time, you may invoke the `chaperone` model when eager loading the relationship:
+Hoặc, nếu bạn muốn opt-in vào việc hydrate cha tự động tại thời điểm chạy, bạn có thể gọi model `chaperone` khi eager load mối quan hệ:
 
 ```php
 use App\Models\Post;
@@ -270,9 +270,9 @@ $posts = Post::with([
 ```
 
 <a name="one-to-many-inverse"></a>
-### One to Many (Inverse) / Belongs To
+### Một đến Nhiều (Nghịch đảo) / Belongs To
 
-Now that we can access all of a post's comments, let's define a relationship to allow a comment to access its parent post. To define the inverse of a `hasMany` relationship, define a relationship method on the child model which calls the `belongsTo` method:
+Bây giờ chúng ta có thể truy cập tất cả các bình luận của một bài đăng, hãy định nghĩa một mối quan hệ để cho phép một bình luận truy cập bài đăng cha của nó. Để định nghĩa nghịch đảo của mối quan hệ `hasMany`, hãy định nghĩa một phương thức mối quan hệ trên model con gọi phương thức `belongsTo`:
 
 ```php
 <?php
@@ -294,7 +294,7 @@ class Comment extends Model
 }
 ```
 
-Once the relationship has been defined, we can retrieve a comment's parent post by accessing the `post` "dynamic relationship property":
+Sau khi mối quan hệ đã được định nghĩa, chúng ta có thể truy xuất bài đăng cha của một bình luận bằng cách truy cập thuộc tính "mối quan hệ động" `post`:
 
 ```php
 use App\Models\Comment;
@@ -304,11 +304,11 @@ $comment = Comment::find(1);
 return $comment->post->title;
 ```
 
-In the example above, Eloquent will attempt to find a `Post` model that has an `id` which matches the `post_id` column on the `Comment` model.
+Trong ví dụ trên, Eloquent sẽ cố gắng tìm một model `Post` có một `id` khớp với cột `post_id` trên model `Comment`.
 
-Eloquent determines the default foreign key name by examining the name of the relationship method and suffixing the method name with a `_` followed by the name of the parent model's primary key column. So, in this example, Eloquent will assume the `Post` model's foreign key on the `comments` table is `post_id`.
+Eloquent xác định tên khóa ngoại mặc định bằng cách kiểm tra tên của phương thức mối quan hệ và thêm hậu tố một `_` theo sau là tên của cột khóa chính của model cha. Vì vậy, trong ví dụ này, Eloquent sẽ giả định rằng khóa ngoại của model `Post` trên bảng `comments` là `post_id`.
 
-However, if the foreign key for your relationship does not follow these conventions, you may pass a custom foreign key name as the second argument to the `belongsTo` method:
+Tuy nhiên, nếu khóa ngoại cho mối quan hệ của bạn không tuân theo các quy ước này, bạn có thể truyền tên khóa ngoại tùy chỉnh làm đối số thứ hai cho phương thức `belongsTo`:
 
 ```php
 /**
@@ -320,7 +320,7 @@ public function post(): BelongsTo
 }
 ```
 
-If your parent model does not use `id` as its primary key, or you wish to find the associated model using a different column, you may pass a third argument to the `belongsTo` method specifying your parent table's custom key:
+Nếu model cha của bạn không sử dụng `id` làm khóa chính của nó, hoặc bạn muốn tìm model liên quan bằng cách sử dụng một cột khác, bạn có thể truyền đối số thứ ba cho phương thức `belongsTo` chỉ định khóa tùy chỉnh của bảng cha của bạn:
 
 ```php
 /**
@@ -333,9 +333,9 @@ public function post(): BelongsTo
 ```
 
 <a name="default-models"></a>
-#### Default Models
+#### Model Mặc định
 
-The `belongsTo`, `hasOne`, `hasOneThrough`, and `morphOne` relationships allow you to define a default model that will be returned if the given relationship is `null`. This pattern is often referred to as the [Null Object pattern](https://en.wikipedia.org/wiki/Null_Object_pattern) and can help remove conditional checks in your code. In the following example, the `user` relation will return an empty `App\Models\User` model if no user is attached to the `Post` model:
+Các mối quan hệ `belongsTo`, `hasOne`, `hasOneThrough`, và `morphOne` cho phép bạn định nghĩa một model mặc định sẽ được trả về nếu mối quan hệ đã cho là `null`. Mẫu này thường được gọi là [Null Object pattern](https://en.wikipedia.org/wiki/Null_Object_pattern) và có thể giúp loại bỏ các kiểm tra điều kiện trong mã của bạn. Trong ví dụ sau, mối quan hệ `user` sẽ trả về một model `App\Models\User` trống nếu không có người dùng nào được gắn vào model `Post`:
 
 ```php
 /**
@@ -347,7 +347,7 @@ public function user(): BelongsTo
 }
 ```
 
-To populate the default model with attributes, you may pass an array or closure to the `withDefault` method:
+Để điền model mặc định với các thuộc tính, bạn có thể truyền một mảng hoặc closure cho phương thức `withDefault`:
 
 ```php
 /**
@@ -372,9 +372,9 @@ public function user(): BelongsTo
 ```
 
 <a name="querying-belongs-to-relationships"></a>
-#### Querying Belongs To Relationships
+#### Truy vấn Mối quan hệ Belongs To
 
-When querying for the children of a "belongs to" relationship, you may manually build the `where` clause to retrieve the corresponding Eloquent models:
+Khi truy vấn cho các con của một mối quan hệ "belongs to", bạn có thể xây dựng thủ công mệnh đề `where` để truy xuất các model Eloquent tương ứng:
 
 ```php
 use App\Models\Post;
@@ -382,13 +382,13 @@ use App\Models\Post;
 $posts = Post::where('user_id', $user->id)->get();
 ```
 
-However, you may find it more convenient to use the `whereBelongsTo` method, which will automatically determine the proper relationship and foreign key for the given model:
+Tuy nhiên, bạn có thể thấy việc sử dụng phương thức `whereBelongsTo` tiện lợi hơn, phương thức này sẽ tự động xác định mối quan hệ thích hợp và khóa ngoại cho model đã cho:
 
 ```php
 $posts = Post::whereBelongsTo($user)->get();
 ```
 
-You may also provide a [collection](/docs/{{version}}/eloquent-collections) instance to the `whereBelongsTo` method. When doing so, Laravel will retrieve models that belong to any of the parent models within the collection:
+Bạn cũng có thể cung cấp một instance [collection](/docs/{{version}}/eloquent-collections) cho phương thức `whereBelongsTo`. Khi làm như vậy, Laravel sẽ truy xuất các model thuộc về bất kỳ model cha nào trong collection:
 
 ```php
 $users = User::where('vip', true)->get();
@@ -396,7 +396,7 @@ $users = User::where('vip', true)->get();
 $posts = Post::whereBelongsTo($users)->get();
 ```
 
-By default, Laravel will determine the relationship associated with the given model based on the class name of the model; however, you may specify the relationship name manually by providing it as the second argument to the `whereBelongsTo` method:
+Theo mặc định, Laravel sẽ xác định mối quan hệ liên kết với model đã cho dựa trên tên lớp của model; tuy nhiên, bạn có thể chỉ định tên mối quan hệ thủ công bằng cách cung cấp nó làm đối số thứ hai cho phương thức `whereBelongsTo`:
 
 ```php
 $posts = Post::whereBelongsTo($user, 'author')->get();
@@ -405,7 +405,7 @@ $posts = Post::whereBelongsTo($user, 'author')->get();
 <a name="has-one-of-many"></a>
 ### Has One of Many
 
-Sometimes a model may have many related models, yet you want to easily retrieve the "latest" or "oldest" related model of the relationship. For example, a `User` model may be related to many `Order` models, but you want to define a convenient way to interact with the most recent order the user has placed. You may accomplish this using the `hasOne` relationship type combined with the `ofMany` methods:
+Đôi khi một model có thể có nhiều model liên quan, nhưng bạn muốn dễ dàng truy xuất model liên quan "mới nhất" hoặc "cũ nhất" của mối quan hệ. Ví dụ, một model `User` có thể liên quan đến nhiều model `Order`, nhưng bạn muốn định nghĩa một cách thuận tiện để tương tác với đơn hàng gần nhất mà người dùng đã đặt. Bạn có thể thực hiện điều này bằng cách sử dụng loại mối quan hệ `hasOne` kết hợp với các phương thức `ofMany`:
 
 ```php
 /**
@@ -417,7 +417,7 @@ public function latestOrder(): HasOne
 }
 ```
 
-Likewise, you may define a method to retrieve the "oldest", or first, related model of a relationship:
+Tương tự, bạn có thể định nghĩa một phương thức để truy xuất model liên quan "cũ nhất", hoặc đầu tiên, của một mối quan hệ:
 
 ```php
 /**
@@ -429,9 +429,9 @@ public function oldestOrder(): HasOne
 }
 ```
 
-By default, the `latestOfMany` and `oldestOfMany` methods will retrieve the latest or oldest related model based on the model's primary key, which must be sortable. However, sometimes you may wish to retrieve a single model from a larger relationship using a different sorting criteria.
+Theo mặc định, các phương thức `latestOfMany` và `oldestOfMany` sẽ truy xuất model liên quan mới nhất hoặc cũ nhất dựa trên khóa chính của model, phải có thể sắp xếp được. Tuy nhiên, đôi khi bạn có thể muốn truy xuất một model duy nhất từ một mối quan hệ lớn hơn bằng cách sử dụng tiêu chí sắp xếp khác.
 
-For example, using the `ofMany` method, you may retrieve the user's most expensive order. The `ofMany` method accepts the sortable column as its first argument and which aggregate function (`min` or `max`) to apply when querying for the related model:
+Ví dụ, sử dụng phương thức `ofMany`, bạn có thể truy xuất đơn hàng đắt nhất của người dùng. Phương thức `ofMany` chấp nhận cột có thể sắp xếp làm đối số đầu tiên và hàm tổng hợp nào (`min` hoặc `max`) để áp dụng khi truy vấn cho model liên quan:
 
 ```php
 /**
@@ -444,12 +444,12 @@ public function largestOrder(): HasOne
 ```
 
 > [!WARNING]
-> Because PostgreSQL does not support executing the `MAX` function against UUID columns, it is not currently possible to use one-of-many relationships in combination with PostgreSQL UUID columns.
+> Vì PostgreSQL không hỗ trợ thực thi hàm `MAX` đối với các cột UUID, hiện không thể sử dụng các mối quan hệ one-of-many kết hợp với các cột UUID của PostgreSQL.
 
 <a name="converting-many-relationships-to-has-one-relationships"></a>
-#### Converting "Many" Relationships to Has One Relationships
+#### Chuyển đổi Mối quan hệ "Many" thành Mối quan hệ Has One
 
-Often, when retrieving a single model using the `latestOfMany`, `oldestOfMany`, or `ofMany` methods, you already have a "has many" relationship defined for the same model. For convenience, Laravel allows you to easily convert this relationship into a "has one" relationship by invoking the `one` method on the relationship:
+Thường thì, khi truy xuất một model duy nhất bằng cách sử dụng các phương thức `latestOfMany`, `oldestOfMany`, hoặc `ofMany`, bạn đã có một mối quan hệ "has many" được định nghĩa cho cùng một model đó. Để thuận tiện, Laravel cho phép bạn dễ dàng chuyển đổi mối quan hệ này thành một mối quan hệ "has one" bằng cách gọi phương thức `one` trên mối quan hệ:
 
 ```php
 /**
@@ -469,7 +469,7 @@ public function largestOrder(): HasOne
 }
 ```
 
-You may also use the `one` method to convert `HasManyThrough` relationships to `HasOneThrough` relationships:
+Bạn cũng có thể sử dụng phương thức `one` để chuyển đổi các mối quan hệ `HasManyThrough` thành các mối quan hệ `HasOneThrough`:
 
 ```php
 public function latestDeployment(): HasOneThrough
@@ -479,11 +479,11 @@ public function latestDeployment(): HasOneThrough
 ```
 
 <a name="advanced-has-one-of-many-relationships"></a>
-#### Advanced Has One of Many Relationships
+#### Mối quan hệ Has One of Many Nâng cao
 
-It is possible to construct more advanced "has one of many" relationships. For example, a `Product` model may have many associated `Price` models that are retained in the system even after new pricing is published. In addition, new pricing data for the product may be able to be published in advance to take effect at a future date via a `published_at` column.
+Có thể xây dựng các mối quan hệ "has one of many" nâng cao hơn. Ví dụ, một model `Product` có thể có nhiều model `Price` liên quan được giữ lại trong hệ thống ngay cả sau khi giá mới được xuất bản. Ngoài ra, dữ liệu giá mới cho sản phẩm có thể được xuất bản trước để có hiệu lực vào một ngày trong tương lai thông qua một cột `published_at`.
 
-So, in summary, we need to retrieve the latest published pricing where the published date is not in the future. In addition, if two prices have the same published date, we will prefer the price with the greatest ID. To accomplish this, we must pass an array to the `ofMany` method that contains the sortable columns which determine the latest price. In addition, a closure will be provided as the second argument to the `ofMany` method. This closure will be responsible for adding additional publish date constraints to the relationship query:
+Vì vậy, tóm lại, chúng ta cần truy xuất giá đã xuất bản mới nhất trong đó ngày xuất bản không phải trong tương lai. Ngoài ra, nếu hai giá có cùng ngày xuất bản, chúng ta sẽ ưu tiên giá có ID lớn nhất. Để thực hiện điều này, chúng ta phải truyền một mảng cho phương thức `ofMany` chứa các cột có thể sắp xếp xác định giá mới nhất. Ngoài ra, một closure sẽ được cung cấp làm đối số thứ hai cho phương thức `ofMany`. Closure này sẽ chịu trách nhiệm thêm các ràng buộc ngày xuất bản bổ sung vào truy vấn mối quan hệ:
 
 ```php
 /**
@@ -503,9 +503,9 @@ public function currentPricing(): HasOne
 <a name="has-one-through"></a>
 ### Has One Through
 
-Relationship "has-one-through" định nghĩa một one-to-one relationship với một model khác. Tuy nhiên, relationship này chỉ ra rằng model đang khai báo có thể được matched với một instance của một model khác bằng cách đi _through_ một model thứ ba.
+Mối quan hệ "has-one-through" định nghĩa một mối quan hệ một-một với một model khác. Tuy nhiên, mối quan hệ này chỉ ra rằng model khai báo có thể được khớp với một instance của một model khác bằng cách đi _qua_ một model thứ ba.
 
-Ví dụ, trong một ứng dụng cửa hàng sửa xe, mỗi `Mechanic` model có thể được associated với một `Car` model, và mỗi `Car` model có thể được associated với một `Owner` model. Trong khi mechanic và owner không có direct relationship trong database, mechanic có thể access owner _through_ `Car` model. Hãy xem các tables cần thiết để define relationship này:
+Ví dụ, trong một ứng dụng cửa hàng sửa chữa xe, mỗi model `Mechanic` có thể liên kết với một model `Car`, và mỗi model `Car` có thể liên kết với một model `Owner`. Mặc dù thợ sửa chữa và chủ sở hữu không có mối quan hệ trực tiếp trong database, thợ sửa chữa có thể truy cập chủ sở hữu _qua_ model `Car`. Hãy xem các bảng cần thiết để định nghĩa mối quan hệ này:
 
 ```text
 mechanics
@@ -523,7 +523,7 @@ owners
     car_id - integer
 ```
 
-Bây giờ chúng ta đã examined table structure cho relationship, hãy define relationship trên `Mechanic` model:
+Bây giờ chúng ta đã xem xét cấu trúc bảng cho mối quan hệ, hãy định nghĩa mối quan hệ trên model `Mechanic`:
 
 ```php
 <?php
@@ -545,9 +545,9 @@ class Mechanic extends Model
 }
 ```
 
-Argument đầu tiên passed đến `hasOneThrough` method là name của final model chúng ta muốn access, trong khi argument thứ hai là name của intermediate model.
+Đối số đầu tiên được truyền cho phương thức `hasOneThrough` là tên của model cuối cùng chúng ta muốn truy cập, trong khi đối số thứ hai là tên của model trung gian.
 
-Hoặc, nếu relevant relationships đã được defined trên tất cả các models involved trong relationship, bạn có thể fluently define một "has-one-through" relationship bằng cách invoking `through` method và supplying names của những relationships đó. Ví dụ, nếu `Mechanic` model có một `cars` relationship và `Car` model có một `owner` relationship, bạn có thể define một "has-one-through" relationship connecting mechanic và owner như sau:
+Hoặc, nếu các mối quan hệ liên quan đã được định nghĩa trên tất cả các model tham gia vào mối quan hệ, bạn có thể định nghĩa trôi chảy một mối quan hệ "has-one-through" bằng cách gọi phương thức `through` và cung cấp tên của các mối quan hệ đó. Ví dụ, nếu model `Mechanic` có một mối quan hệ `cars` và model `Car` có một mối quan hệ `owner`, bạn có thể định nghĩa một mối quan hệ "has-one-through" kết nối thợ sửa chữa và chủ sở hữu như sau:
 
 ```php
 // String based syntax...
@@ -558,9 +558,9 @@ return $this->throughCars()->hasOwner();
 ```
 
 <a name="has-one-through-key-conventions"></a>
-#### Key Conventions
+#### Quy ước Khóa
 
-Typical Eloquent foreign key conventions sẽ được sử dụng khi performing relationship's queries. Nếu bạn muốn customize keys của relationship, bạn có thể pass chúng như third và fourth arguments đến `hasOneThrough` method. Argument thứ ba là name của foreign key trên intermediate model. Argument thứ tư là name của foreign key trên final model. Argument thứ năm là local key, trong khi argument thứ sáu là local key của intermediate model:
+Các quy ước khóa ngoại Eloquent điển hình sẽ được sử dụng khi thực hiện các truy vấn của mối quan hệ. Nếu bạn muốn tùy chỉnh các khóa của mối quan hệ, bạn có thể truyền chúng làm đối số thứ ba và thứ tư cho phương thức `hasOneThrough`. Đối số thứ ba là tên của khóa ngoại trên model trung gian. Đối số thứ tư là tên của khóa ngoại trên model cuối cùng. Đối số thứ năm là khóa cục bộ, trong khi đối số thứ sáu là khóa cục bộ của model trung gian:
 
 ```php
 class Mechanic extends Model
@@ -582,7 +582,7 @@ class Mechanic extends Model
 }
 ```
 
-Hoặc, như đã discussed earlier, nếu relevant relationships đã được defined trên tất cả các models involved trong relationship, bạn có thể fluently define một "has-one-through" relationship bằng cách invoking `through` method và supplying names của những relationships đó. Approach này offers advantage của reusing key conventions đã được defined trên existing relationships:
+Hoặc, như đã thảo luận trước đó, nếu các mối quan hệ liên quan đã được định nghĩa trên tất cả các model tham gia vào mối quan hệ, bạn có thể định nghĩa trôi chảy một mối quan hệ "has-one-through" bằng cách gọi phương thức `through` và cung cấp tên của các mối quan hệ đó. Cách tiếp cận này mang lại lợi ích của việc tái sử dụng các quy ước khóa đã được định nghĩa trên các mối quan hệ hiện có:
 
 ```php
 // String based syntax...
@@ -595,7 +595,7 @@ return $this->throughCars()->hasOwner();
 <a name="has-many-through"></a>
 ### Has Many Through
 
-Relationship "has-many-through" provides một convenient way để access distant relations via một intermediate relation. Ví dụ, hãy assume chúng ta đang building một deployment platform như [Laravel Cloud](https://cloud.laravel.com). Một `Application` model có thể access nhiều `Deployment` models through một intermediate `Environment` model. Sử dụng example này, bạn có thể easily gather tất cả deployments cho một given application. Hãy xem các tables cần thiết để define relationship này:
+Mối quan hệ "has-many-through" cung cấp một cách thuận tiện để truy cập các mối quan hệ xa thông qua một mối quan hệ trung gian. Ví dụ, hãy giả sử chúng ta đang xây dựng một nền tảng triển khai như [Laravel Cloud](https://cloud.laravel.com). Một model `Application` có thể truy cập nhiều model `Deployment` thông qua một model `Environment` trung gian. Sử dụng ví dụ này, bạn có thể dễ dàng thu thập tất cả các triển khai cho một ứng dụng đã cho. Hãy xem các bảng cần thiết để định nghĩa mối quan hệ này:
 
 ```text
 applications
@@ -613,7 +613,7 @@ deployments
     commit_hash - string
 ```
 
-Bây giờ chúng ta đã examined table structure cho relationship, hãy define relationship trên `Application` model:
+Bây giờ chúng ta đã xem xét cấu trúc bảng cho mối quan hệ, hãy định nghĩa mối quan hệ trên model `Application`:
 
 ```php
 <?php
@@ -635,9 +635,9 @@ class Application extends Model
 }
 ```
 
-Argument đầu tiên passed đến `hasManyThrough` method là name của final model chúng ta muốn access, trong khi argument thứ hai là name của intermediate model.
+Đối số đầu tiên được truyền cho phương thức `hasManyThrough` là tên của model cuối cùng chúng ta muốn truy cập, trong khi đối số thứ hai là tên của model trung gian.
 
-Hoặc, nếu relevant relationships đã được defined trên tất cả các models involved trong relationship, bạn có thể fluently define một "has-many-through" relationship bằng cách invoking `through` method và supplying names của những relationships đó. Ví dụ, nếu `Application` model có một `environments` relationship và `Environment` model có một `deployments` relationship, bạn có thể define một "has-many-through" relationship connecting application và deployments như sau:
+Hoặc, nếu các mối quan hệ liên quan đã được định nghĩa trên tất cả các model tham gia vào mối quan hệ, bạn có thể định nghĩa trôi chảy một mối quan hệ "has-many-through" bằng cách gọi phương thức `through` và cung cấp tên của các mối quan hệ đó. Ví dụ, nếu model `Application` có một mối quan hệ `environments` và model `Environment` có một mối quan hệ `deployments`, bạn có thể định nghĩa một mối quan hệ "has-many-through" kết nối ứng dụng và các triển khai như sau:
 
 ```php
 // String based syntax...
@@ -647,12 +647,12 @@ return $this->through('environments')->has('deployments');
 return $this->throughEnvironments()->hasDeployments();
 ```
 
-Mặc dù `Deployment` model's table không chứa một `application_id` column, `hasManyThrough` relation provides access đến một application's deployments via `$application->deployments`. Để retrieve những models này, Eloquent inspects `application_id` column trên intermediate `Environment` model's table. Sau khi finding relevant environment IDs, chúng được sử dụng để query `Deployment` model's table.
+Mặc dù bảng của model `Deployment` không chứa cột `application_id`, mối quan hệ `hasManyThrough` cung cấp quyền truy cập vào các triển khai của một ứng dụng thông qua `$application->deployments`. Để truy xuất các model này, Eloquent kiểm tra cột `application_id` trên bảng của model `Environment` trung gian. Sau khi tìm thấy các ID môi trường liên quan, chúng được sử dụng để truy vấn bảng của model `Deployment`.
 
 <a name="has-many-through-key-conventions"></a>
-#### Key Conventions
+#### Quy ước Khóa
 
-Typical Eloquent foreign key conventions sẽ được sử dụng khi performing relationship's queries. Nếu bạn muốn customize keys của relationship, bạn có thể pass chúng như third và fourth arguments đến `hasManyThrough` method. Argument thứ ba là name của foreign key trên intermediate model. Argument thứ tư là name của foreign key trên final model. Argument thứ năm là local key, trong khi argument thứ sáu là local key của intermediate model:
+Các quy ước khóa ngoại Eloquent điển hình sẽ được sử dụng khi thực hiện các truy vấn của mối quan hệ. Nếu bạn muốn tùy chỉnh các khóa của mối quan hệ, bạn có thể truyền chúng làm đối số thứ ba và thứ tư cho phương thức `hasManyThrough`. Đối số thứ ba là tên của khóa ngoại trên model trung gian. Đối số thứ tư là tên của khóa ngoại trên model cuối cùng. Đối số thứ năm là khóa cục bộ, trong khi đối số thứ sáu là khóa cục bộ của model trung gian:
 
 ```php
 class Application extends Model
@@ -671,7 +671,7 @@ class Application extends Model
 }
 ```
 
-Hoặc, như đã discussed earlier, nếu relevant relationships đã được defined trên tất cả các models involved trong relationship, bạn có thể fluently define một "has-many-through" relationship bằng cách invoking `through` method và supplying names của những relationships đó. Approach này offers advantage của reusing key conventions đã được defined trên existing relationships:
+Hoặc, như đã thảo luận trước đó, nếu các mối quan hệ liên quan đã được định nghĩa trên tất cả các model tham gia vào mối quan hệ, bạn có thể định nghĩa trôi chảy một mối quan hệ "has-many-through" bằng cách gọi phương thức `through` và cung cấp tên của các mối quan hệ đó. Cách tiếp cận này mang lại lợi ích của việc tái sử dụng các quy ước khóa đã được định nghĩa trên các mối quan hệ hiện có:
 
 ```php
 // String based syntax...
@@ -684,7 +684,7 @@ return $this->throughEnvironments()->hasDeployments();
 <a name="scoped-relationships"></a>
 ### Scoped Relationships
 
-Rất common để add additional methods đến models mà constrain relationships. Ví dụ, bạn có thể add một `featuredPosts` method đến một `User` model mà constrains broader `posts` relationship với một additional `where` constraint:
+Rất phổ biến khi thêm các phương thức bổ sung vào các model để ràng buộc các mối quan hệ. Ví dụ, bạn có thể thêm một phương thức `featuredPosts` vào model `User` ràng buộc mối quan hệ `posts` rộng hơn với một ràng buộc `where` bổ sung:
 
 ```php
 <?php
@@ -714,7 +714,7 @@ class User extends Model
 }
 ```
 
-Tuy nhiên, nếu bạn attempt để create một model via `featuredPosts` method, `featured` attribute của nó sẽ không được set thành `true`. Nếu bạn muốn create models via relationship methods và cũng specify attributes mà nên được added đến tất cả models created via relationship đó, bạn có thể sử dụng `withAttributes` method khi building relationship query:
+Tuy nhiên, nếu bạn cố gắng tạo một model thông qua phương thức `featuredPosts`, thuộc tính `featured` của nó sẽ không được đặt thành `true`. Nếu bạn muốn tạo các model thông qua các phương thức mối quan hệ và cũng chỉ định các thuộc tính nên được thêm vào tất cả các model được tạo thông qua mối quan hệ đó, bạn có thể sử dụng phương thức `withAttributes` khi xây dựng truy vấn mối quan hệ:
 
 ```php
 /**
@@ -726,7 +726,7 @@ public function featuredPosts(): HasMany
 }
 ```
 
-`withAttributes` method sẽ add `where` conditions đến query sử dụng given attributes, và nó cũng sẽ add given attributes đến bất kỳ models nào created via relationship method:
+Phương thức `withAttributes` sẽ thêm các điều kiện `where` vào truy vấn bằng cách sử dụng các thuộc tính đã cho, và nó cũng sẽ thêm các thuộc tính đã cho vào bất kỳ model nào được tạo thông qua phương thức mối quan hệ:
 
 ```php
 $post = $user->featuredPosts()->create(['title' => 'Featured Post']);
@@ -734,23 +734,23 @@ $post = $user->featuredPosts()->create(['title' => 'Featured Post']);
 $post->featured; // true
 ```
 
-Để instruct `withAttributes` method để không add `where` conditions đến query, bạn có thể set `asConditions` argument thành `false`:
+Để hướng dẫn phương thức `withAttributes` không thêm các điều kiện `where` vào truy vấn, bạn có thể đặt đối số `asConditions` thành `false`:
 
 ```php
 return $this->posts()->withAttributes(['featured' => true], asConditions: false);
 ```
 
 <a name="many-to-many"></a>
-## Many to Many Relationships
+## Mối quan hệ Nhiều đến Nhiều
 
-Many-to-many relations hơi more complicated hơn `hasOne` và `hasMany` relationships. Một example của many-to-many relationship là một user mà có nhiều roles và những roles đó cũng được shared bởi other users trong application. Ví dụ, một user có thể được assigned role của "Author" và "Editor"; tuy nhiên, những roles đó cũng có thể được assigned đến other users. Vì vậy, một user có nhiều roles và một role có nhiều users.
+Các mối quan hệ nhiều-đến-nhiều phức tạp hơn một chút so với các mối quan hệ `hasOne` và `hasMany`. Một ví dụ về mối quan hệ nhiều-đến-nhiều là một người dùng có nhiều vai trò và các vai trò đó cũng được chia sẻ bởi những người dùng khác trong ứng dụng. Ví dụ, một người dùng có thể được gán vai trò "Author" và "Editor"; tuy nhiên, các vai trò đó cũng có thể được gán cho những người dùng khác. Vì vậy, một người dùng có nhiều vai trò và một vai trò có nhiều người dùng.
 
 <a name="many-to-many-table-structure"></a>
-#### Table Structure
+#### Cấu trúc Bảng
 
-Để define relationship này, ba database tables cần thiết: `users`, `roles`, và `role_user`. `role_user` table được derived từ alphabetical order của related model names và chứa `user_id` và `role_id` columns. Table này được sử dụng như một intermediate table linking users và roles.
+Để định nghĩa mối quan hệ này, cần có ba bảng database: `users`, `roles`, và `role_user`. Bảng `role_user` được lấy từ thứ tự bảng chữ cái của các tên model liên quan và chứa các cột `user_id` và `role_id`. Bảng này được sử dụng làm bảng trung gian kết nối người dùng và vai trò.
 
-Remember, vì một role có thể belong đến nhiều users, chúng ta không thể simply place một `user_id` column trên `roles` table. Điều này sẽ mean rằng một role chỉ có thể belong đến một single user. Để provide support cho roles being assigned đến multiple users, `role_user` table cần thiết. Chúng ta có thể summarize relationship's table structure như sau:
+Hãy nhớ rằng, vì một vai trò có thể thuộc về nhiều người dùng, chúng ta không thể đơn giản đặt một cột `user_id` trên bảng `roles`. Điều này sẽ có nghĩa là một vai trò chỉ có thể thuộc về một người dùng duy nhất. Để cung cấp hỗ trợ cho việc gán vai trò cho nhiều người dùng, bảng `role_user` là cần thiết. Chúng ta có thể tóm tắt cấu trúc bảng của mối quan hệ như sau:
 
 ```text
 users
@@ -767,9 +767,9 @@ role_user
 ```
 
 <a name="many-to-many-model-structure"></a>
-#### Model Structure
+#### Cấu trúc Model
 
-Many-to-many relationships được defined bằng cách writing một method mà returns result của `belongsToMany` method. `belongsToMany` method được provided bởi `Illuminate\Database\Eloquent\Model` base class mà được sử dụng bởi tất cả application's Eloquent models của bạn. Ví dụ, hãy define một `roles` method trên `User` model của chúng ta. Argument đầu tiên passed đến method này là name của related model class:
+Các mối quan hệ nhiều-đến-nhiều được định nghĩa bằng cách viết một phương thức trả về kết quả của phương thức `belongsToMany`. Phương thức `belongsToMany` được cung cấp bởi lớp cơ sở `Illuminate\Database\Eloquent\Model` được sử dụng bởi tất cả các model Eloquent của ứng dụng của bạn. Ví dụ, hãy định nghĩa một phương thức `roles` trên model `User` của chúng ta. Đối số đầu tiên được truyền cho phương thức này là tên của lớp model liên quan:
 
 ```php
 <?php
@@ -791,7 +791,7 @@ class User extends Model
 }
 ```
 
-Khi relationship đã được defined, bạn có thể access user's roles sử dụng `roles` dynamic relationship property:
+Sau khi mối quan hệ được định nghĩa, bạn có thể truy cập các vai trò của người dùng bằng cách sử dụng thuộc tính mối quan hệ động `roles`:
 
 ```php
 use App\Models\User;
@@ -803,28 +803,28 @@ foreach ($user->roles as $role) {
 }
 ```
 
-Vì tất cả relationships cũng serve như query builders, bạn có thể add further constraints đến relationship query bằng cách calling `roles` method và continuing để chain conditions lên query:
+Vì tất cả các mối quan hệ cũng đóng vai trò là query builder, bạn có thể thêm các ràng buộc thêm vào truy vấn mối quan hệ bằng cách gọi phương thức `roles` và tiếp tục chuỗi các điều kiện vào truy vấn:
 
 ```php
 $roles = User::find(1)->roles()->orderBy('name')->get();
 ```
 
-Để determine table name của relationship's intermediate table, Eloquent sẽ join hai related model names trong alphabetical order. Tuy nhiên, bạn có thể tự do override convention này. Bạn có thể làm điều đó bằng cách passing một second argument đến `belongsToMany` method:
+Để xác định tên bảng của bảng trung gian của mối quan hệ, Eloquent sẽ nối hai tên model liên quan theo thứ tự bảng chữ cái. Tuy nhiên, bạn có thể ghi đè quy ước này. Bạn có thể làm như vậy bằng cách truyền đối số thứ hai cho phương thức `belongsToMany`:
 
 ```php
 return $this->belongsToMany(Role::class, 'role_user');
 ```
 
-Ngoài việc customizing name của intermediate table, bạn cũng có thể customize column names của keys trên table bằng cách passing additional arguments đến `belongsToMany` method. Argument thứ ba là foreign key name của model mà bạn đang defining relationship, trong khi argument thứ tư là foreign key name của model mà bạn đang joining đến:
+Ngoài việc tùy chỉnh tên của bảng trung gian, bạn cũng có thể tùy chỉnh tên cột của các khóa trên bảng bằng cách truyền các đối số bổ sung cho phương thức `belongsToMany`. Đối số thứ ba là tên khóa ngoại của model mà bạn đang định nghĩa mối quan hệ, trong khi đối số thứ tư là tên khóa ngoại của model mà bạn đang kết nối tới:
 
 ```php
 return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
 ```
 
 <a name="many-to-many-defining-the-inverse-of-the-relationship"></a>
-#### Defining the Inverse of the Relationship
+#### Định nghĩa Nghịch đảo của Mối quan hệ
 
-Để define "inverse" của một many-to-many relationship, bạn nên define một method trên related model mà cũng returns result của `belongsToMany` method. Để complete user / role example của chúng ta, hãy define `users` method trên `Role` model:
+Để định nghĩa "nghịch đảo" của một mối quan hệ nhiều-đến-nhiều, bạn nên định nghĩa một phương thức trên model liên quan cũng trả về kết quả của phương thức `belongsToMany`. Để hoàn thành ví dụ người dùng / vai trò của chúng ta, hãy định nghĩa phương thức `users` trên model `Role`:
 
 ```php
 <?php
@@ -846,12 +846,12 @@ class Role extends Model
 }
 ```
 
-Như bạn có thể thấy, relationship được defined exactly the same như `User` model counterpart của nó với exception của referencing `App\Models\User` model. Vì chúng ta đang reusing `belongsToMany` method, tất cả usual table và key customization options đều available khi defining "inverse" của many-to-many relationships.
+Như bạn có thể thấy, mối quan hệ được định nghĩa chính xác giống như đối tác model `User` của nó với ngoại lệ là tham chiếu đến model `App\Models\User`. Vì chúng ta đang tái sử dụng phương thức `belongsToMany`, tất cả các tùy chọn tùy chỉnh bảng và khóa thông thường đều có sẵn khi định nghĩa "nghịch đảo" của các mối quan hệ nhiều-đến-nhiều.
 
 <a name="retrieving-intermediate-table-columns"></a>
 ### Retrieving Intermediate Table Columns
 
-Như bạn đã learned, working với many-to-many relations requires presence của một intermediate table. Eloquent provides một số very helpful ways của interacting với table này. Ví dụ, hãy assume `User` model của chúng ta có nhiều `Role` models mà nó related đến. Sau khi accessing relationship này, chúng ta có thể access intermediate table sử dụng `pivot` attribute trên models:
+Như bạn đã học, làm việc với các mối quan hệ nhiều-đến-nhiều đòi hỏi sự hiện diện của một bảng trung gian. Eloquent cung cấp một số cách rất hữu ích để tương tác với bảng này. Ví dụ, hãy giả sử model `User` của chúng ta có nhiều model `Role` liên quan. Sau khi truy cập mối quan hệ này, chúng ta có thể truy cập bảng trung gian bằng cách sử dụng thuộc tính `pivot` trên các model:
 
 ```php
 use App\Models\User;
@@ -863,29 +863,29 @@ foreach ($user->roles as $role) {
 }
 ```
 
-Notice rằng mỗi `Role` model chúng ta retrieve được automatically assigned một `pivot` attribute. Attribute này chứa một model representing intermediate table.
+Lưu ý rằng mỗi model `Role` chúng ta truy xuất được tự động gán một thuộc tính `pivot`. Thuộc tính này chứa một model đại diện cho bảng trung gian.
 
-Theo mặc định, chỉ model keys sẽ present trên `pivot` model. Nếu intermediate table của bạn chứa extra attributes, bạn phải specify chúng khi defining relationship:
+Theo mặc định, chỉ có các khóa của model sẽ có trên model `pivot`. Nếu bảng trung gian của bạn chứa các thuộc tính bổ sung, bạn phải chỉ định chúng khi định nghĩa mối quan hệ:
 
 ```php
 return $this->belongsToMany(Role::class)->withPivot('active', 'created_by');
 ```
 
-Nếu bạn muốn intermediate table của bạn có `created_at` và `updated_at` timestamps mà được automatically maintained bởi Eloquent, call `withTimestamps` method khi defining relationship:
+Nếu bạn muốn bảng trung gian của mình có các timestamp `created_at` và `updated_at` được duy trì tự động bởi Eloquent, hãy gọi phương thức `withTimestamps` khi định nghĩa mối quan hệ:
 
 ```php
 return $this->belongsToMany(Role::class)->withTimestamps();
 ```
 
 > [!WARNING]
-> Intermediate tables that utilize Eloquent's automatically maintained timestamps are required to have both `created_at` and `updated_at` timestamp columns.
+> Các bảng trung gian sử dụng các timestamp được duy trì tự động của Eloquent được yêu cầu phải có cả hai cột timestamp `created_at` và `updated_at`.
 
 <a name="customizing-the-pivot-attribute-name"></a>
-#### Customizing the `pivot` Attribute Name
+#### Tùy chỉnh Tên Thuộc tính `pivot`
 
-Như đã noted previously, attributes từ intermediate table có thể được accessed trên models via `pivot` attribute. Tuy nhiên, bạn có thể tự do customize name của attribute này để better reflect purpose của nó trong application của bạn.
+Như đã lưu ý trước đó, các thuộc tính từ bảng trung gian có thể được truy cập trên các model thông qua thuộc tính `pivot`. Tuy nhiên, bạn có thể tùy chỉnh tên của thuộc tính này để phản ánh tốt hơn mục đích của nó trong ứng dụng của bạn.
 
-Ví dụ, nếu application của bạn chứa users mà có thể subscribe đến podcasts, bạn likely có một many-to-many relationship giữa users và podcasts. Nếu đây là case, bạn có thể wish để rename intermediate table attribute của bạn thành `subscription` thay vì `pivot`. Điều này có thể được done sử dụng `as` method khi defining relationship:
+Ví dụ, nếu ứng dụng của bạn chứa người dùng có thể đăng ký podcast, bạn có thể có một mối quan hệ nhiều-đến-nhiều giữa người dùng và podcast. Nếu đây là trường hợp, bạn có thể muốn đổi tên thuộc tính bảng trung gian của mình thành `subscription` thay vì `pivot`. Điều này có thể được thực hiện bằng cách sử dụng phương thức `as` khi định nghĩa mối quan hệ:
 
 ```php
 return $this->belongsToMany(Podcast::class)
@@ -893,7 +893,7 @@ return $this->belongsToMany(Podcast::class)
     ->withTimestamps();
 ```
 
-Khi custom intermediate table attribute đã được specified, bạn có thể access intermediate table data sử dụng customized name:
+Sau khi thuộc tính bảng trung gian tùy chỉnh đã được chỉ định, bạn có thể truy cập dữ liệu bảng trung gian bằng cách sử dụng tên tùy chỉnh:
 
 ```php
 $users = User::with('podcasts')->get();
@@ -906,7 +906,7 @@ foreach ($users->flatMap->podcasts as $podcast) {
 <a name="filtering-queries-via-intermediate-table-columns"></a>
 ### Filtering Queries via Intermediate Table Columns
 
-Bạn cũng có thể filter results returned bởi `belongsToMany` relationship queries sử dụng `wherePivot`, `wherePivotIn`, `wherePivotNotIn`, `wherePivotBetween`, `wherePivotNotBetween`, `wherePivotNull`, và `wherePivotNotNull` methods khi defining relationship:
+Bạn cũng có thể lọc các kết quả được trả về bởi các truy vấn mối quan hệ `belongsToMany` bằng cách sử dụng các phương thức `wherePivot`, `wherePivotIn`, `wherePivotNotIn`, `wherePivotBetween`, `wherePivotNotBetween`, `wherePivotNull`, và `wherePivotNotNull` khi định nghĩa mối quan hệ:
 
 ```php
 return $this->belongsToMany(Role::class)
@@ -935,7 +935,7 @@ return $this->belongsToMany(Podcast::class)
     ->wherePivotNotNull('expired_at');
 ```
 
-`wherePivot` adds một where clause constraint đến query, nhưng không add specified value khi creating new models via defined relationship. Nếu bạn cần cả query và create relationships với một particular pivot value, bạn có thể sử dụng `withPivotValue` method:
+`wherePivot` thêm một ràng buộc mệnh đề where vào truy vấn, nhưng không thêm giá trị đã chỉ định khi tạo các model mới thông qua mối quan hệ đã định nghĩa. Nếu bạn cần cả truy vấn và tạo các mối quan hệ với một giá trị pivot cụ thể, bạn có thể sử dụng phương thức `withPivotValue`:
 
 ```php
 return $this->belongsToMany(Role::class)
@@ -945,7 +945,7 @@ return $this->belongsToMany(Role::class)
 <a name="ordering-queries-via-intermediate-table-columns"></a>
 ### Ordering Queries via Intermediate Table Columns
 
-Bạn có thể order results returned bởi `belongsToMany` relationship queries sử dụng `orderByPivot` và `orderByPivotDesc` methods. Trong following example, chúng ta sẽ retrieve tất cả latest badges cho user:
+Bạn có thể sắp xếp các kết quả được trả về bởi các truy vấn mối quan hệ `belongsToMany` bằng cách sử dụng các phương thức `orderByPivot` và `orderByPivotDesc`. Trong ví dụ sau, chúng ta sẽ truy xuất tất cả các huy hiệu mới nhất cho người dùng:
 
 ```php
 return $this->belongsToMany(Badge::class)
@@ -956,9 +956,9 @@ return $this->belongsToMany(Badge::class)
 <a name="defining-custom-intermediate-table-models"></a>
 ### Defining Custom Intermediate Table Models
 
-Nếu bạn muốn define một custom model để represent intermediate table của many-to-many relationship của bạn, bạn có thể call `using` method khi defining relationship. Custom pivot models give bạn opportunity để define additional behavior trên pivot model, như methods và casts.
+Nếu bạn muốn định nghĩa một model tùy chỉnh để đại diện cho bảng trung gian của mối quan hệ nhiều-đến-nhiều của mình, bạn có thể gọi phương thức `using` khi định nghĩa mối quan hệ. Các model pivot tùy chỉnh cho bạn cơ hội định nghĩa hành vi bổ sung trên model pivot, chẳng hạn như các phương thức và casts.
 
-Custom many-to-many pivot models nên extend `Illuminate\Database\Eloquent\Relations\Pivot` class trong khi custom polymorphic many-to-many pivot models nên extend `Illuminate\Database\Eloquent\Relations\MorphPivot` class. Ví dụ, chúng ta có thể define một `Role` model mà sử dụng một custom `RoleUser` pivot model:
+Các model pivot nhiều-đến-nhiều tùy chỉnh nên mở rộng lớp `Illuminate\Database\Eloquent\Relations\Pivot`, trong khi các model pivot nhiều-đến-nhiều polymorphic tùy chỉnh nên mở rộng lớp `Illuminate\Database\Eloquent\Relations\MorphPivot`. Ví dụ, chúng ta có thể định nghĩa một model `Role` sử dụng một model pivot `RoleUser` tùy chỉnh:
 
 ```php
 <?php
@@ -980,7 +980,7 @@ class Role extends Model
 }
 ```
 
-Khi defining `RoleUser` model, bạn nên extend `Illuminate\Database\Eloquent\Relations\Pivot` class:
+Khi định nghĩa model `RoleUser`, bạn nên mở rộng lớp `Illuminate\Database\Eloquent\Relations\Pivot`:
 
 ```php
 <?php
@@ -996,12 +996,12 @@ class RoleUser extends Pivot
 ```
 
 > [!WARNING]
-> Pivot models có thể không sử dụng `SoftDeletes` trait. Nếu bạn cần soft delete pivot records hãy consider converting pivot model của bạn thành một actual Eloquent model.
+> Các model pivot không thể sử dụng trait `SoftDeletes`. Nếu bạn cần soft delete các bản ghi pivot, hãy cân nhắc chuyển đổi model pivot của bạn thành một model Eloquent thực tế.
 
 <a name="custom-pivot-models-and-incrementing-ids"></a>
 #### Custom Pivot Models and Incrementing IDs
 
-Nếu bạn đã defined một many-to-many relationship mà sử dụng một custom pivot model, và pivot model đó có một auto-incrementing primary key, bạn nên ensure custom pivot model class của bạn sử dụng `Table` attribute với `incrementing` set thành `true`:
+Nếu bạn đã định nghĩa một mối quan hệ nhiều-đến-nhiều sử dụng một model pivot tùy chỉnh, và model pivot đó có một khóa chính tự tăng, bạn nên đảm bảo lớp model pivot tùy chỉnh của bạn sử dụng thuộc tính `Table` với `incrementing` được đặt thành `true`:
 
 ```php
 use Illuminate\Database\Eloquent\Attributes\Table;
@@ -1017,15 +1017,15 @@ class RoleUser extends Pivot
 <a name="polymorphic-relationships"></a>
 ## Polymorphic Relationships
 
-Một polymorphic relationship allows child model để belong đến more than one type của model sử dụng một single association. Ví dụ, imagine bạn đang building một application mà allows users để share blog posts và videos. Trong application như vậy, một `Comment` model có thể belong đến cả `Post` và `Video` models.
+Mối quan hệ polymorphic cho phép model con thuộc về nhiều hơn một loại model bằng cách sử dụng một liên kết duy nhất. Ví dụ, hãy tưởng tượng bạn đang xây dựng một ứng dụng cho phép người dùng chia sẻ bài đăng blog và video. Trong một ứng dụng như vậy, một model `Comment` có thể thuộc về cả model `Post` và `Video`.
 
 <a name="one-to-one-polymorphic-relations"></a>
 ### One to One (Polymorphic)
 
 <a name="one-to-one-polymorphic-table-structure"></a>
-#### Table Structure
+#### Cấu trúc Bảng
 
-Một one-to-one polymorphic relation là similar đến một typical one-to-one relation; tuy nhiên, child model có thể belong đến more than one type của model sử dụng một single association. Ví dụ, một blog `Post` và một `User` có thể share một polymorphic relation đến một `Image` model. Sử dụng một one-to-one polymorphic relation allows bạn để có một single table của unique images mà có thể được associated với posts và users. First, hãy examine table structure:
+Mối quan hệ một-một polymorphic tương tự như một mối quan hệ một-một điển hình; tuy nhiên, model con có thể thuộc về nhiều hơn một loại model bằng cách sử dụng một liên kết duy nhất. Ví dụ, một bài đăng blog `Post` và một `User` có thể chia sẻ một mối quan hệ polymorphic với một model `Image`. Sử dụng một mối quan hệ một-một polymorphic cho phép bạn có một bảng duy nhất của các hình ảnh duy nhất có thể được liên kết với bài đăng và người dùng. Trước tiên, hãy xem cấu trúc bảng:
 
 ```text
 posts
@@ -1043,12 +1043,12 @@ images
     imageable_id - integer
 ```
 
-Note `imageable_id` và `imageable_type` columns trên `images` table. `imageable_id` column sẽ chứa ID value của post hoặc user, trong khi `imageable_type` column sẽ chứa class name của parent model. `imageable_type` column được sử dụng bởi Eloquent để determine "type" nào của parent model để return khi accessing `imageable` relation. Trong case này, column sẽ chứa hoặc `App\Models\Post` hoặc `App\Models\User`.
+Lưu ý các cột `imageable_id` và `imageable_type` trên bảng `images`. Cột `imageable_id` sẽ chứa giá trị ID của bài đăng hoặc người dùng, trong khi cột `imageable_type` sẽ chứa tên lớp của model cha. Cột `imageable_type` được Eloquent sử dụng để xác định "loại" model cha nào sẽ trả về khi truy cập mối quan hệ `imageable`. Trong trường hợp này, cột sẽ chứa `App\Models\Post` hoặc `App\Models\User`.
 
 <a name="one-to-one-polymorphic-model-structure"></a>
-#### Model Structure
+#### Cấu trúc Model
 
-Tiếp theo, hãy examine model definitions cần thiết để build relationship này:
+Tiếp theo, hãy xem các định nghĩa model cần thiết để xây dựng mối quan hệ này:
 
 ```php
 <?php
@@ -1101,7 +1101,7 @@ class User extends Model
 <a name="one-to-one-polymorphic-retrieving-the-relationship"></a>
 #### Retrieving the Relationship
 
-Khi database table và models của bạn đã được defined, bạn có thể access relationships via models của bạn. Ví dụ, để retrieve image cho một post, chúng ta có thể access `image` dynamic relationship property:
+Sau khi bảng database và các model của bạn được định nghĩa, bạn có thể truy cập các mối quan hệ thông qua các model của bạn. Ví dụ, để truy xuất hình ảnh cho một bài đăng, chúng ta có thể truy cập thuộc tính mối quan hệ động `image`:
 
 ```php
 use App\Models\Post;
@@ -1111,7 +1111,7 @@ $post = Post::find(1);
 $image = $post->image;
 ```
 
-Bạn có thể retrieve parent của polymorphic model bằng cách accessing name của method mà performs call đến `morphTo`. Trong case này, đó là `imageable` method trên `Image` model. Vì vậy, chúng ta sẽ access method đó như một dynamic relationship property:
+Bạn có thể truy xuất cha của model polymorphic bằng cách truy cập tên của phương thức thực hiện lệnh gọi đến `morphTo`. Trong trường hợp này, đó là phương thức `imageable` trên model `Image`. Vì vậy, chúng ta sẽ truy cập phương thức đó như một thuộc tính mối quan hệ động:
 
 ```php
 use App\Models\Image;
@@ -1121,12 +1121,12 @@ $image = Image::find(1);
 $imageable = $image->imageable;
 ```
 
-`imageable` relation trên `Image` model sẽ return hoặc một `Post` hoặc `User` instance, tùy thuộc vào type nào của model owns image.
+Mối quan hệ `imageable` trên model `Image` sẽ trả về một instance `Post` hoặc `User`, tùy thuộc vào loại model nào sở hữu hình ảnh.
 
 <a name="morph-one-to-one-key-conventions"></a>
 #### Key Conventions
 
-Nếu necessary, bạn có thể specify name của "id" và "type" columns utilized bởi polymorphic child model của bạn. Nếu bạn làm điều đó, ensure rằng bạn luôn pass name của relationship như first argument đến `morphTo` method. Thông thường, value này nên match method name, vì vậy bạn có thể sử dụng PHP's `__FUNCTION__` constant:
+Nếu cần thiết, bạn có thể chỉ định tên của các cột "id" và "type" được sử dụng bởi model con polymorphic của bạn. Nếu bạn làm như vậy, hãy đảm bảo rằng bạn luôn truyền tên của mối quan hệ làm đối số đầu tiên cho phương thức `morphTo`. Thông thường, giá trị này nên khớp với tên phương thức, vì vậy bạn có thể sử dụng hằng số `__FUNCTION__` của PHP:
 
 ```php
 /**
@@ -1142,9 +1142,9 @@ public function imageable(): MorphTo
 ### One to Many (Polymorphic)
 
 <a name="one-to-many-polymorphic-table-structure"></a>
-#### Table Structure
+#### Cấu trúc Bảng
 
-Một one-to-many polymorphic relation là similar đến một typical one-to-many relation; tuy nhiên, child model có thể belong đến more than one type của model sử dụng một single association. Ví dụ, imagine users của application của bạn có thể "comment" trên posts và videos. Sử dụng polymorphic relationships, bạn có thể sử dụng một single `comments` table để contain comments cho cả posts và videos. First, hãy examine table structure cần thiết để build relationship này:
+Mối quan hệ một-nhiều polymorphic tương tự như một mối quan hệ một-nhiều điển hình; tuy nhiên, model con có thể thuộc về nhiều hơn một loại model bằng cách sử dụng một liên kết duy nhất. Ví dụ, hãy tưởng tượng người dùng của ứng dụng của bạn có thể "bình luận" về bài đăng và video. Sử dụng các mối quan hệ polymorphic, bạn có thể sử dụng một bảng `comments` duy nhất để chứa bình luận cho cả bài đăng và video. Trước tiên, hãy xem cấu trúc bảng cần thiết để xây dựng mối quan hệ này:
 
 ```text
 posts
@@ -1165,9 +1165,9 @@ comments
 ```
 
 <a name="one-to-many-polymorphic-model-structure"></a>
-#### Model Structure
+#### Cấu trúc Model
 
-Tiếp theo, hãy examine model definitions cần thiết để build relationship này:
+Tiếp theo, hãy xem các định nghĩa model cần thiết để xây dựng mối quan hệ này:
 
 ```php
 <?php
@@ -1220,7 +1220,7 @@ class Video extends Model
 <a name="one-to-many-polymorphic-retrieving-the-relationship"></a>
 #### Retrieving the Relationship
 
-Khi database table và models của bạn đã được defined, bạn có thể access relationships via model's dynamic relationship properties của bạn. Ví dụ, để access tất cả comments cho một post, chúng ta có thể sử dụng `comments` dynamic property:
+Sau khi bảng database và các model của bạn được định nghĩa, bạn có thể truy cập các mối quan hệ thông qua các thuộc tính mối quan hệ động của model. Ví dụ, để truy cập tất cả các bình luận cho một bài đăng, chúng ta có thể sử dụng thuộc tính động `comments`:
 
 ```php
 use App\Models\Post;
@@ -1232,7 +1232,7 @@ foreach ($post->comments as $comment) {
 }
 ```
 
-Bạn cũng có thể retrieve parent của một polymorphic child model bằng cách accessing name của method mà performs call đến `morphTo`. Trong case này, đó là `commentable` method trên `Comment` model. Vì vậy, chúng ta sẽ access method đó như một dynamic relationship property để access comment's parent model:
+Bạn cũng có thể truy xuất cha của một model con polymorphic bằng cách truy cập tên của phương thức thực hiện lệnh gọi đến `morphTo`. Trong trường hợp này, đó là phương thức `commentable` trên model `Comment`. Vì vậy, chúng ta sẽ truy cập phương thức đó như một thuộc tính mối quan hệ động để truy cập model cha của bình luận:
 
 ```php
 use App\Models\Comment;
@@ -1242,12 +1242,12 @@ $comment = Comment::find(1);
 $commentable = $comment->commentable;
 ```
 
-`commentable` relation trên `Comment` model sẽ return hoặc một `Post` hoặc `Video` instance, tùy thuộc vào type nào của model là comment's parent.
+Mối quan hệ `commentable` trên model `Comment` sẽ trả về một instance `Post` hoặc `Video`, tùy thuộc vào loại model nào là cha của bình luận.
 
 <a name="polymorphic-automatically-hydrating-parent-models-on-children"></a>
 #### Automatically Hydrating Parent Models on Children
 
-Ngay cả khi utilizing Eloquent eager loading, "N + 1" query problems có thể arise nếu bạn attempt để access parent model từ một child model trong khi looping qua child models:
+Ngay cả khi sử dụng eager loading của Eloquent, các vấn đề truy vấn "N + 1" có thể phát sinh nếu bạn cố gắng truy cập model cha từ một model con trong khi lặp qua các model con:
 
 ```php
 $posts = Post::with('comments')->get();
@@ -1259,9 +1259,9 @@ foreach ($posts as $post) {
 }
 ```
 
-In the example above, an "N + 1" query problem has been introduced because, even though comments were eager loaded for every `Post` model, Eloquent does not automatically hydrate the parent `Post` on each child `Comment` model.
+Trong ví dụ trên, một vấn đề truy vấn "N + 1" đã được đưa ra vì, mặc dù các bình luận đã được eager load cho mọi model `Post`, Eloquent không tự động hydrate model `Post` cha trên mỗi model `Comment` con.
 
-If you would like Eloquent to automatically hydrate parent models onto their children, you may invoke the `chaperone` method when defining a `morphMany` relationship:
+Nếu bạn muốn Eloquent tự động hydrate các model cha vào các model con của chúng, bạn có thể gọi phương thức `chaperone` khi định nghĩa một mối quan hệ `morphMany`:
 
 ```php
 class Post extends Model
@@ -1276,7 +1276,7 @@ class Post extends Model
 }
 ```
 
-Or, if you would like to opt-in to automatic parent hydration at run time, you may invoke the `chaperone` model when eager loading the relationship:
+Hoặc, nếu bạn muốn opt-in vào việc hydrate cha tự động tại thời điểm chạy, bạn có thể gọi model `chaperone` khi eager load mối quan hệ:
 
 ```php
 use App\Models\Post;
@@ -1289,7 +1289,7 @@ $posts = Post::with([
 <a name="one-of-many-polymorphic-relations"></a>
 ### One of Many (Polymorphic)
 
-Sometimes a model may have many related models, yet you want to easily retrieve the "latest" or "oldest" related model of the relationship. For example, a `User` model may be related to many `Image` models, but you want to define a convenient way to interact with the most recent image the user has uploaded. You may accomplish this using the `morphOne` relationship type combined with the `ofMany` methods:
+Đôi khi một model có thể có nhiều model liên quan, nhưng bạn muốn dễ dàng truy xuất model liên quan "mới nhất" hoặc "cũ nhất" của mối quan hệ. Ví dụ, một model `User` có thể liên quan đến nhiều model `Image`, nhưng bạn muốn định nghĩa một cách thuận tiện để tương tác với hình ảnh gần nhất mà người dùng đã tải lên. Bạn có thể thực hiện điều này bằng cách sử dụng loại mối quan hệ `morphOne` kết hợp với các phương thức `ofMany`:
 
 ```php
 /**
@@ -1301,7 +1301,7 @@ public function latestImage(): MorphOne
 }
 ```
 
-Likewise, you may define a method to retrieve the "oldest", or first, related model of a relationship:
+Tương tự, bạn có thể định nghĩa một phương thức để truy xuất model liên quan "cũ nhất", hoặc đầu tiên, của một mối quan hệ:
 
 ```php
 /**
@@ -1313,9 +1313,9 @@ public function oldestImage(): MorphOne
 }
 ```
 
-By default, the `latestOfMany` and `oldestOfMany` methods will retrieve the latest or oldest related model based on the model's primary key, which must be sortable. However, sometimes you may wish to retrieve a single model from a larger relationship using a different sorting criteria.
+Theo mặc định, các phương thức `latestOfMany` và `oldestOfMany` sẽ truy xuất model liên quan mới nhất hoặc cũ nhất dựa trên khóa chính của model, phải có thể sắp xếp được. Tuy nhiên, đôi khi bạn có thể muốn truy xuất một model duy nhất từ một mối quan hệ lớn hơn bằng cách sử dụng tiêu chí sắp xếp khác.
 
-For example, using the `ofMany` method, you may retrieve the user's most "liked" image. The `ofMany` method accepts the sortable column as its first argument and which aggregate function (`min` or `max`) to apply when querying for the related model:
+Ví dụ, sử dụng phương thức `ofMany`, bạn có thể truy xuất hình ảnh được "thích" nhất của người dùng. Phương thức `ofMany` chấp nhận cột có thể sắp xếp làm đối số đầu tiên và hàm tổng hợp nào (`min` hoặc `max`) để áp dụng khi truy vấn cho model liên quan:
 
 ```php
 /**
@@ -1328,15 +1328,15 @@ public function bestImage(): MorphOne
 ```
 
 > [!NOTE]
-> It is possible to construct more advanced "one of many" relationships. For more information, please consult the [has one of many documentation](#advanced-has-one-of-many-relationships).
+> Có thể xây dựng các mối quan hệ "one of many" nâng cao hơn. Để biết thêm thông tin, vui lòng tham khảo [tài liệu has one of many](#advanced-has-one-of-many-relationships).
 
 <a name="many-to-many-polymorphic-relations"></a>
 ### Many to Many (Polymorphic)
 
 <a name="many-to-many-polymorphic-table-structure"></a>
-#### Table Structure
+#### Cấu trúc Bảng
 
-Many-to-many polymorphic relations are slightly more complicated than "morph one" and "morph many" relationships. For example, a `Post` model and `Video` model could share a polymorphic relation to a `Tag` model. Using a many-to-many polymorphic relation in this situation would allow your application to have a single table of unique tags that may be associated with posts or videos. First, let's examine the table structure required to build this relationship:
+Các mối quan hệ nhiều-đến-nhiều polymorphic phức tạp hơn một chút so với các mối quan hệ "morph one" và "morph many". Ví dụ, một model `Post` và model `Video` có thể chia sẻ một mối quan hệ polymorphic với một model `Tag`. Sử dụng một mối quan hệ nhiều-đến-nhiều polymorphic trong tình huống này sẽ cho phép ứng dụng của bạn có một bảng duy nhất của các thẻ duy nhất có thể được liên kết với bài đăng hoặc video. Trước tiên, hãy xem cấu trúc bảng cần thiết để xây dựng mối quan hệ này:
 
 ```text
 posts
@@ -1358,14 +1358,14 @@ taggables
 ```
 
 > [!NOTE]
-> Before diving into polymorphic many-to-many relationships, you may benefit from reading the documentation on typical [many-to-many relationships](#many-to-many).
+> Trước khi đi sâu vào các mối quan hệ nhiều-đến-nhiều polymorphic, bạn có thể hưởng lợi từ việc đọc tài liệu về các mối quan hệ nhiều-đến-nhiều điển hình [many-to-many relationships](#many-to-many).
 
 <a name="many-to-many-polymorphic-model-structure"></a>
-#### Model Structure
+#### Cấu trúc Model
 
-Next, we're ready to define the relationships on the models. The `Post` and `Video` models will both contain a `tags` method that calls the `morphToMany` method provided by the base Eloquent model class.
+Tiếp theo, chúng ta đã sẵn sàng để định nghĩa các mối quan hệ trên các model. Các model `Post` và `Video` sẽ đều chứa một phương thức `tags` gọi phương thức `morphToMany` được cung cấp bởi lớp model Eloquent cơ sở.
 
-The `morphToMany` method accepts the name of the related model as well as the "relationship name". Based on the name we assigned to our intermediate table name and the keys it contains, we will refer to the relationship as "taggable":
+Phương thức `morphToMany` chấp nhận tên của model liên quan cũng như "tên mối quan hệ". Dựa trên tên chúng ta gán cho tên bảng trung gian của chúng ta và các khóa nó chứa, chúng ta sẽ gọi mối quan hệ là "taggable":
 
 ```php
 <?php
@@ -1388,11 +1388,11 @@ class Post extends Model
 ```
 
 <a name="many-to-many-polymorphic-defining-the-inverse-of-the-relationship"></a>
-#### Defining the Inverse of the Relationship
+#### Định nghĩa Nghịch đảo của Mối quan hệ
 
-Next, on the `Tag` model, you should define a method for each of its possible parent models. So, in this example, we will define a `posts` method and a `videos` method. Both of these methods should return the result of the `morphedByMany` method.
+Tiếp theo, trên model `Tag`, bạn nên định nghĩa một phương thức cho mỗi model cha có thể của nó. Vì vậy, trong ví dụ này, chúng ta sẽ định nghĩa một phương thức `posts` và một phương thức `videos`. Cả hai phương thức này nên trả về kết quả của phương thức `morphedByMany`.
 
-The `morphedByMany` method accepts the name of the related model as well as the "relationship name". Based on the name we assigned to our intermediate table name and the keys it contains, we will refer to the relationship as "taggable":
+Phương thức `morphedByMany` chấp nhận tên của model liên quan cũng như "tên mối quan hệ". Dựa trên tên chúng ta gán cho tên bảng trung gian của chúng ta và các khóa nó chứa, chúng ta sẽ gọi mối quan hệ là "taggable":
 
 ```php
 <?php
@@ -1425,7 +1425,7 @@ class Tag extends Model
 <a name="many-to-many-polymorphic-retrieving-the-relationship"></a>
 #### Retrieving the Relationship
 
-Once your database table and models are defined, you may access the relationships via your models. For example, to access all of the tags for a post, you may use the `tags` dynamic relationship property:
+Sau khi bảng database và các model của bạn được định nghĩa, bạn có thể truy cập các mối quan hệ thông qua các model của bạn. Ví dụ, để truy cập tất cả các thẻ cho một bài đăng, bạn có thể sử dụng thuộc tính mối quan hệ động `tags`:
 
 ```php
 use App\Models\Post;
@@ -1437,7 +1437,7 @@ foreach ($post->tags as $tag) {
 }
 ```
 
-You may retrieve the parent of a polymorphic relation from the polymorphic child model by accessing the name of the method that performs the call to `morphedByMany`. In this case, that is the `posts` or `videos` methods on the `Tag` model:
+Bạn có thể truy xuất cha của một mối quan hệ polymorphic từ model con polymorphic bằng cách truy cập tên của phương thức thực hiện lệnh gọi đến `morphedByMany`. Trong trường hợp này, đó là các phương thức `posts` hoặc `videos` trên model `Tag`:
 
 ```php
 use App\Models\Tag;
@@ -1456,9 +1456,9 @@ foreach ($tag->videos as $video) {
 <a name="custom-polymorphic-types"></a>
 ### Custom Polymorphic Types
 
-By default, Laravel will use the fully qualified class name to store the "type" of the related model. For instance, given the one-to-many relationship example above where a `Comment` model may belong to a `Post` or a `Video` model, the default `commentable_type` would be either `App\Models\Post` or `App\Models\Video`, respectively. However, you may wish to decouple these values from your application's internal structure.
+Theo mặc định, Laravel sẽ sử dụng tên lớp đầy đủ để lưu trữ "loại" của model liên quan. Ví dụ, với ví dụ mối quan hệ một-nhiều ở trên trong đó một model `Comment` có thể thuộc về một model `Post` hoặc `Video`, `commentable_type` mặc định sẽ là `App\Models\Post` hoặc `App\Models\Video`, tương ứng. Tuy nhiên, bạn có thể muốn tách rời các giá trị này khỏi cấu trúc nội bộ của ứng dụng của bạn.
 
-For example, instead of using the model names as the "type", we may use simple strings such as `post` and `video`. By doing so, the polymorphic "type" column values in our database will remain valid even if the models are renamed:
+Ví dụ, thay vì sử dụng tên model làm "loại", chúng ta có thể sử dụng các chuỗi đơn giản như `post` và `video`. Bằng cách làm như vậy, các giá trị cột "loại" polymorphic trong database của chúng ta sẽ vẫn hợp lệ ngay cả khi các model được đổi tên:
 
 ```php
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -1469,9 +1469,9 @@ Relation::enforceMorphMap([
 ]);
 ```
 
-You may call the `enforceMorphMap` method in the `boot` method of your `App\Providers\AppServiceProvider` class or create a separate service provider if you wish.
+Bạn có thể gọi phương thức `enforceMorphMap` trong phương thức `boot` của lớp `App\Providers\AppServiceProvider` của bạn hoặc tạo một service provider riêng biệt nếu bạn muốn.
 
-You may determine the morph alias of a given model at runtime using the model's `getMorphClass` method. Conversely, you may determine the fully-qualified class name associated with a morph alias using the `Relation::getMorphedModel` method:
+Bạn có thể xác định bí danh morph của một model đã cho tại thời điểm chạy bằng cách sử dụng phương thức `getMorphClass` của model. Ngược lại, bạn có thể xác định tên lớp đầy đủ được liên kết với một bí danh morph bằng cách sử dụng phương thức `Relation::getMorphedModel`:
 
 ```php
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -1482,14 +1482,14 @@ $class = Relation::getMorphedModel($alias);
 ```
 
 > [!WARNING]
-> When adding a "morph map" to your existing application, every morphable `*_type` column value in your database that still contains a fully-qualified class will need to be converted to its "map" name.
+> Khi thêm một "morph map" vào ứng dụng hiện có của bạn, mọi giá trị cột `*_type` có thể morph trong database của bạn vẫn chứa một lớp đầy đủ sẽ cần được chuyển đổi thành tên "map" của nó.
 
 <a name="dynamic-relationships"></a>
 ### Dynamic Relationships
 
-You may use the `resolveRelationUsing` method to define relations between Eloquent models at runtime. While not typically recommended for normal application development, this may occasionally be useful when developing Laravel packages.
+Bạn có thể sử dụng phương thức `resolveRelationUsing` để định nghĩa các mối quan hệ giữa các model Eloquent tại thời điểm chạy. Mặc dù thường không được khuyến nghị cho phát triển ứng dụng bình thường, điều này có thể đôi khi hữu ích khi phát triển các gói Laravel.
 
-The `resolveRelationUsing` method accepts the desired relationship name as its first argument. The second argument passed to the method should be a closure that accepts the model instance and returns a valid Eloquent relationship definition. Typically, you should configure dynamic relationships within the boot method of a [service provider](/docs/{{version}}/providers):
+Phương thức `resolveRelationUsing` chấp nhận tên mối quan hệ mong muốn làm đối số đầu tiên. Đối số thứ hai được truyền cho phương thức nên là một closure chấp nhận instance model và trả về một định nghĩa mối quan hệ Eloquent hợp lệ. Thông thường, bạn nên cấu hình các mối quan hệ động trong phương thức boot của một [service provider](/docs/{{version}}/providers):
 
 ```php
 use App\Models\Order;
@@ -1501,14 +1501,14 @@ Order::resolveRelationUsing('customer', function (Order $orderModel) {
 ```
 
 > [!WARNING]
-> When defining dynamic relationships, always provide explicit key name arguments to the Eloquent relationship methods.
+> Khi định nghĩa các mối quan hệ động, luôn cung cấp các đối số tên khóa rõ ràng cho các phương thức mối quan hệ Eloquent.
 
 <a name="querying-relations"></a>
 ## Querying Relations
 
-Since all Eloquent relationships are defined via methods, you may call those methods to obtain an instance of the relationship without actually executing a query to load the related models. In addition, all types of Eloquent relationships also serve as [query builders](/docs/{{version}}/queries), allowing you to continue to chain constraints onto the relationship query before finally executing the SQL query against your database.
+Vì tất cả các mối quan hệ Eloquent được định nghĩa thông qua các phương thức, bạn có thể gọi các phương thức đó để lấy một instance của mối quan hệ mà không thực sự thực thi một truy vấn để tải các model liên quan. Ngoài ra, tất cả các loại mối quan hệ Eloquent cũng đóng vai trò là [query builders](/docs/{{version}}/queries), cho phép bạn tiếp tục chuỗi các ràng buộc vào truy vấn mối quan hệ trước khi cuối cùng thực thi truy vấn SQL đối với database của bạn.
 
-For example, imagine a blog application in which a `User` model has many associated `Post` models:
+Ví dụ, hãy tưởng tượng một ứng dụng blog trong đó một model `User` có nhiều model `Post` liên quan:
 
 ```php
 <?php
@@ -1530,7 +1530,7 @@ class User extends Model
 }
 ```
 
-You may query the `posts` relationship and add additional constraints to the relationship like so:
+Bạn có thể truy vấn mối quan hệ `posts` và thêm các ràng buộc bổ sung vào mối quan hệ như sau:
 
 ```php
 use App\Models\User;
@@ -1540,12 +1540,12 @@ $user = User::find(1);
 $user->posts()->where('active', 1)->get();
 ```
 
-You are able to use any of the Laravel [query builder's](/docs/{{version}}/queries) methods on the relationship, so be sure to explore the query builder documentation to learn about all of the methods that are available to you.
+Bạn có thể sử dụng bất kỳ phương thức nào của [query builder](/docs/{{version}}/queries) của Laravel trên mối quan hệ, vì vậy hãy đảm bảo khám phá tài liệu query builder để tìm hiểu về tất cả các phương thức có sẵn cho bạn.
 
 <a name="chaining-orwhere-clauses-after-relationships"></a>
 #### Chaining `orWhere` Clauses After Relationships
 
-As demonstrated in the example above, you are free to add additional constraints to relationships when querying them. However, use caution when chaining `orWhere` clauses onto a relationship, as the `orWhere` clauses will be logically grouped at the same level as the relationship constraint:
+Như được minh họa trong ví dụ trên, bạn có thể tự do thêm các ràng buộc bổ sung vào các mối quan hệ khi truy vấn chúng. Tuy nhiên, hãy thận trọng khi chuỗi các mệnh đề `orWhere` vào một mối quan hệ, vì các mệnh đề `orWhere` sẽ được nhóm logic ở cùng cấp với ràng buộc mối quan hệ:
 
 ```php
 $user->posts()
@@ -1554,7 +1554,7 @@ $user->posts()
     ->get();
 ```
 
-The example above will generate the following SQL. As you can see, the `or` clause instructs the query to return _any_ post with greater than 100 votes. The query is no longer constrained to a specific user:
+Ví dụ trên sẽ tạo ra SQL sau. Như bạn có thể thấy, mệnh đề `or` hướng dẫn truy vấn trả về _bất kỳ_ bài đăng nào có hơn 100 phiếu bầu. Truy vấn không còn bị ràng buộc với một người dùng cụ thể:
 
 ```sql
 select *
@@ -1562,7 +1562,7 @@ from posts
 where user_id = ? and active = 1 or votes >= 100
 ```
 
-In most situations, you should use [logical groups](/docs/{{version}}/queries#logical-grouping) to group the conditional checks between parentheses:
+Trong hầu hết các tình huống, bạn nên sử dụng [nhóm logic](/docs/{{version}}/queries#logical-grouping) để nhóm các kiểm tra điều kiện giữa các dấu ngoặc đơn:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1575,7 +1575,7 @@ $user->posts()
     ->get();
 ```
 
-The example above will produce the following SQL. Note that the logical grouping has properly grouped the constraints and the query remains constrained to a specific user:
+Ví dụ trên sẽ tạo ra SQL sau. Lưu ý rằng nhóm logic đã nhóm các ràng buộc đúng cách và truy vấn vẫn bị ràng buộc với một người dùng cụ thể:
 
 ```sql
 select *
@@ -1586,7 +1586,7 @@ where user_id = ? and (active = 1 or votes >= 100)
 <a name="relationship-methods-vs-dynamic-properties"></a>
 ### Relationship Methods vs. Dynamic Properties
 
-If you do not need to add additional constraints to an Eloquent relationship query, you may access the relationship as if it were a property. For example, continuing to use our `User` and `Post` example models, we may access all of a user's posts like so:
+Nếu bạn không cần thêm các ràng buộc bổ sung vào một truy vấn mối quan hệ Eloquent, bạn có thể truy cập mối quan hệ như thể nó là một thuộc tính. Ví dụ, tiếp tục sử dụng các model ví dụ `User` và `Post` của chúng ta, chúng ta có thể truy cập tất cả các bài đăng của một người dùng như sau:
 
 ```php
 use App\Models\User;
@@ -1598,12 +1598,12 @@ foreach ($user->posts as $post) {
 }
 ```
 
-Dynamic relationship properties perform "lazy loading", meaning they will only load their relationship data when you actually access them. Because of this, developers often use [eager loading](#eager-loading) to pre-load relationships they know will be accessed after loading the model. Eager loading provides a significant reduction in SQL queries that must be executed to load a model's relations.
+Các thuộc tính mối quan hệ động thực hiện "lazy loading", nghĩa là chúng sẽ chỉ tải dữ liệu mối quan hệ khi bạn thực sự truy cập chúng. Vì lý do này, các nhà phát triển thường sử dụng [eager loading](#eager-loading) để tải trước các mối quan hệ mà họ biết sẽ được truy cập sau khi tải model. Eager loading cung cấp sự giảm đáng kể các truy vấn SQL phải được thực thi để tải các mối quan hệ của một model.
 
 <a name="querying-relationship-existence"></a>
 ### Querying Relationship Existence
 
-When retrieving model records, you may wish to limit your results based on the existence of a relationship. For example, imagine you want to retrieve all blog posts that have at least one comment. To do so, you may pass the name of the relationship to the `has` and `orHas` methods:
+Khi truy xuất các bản ghi model, bạn có thể muốn giới hạn kết quả của mình dựa trên sự tồn tại của một mối quan hệ. Ví dụ, hãy tưởng tượng bạn muốn truy xuất tất cả các bài đăng blog có ít nhất một bình luận. Để làm như vậy, bạn có thể truyền tên của mối quan hệ cho các phương thức `has` và `orHas`:
 
 ```php
 use App\Models\Post;
@@ -1612,21 +1612,21 @@ use App\Models\Post;
 $posts = Post::has('comments')->get();
 ```
 
-You may also specify an operator and count value to further customize the query:
+Bạn cũng có thể chỉ định một toán tử và giá trị đếm để tùy chỉnh thêm truy vấn:
 
 ```php
 // Retrieve all posts that have three or more comments...
 $posts = Post::has('comments', '>=', 3)->get();
 ```
 
-Nested `has` statements may be constructed using "dot" notation. For example, you may retrieve all posts that have at least one comment that has at least one image:
+Các câu lệnh `has` lồng nhau có thể được xây dựng bằng cách sử dụng ký hiệu "dot". Ví dụ, bạn có thể truy xuất tất cả các bài đăng có ít nhất một bình luận có ít nhất một hình ảnh:
 
 ```php
 // Retrieve posts that have at least one comment with images...
 $posts = Post::has('comments.images')->get();
 ```
 
-If you need even more power, you may use the `whereHas` and `orWhereHas` methods to define additional query constraints on your `has` queries, such as inspecting the content of a comment:
+Nếu bạn cần thêm sức mạnh hơn, bạn có thể sử dụng các phương thức `whereHas` và `orWhereHas` để định nghĩa các ràng buộc truy vấn bổ sung trên các truy vấn `has` của bạn, chẳng hạn như kiểm tra nội dung của một bình luận:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1643,18 +1643,18 @@ $posts = Post::whereHas('comments', function (Builder $query) {
 ```
 
 > [!WARNING]
-> Eloquent does not currently support querying for relationship existence across databases. The relationships must exist within the same database.
+> Eloquent hiện không hỗ trợ truy vấn sự tồn tại của mối quan hệ trên các database. Các mối quan hệ phải tồn tại trong cùng một database.
 
 <a name="many-to-many-relationship-existence-queries"></a>
 #### Many to Many Relationship Existence Queries
 
-The `whereAttachedTo` method may be used to query for models that have a many to many attachment to a model or collection of models:
+Phương thức `whereAttachedTo` có thể được sử dụng để truy vấn cho các model có một mối quan hệ nhiều-đến-nhiều với một model hoặc collection của các model:
 
 ```php
 $users = User::whereAttachedTo($role)->get();
 ```
 
-You may also provide a [collection](/docs/{{version}}/eloquent-collections) instance to the `whereAttachedTo` method. When doing so, Laravel will retrieve models that are attached to any of the models within the collection:
+Bạn cũng có thể cung cấp một instance [collection](/docs/{{version}}/eloquent-collections) cho phương thức `whereAttachedTo`. Khi làm như vậy, Laravel sẽ truy xuất các model được gắn vào bất kỳ model cha nào trong collection:
 
 ```php
 $tags = Tag::whereLike('name', '%laravel%')->get();
@@ -1665,7 +1665,7 @@ $posts = Post::whereAttachedTo($tags)->get();
 <a name="inline-relationship-existence-queries"></a>
 #### Inline Relationship Existence Queries
 
-If you would like to query for a relationship's existence with a single, simple where condition attached to the relationship query, you may find it more convenient to use the `whereRelation`, `orWhereRelation`, `whereMorphRelation`, and `orWhereMorphRelation` methods. For example, we may query for all posts that have unapproved comments:
+Nếu bạn muốn truy vấn sự tồn tại của một mối quan hệ với một điều kiện where đơn giản được gắn vào truy vấn mối quan hệ, bạn có thể thấy việc sử dụng các phương thức `whereRelation`, `orWhereRelation`, `whereMorphRelation`, và `orWhereMorphRelation` tiện lợi hơn. Ví dụ, chúng ta có thể truy vấn cho tất cả các bài đăng có bình luận chưa được phê duyệt:
 
 ```php
 use App\Models\Post;
@@ -1673,7 +1673,7 @@ use App\Models\Post;
 $posts = Post::whereRelation('comments', 'is_approved', false)->get();
 ```
 
-Of course, like calls to the query builder's `where` method, you may also specify an operator:
+Tất nhiên, giống như các lệnh gọi đến phương thức `where` của query builder, bạn cũng có thể chỉ định một toán tử:
 
 ```php
 $posts = Post::whereRelation(
@@ -1684,7 +1684,7 @@ $posts = Post::whereRelation(
 <a name="querying-relationship-absence"></a>
 ### Querying Relationship Absence
 
-When retrieving model records, you may wish to limit your results based on the absence of a relationship. For example, imagine you want to retrieve all blog posts that **don't** have any comments. To do so, you may pass the name of the relationship to the `doesntHave` and `orDoesntHave` methods:
+Khi truy xuất các bản ghi model, bạn có thể muốn giới hạn kết quả của mình dựa trên sự vắng mặt của một mối quan hệ. Ví dụ, hãy tưởng tượng bạn muốn truy xuất tất cả các bài đăng blog **không** có bất kỳ bình luận nào. Để làm như vậy, bạn có thể truyền tên của mối quan hệ cho các phương thức `doesntHave` và `orDoesntHave`:
 
 ```php
 use App\Models\Post;
@@ -1692,7 +1692,7 @@ use App\Models\Post;
 $posts = Post::doesntHave('comments')->get();
 ```
 
-If you need even more power, you may use the `whereDoesntHave` and `orWhereDoesntHave` methods to add additional query constraints to your `doesntHave` queries, such as inspecting the content of a comment:
+Nếu bạn cần thêm sức mạnh hơn, bạn có thể sử dụng các phương thức `whereDoesntHave` và `orWhereDoesntHave` để thêm các ràng buộc truy vấn bổ sung vào các truy vấn `doesntHave` của bạn, chẳng hạn như kiểm tra nội dung của một bình luận:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1702,7 +1702,7 @@ $posts = Post::whereDoesntHave('comments', function (Builder $query) {
 })->get();
 ```
 
-You may use "dot" notation to execute a query against a nested relationship. For example, the following query will retrieve all posts that do not have comments as well as posts that have comments where none of the comments are from banned users:
+Bạn có thể sử dụng ký hiệu "dot" để thực thi một truy vấn đối với một mối quan hệ lồng nhau. Ví dụ, truy vấn sau sẽ truy xuất tất cả các bài đăng không có bình luận cũng như các bài đăng có bình luận trong đó không có bình luận nào từ người dùng bị cấm:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1715,7 +1715,7 @@ $posts = Post::whereDoesntHave('comments.author', function (Builder $query) {
 <a name="querying-morph-to-relationships"></a>
 ### Querying Morph To Relationships
 
-To query the existence of "morph to" relationships, you may use the `whereHasMorph` and `whereDoesntHaveMorph` methods. These methods accept the name of the relationship as their first argument. Next, the methods accept the names of the related models that you wish to include in the query. Finally, you may provide a closure which customizes the relationship query:
+Để truy vấn sự tồn tại của các mối quan hệ "morph to", bạn có thể sử dụng các phương thức `whereHasMorph` và `whereDoesntHaveMorph`. Các phương thức này chấp nhận tên của mối quan hệ làm đối số đầu tiên. Tiếp theo, các phương thức chấp nhận tên của các model liên quan mà bạn muốn bao gồm trong truy vấn. Cuối cùng, bạn có thể cung cấp một closure tùy chỉnh truy vấn mối quan hệ:
 
 ```php
 use App\Models\Comment;
@@ -1742,7 +1742,7 @@ $comments = Comment::whereDoesntHaveMorph(
 )->get();
 ```
 
-You may occasionally need to add query constraints based on the "type" of the related polymorphic model. The closure passed to the `whereHasMorph` method may receive a `$type` value as its second argument. This argument allows you to inspect the "type" of the query that is being built:
+Đôi khi bạn có thể cần thêm các ràng buộc truy vấn dựa trên "loại" của model polymorphic liên quan. Closure được truyền cho phương thức `whereHasMorph` có thể nhận một giá trị `$type` làm đối số thứ hai. Đối số này cho phép bạn kiểm tra "loại" của truy vấn đang được xây dựng:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1758,7 +1758,7 @@ $comments = Comment::whereHasMorph(
 )->get();
 ```
 
-Sometimes you may want to query for the children of a "morph to" relationship's parent. You may accomplish this using the `whereMorphedTo` and `whereNotMorphedTo` methods, which will automatically determine the proper morph type mapping for the given model. These methods accept the name of the `morphTo` relationship as their first argument and the related parent model as their second argument:
+Đôi khi bạn muốn truy vấn cho các con của một cha của mối quan hệ "morph to". Bạn có thể thực hiện điều này bằng cách sử dụng các phương thức `whereMorphedTo` và `whereNotMorphedTo`, phương thức này sẽ tự động xác định ánh xạ loại morph thích hợp cho model đã cho. Các phương thức này chấp nhận tên của mối quan hệ `morphTo` làm đối số đầu tiên và model cha liên quan làm đối số thứ hai:
 
 ```php
 $comments = Comment::whereMorphedTo('commentable', $post)
@@ -1769,7 +1769,7 @@ $comments = Comment::whereMorphedTo('commentable', $post)
 <a name="querying-all-morph-to-related-models"></a>
 #### Querying All Related Models
 
-Instead of passing an array of possible polymorphic models, you may provide `*` as a wildcard value. This will instruct Laravel to retrieve all of the possible polymorphic types from the database. Laravel will execute an additional query in order to perform this operation:
+Thay vì truyền một mảng các model polymorphic có thể, bạn có thể cung cấp `*` làm giá trị wildcard. Điều này sẽ hướng dẫn Laravel truy xuất tất cả các loại polymorphic có thể từ database. Laravel sẽ thực thi một truy vấn bổ sung để thực hiện thao tác này:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1785,7 +1785,7 @@ $comments = Comment::whereHasMorph('commentable', '*', function (Builder $query)
 <a name="counting-related-models"></a>
 ### Counting Related Models
 
-Sometimes you may want to count the number of related models for a given relationship without actually loading the models. To accomplish this, you may use the `withCount` method. The `withCount` method will place a `{relation}_count` attribute on the resulting models:
+Đôi khi bạn muốn đếm số lượng model liên quan cho một mối quan hệ đã cho mà không thực sự tải các model. Để thực hiện điều này, bạn có thể sử dụng phương thức `withCount`. Phương thức `withCount` sẽ đặt một thuộc tính `{relation}_count` trên các model kết quả:
 
 ```php
 use App\Models\Post;
@@ -1797,7 +1797,7 @@ foreach ($posts as $post) {
 }
 ```
 
-By passing an array to the `withCount` method, you may add the "counts" for multiple relations as well as add additional constraints to the queries:
+Bằng cách truyền một mảng cho phương thức `withCount`, bạn có thể thêm "số đếm" cho nhiều mối quan hệ cũng như thêm các ràng buộc bổ sung vào các truy vấn:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1810,7 +1810,7 @@ echo $posts[0]->votes_count;
 echo $posts[0]->comments_count;
 ```
 
-You may also alias the relationship count result, allowing multiple counts on the same relationship:
+Bạn cũng có thể đặt tên cho kết quả đếm mối quan hệ, cho phép nhiều số đếm trên cùng một mối quan hệ:
 
 ```php
 use Illuminate\Database\Eloquent\Builder;
@@ -1829,7 +1829,7 @@ echo $posts[0]->pending_comments_count;
 <a name="deferred-count-loading"></a>
 #### Deferred Count Loading
 
-Using the `loadCount` method, you may load a relationship count after the parent model has already been retrieved:
+Sử dụng phương thức `loadCount`, bạn có thể tải số đếm mối quan hệ sau khi model cha đã được truy xuất:
 
 ```php
 $book = Book::first();
@@ -1837,7 +1837,7 @@ $book = Book::first();
 $book->loadCount('genres');
 ```
 
-If you need to set additional query constraints on the count query, you may pass an array keyed by the relationships you wish to count. The array values should be closures which receive the query builder instance:
+Nếu bạn cần đặt các ràng buộc truy vấn bổ sung trên truy vấn đếm, bạn có thể truyền một mảng được khóa bởi các mối quan hệ bạn muốn đếm. Các giá trị mảng nên là các closure nhận instance query builder:
 
 ```php
 $book->loadCount(['reviews' => function (Builder $query) {
@@ -1848,7 +1848,7 @@ $book->loadCount(['reviews' => function (Builder $query) {
 <a name="relationship-counting-and-custom-select-statements"></a>
 #### Relationship Counting and Custom Select Statements
 
-If you're combining `withCount` with a `select` statement, ensure that you call `withCount` after the `select` method:
+Nếu bạn đang kết hợp `withCount` với một câu lệnh `select`, hãy đảm bảo rằng bạn gọi `withCount` sau phương thức `select`:
 
 ```php
 $posts = Post::select(['title', 'body'])
@@ -1859,7 +1859,7 @@ $posts = Post::select(['title', 'body'])
 <a name="other-aggregate-functions"></a>
 ### Other Aggregate Functions
 
-In addition to the `withCount` method, Eloquent provides `withMin`, `withMax`, `withAvg`, `withSum`, and `withExists` methods. These methods will place a `{relation}_{function}_{column}` attribute on your resulting models:
+Ngoài phương thức `withCount`, Eloquent cung cấp các phương thức `withMin`, `withMax`, `withAvg`, `withSum`, và `withExists`. Các phương thức này sẽ đặt một thuộc tính `{relation}_{function}_{column}` trên các model kết quả của bạn:
 
 ```php
 use App\Models\Post;
@@ -1871,7 +1871,7 @@ foreach ($posts as $post) {
 }
 ```
 
-If you wish to access the result of the aggregate function using another name, you may specify your own alias:
+Nếu bạn muốn truy cập kết quả của hàm tổng hợp bằng cách sử dụng một tên khác, bạn có thể chỉ định bí danh của riêng bạn:
 
 ```php
 $posts = Post::withSum('comments as total_comments', 'votes')->get();
@@ -1881,7 +1881,7 @@ foreach ($posts as $post) {
 }
 ```
 
-Like the `loadCount` method, deferred versions of these methods are also available. These additional aggregate operations may be performed on Eloquent models that have already been retrieved:
+Giống như phương thức `loadCount`, các phiên bản deferred của các phương thức này cũng có sẵn. Các hoạt động tổng hợp bổ sung này có thể được thực hiện trên các model Eloquent đã được truy xuất:
 
 ```php
 $post = Post::first();
@@ -1889,7 +1889,7 @@ $post = Post::first();
 $post->loadSum('comments', 'votes');
 ```
 
-If you're combining these aggregate methods with a `select` statement, ensure that you call the aggregate methods after the `select` method:
+Nếu bạn đang kết hợp các phương thức tổng hợp này với một câu lệnh `select`, hãy đảm bảo rằng bạn gọi các phương thức tổng hợp sau phương thức `select`:
 
 ```php
 $posts = Post::select(['title', 'body'])
@@ -1900,11 +1900,11 @@ $posts = Post::select(['title', 'body'])
 <a name="counting-related-models-on-morph-to-relationships"></a>
 ### Counting Related Models on Morph To Relationships
 
-If you would like to eager load a "morph to" relationship, as well as related model counts for the various entities that may be returned by that relationship, you may utilize the `with` method in combination with the `morphTo` relationship's `morphWithCount` method.
+Nếu bạn muốn eager load một mối quan hệ "morph to", cũng như số đếm model liên quan cho các thực thể khác nhau có thể được trả về bởi mối quan hệ đó, bạn có thể sử dụng phương thức `with` kết hợp với phương thức `morphWithCount` của mối quan hệ `morphTo`.
 
-In this example, let's assume that `Photo` and `Post` models may create `ActivityFeed` models. We will assume the `ActivityFeed` model defines a "morph to" relationship named `parentable` that allows us to retrieve the parent `Photo` or `Post` model for a given `ActivityFeed` instance. Additionally, let's assume that `Photo` models "have many" `Tag` models and `Post` models "have many" `Comment` models.
+Trong ví dụ này, hãy giả sử rằng các model `Photo` và `Post` có thể tạo ra các model `ActivityFeed`. Chúng ta sẽ giả định rằng model `ActivityFeed` định nghĩa một mối quan hệ "morph to" tên là `parentable` cho phép chúng ta truy xuất model cha `Photo` hoặc `Post` cho một instance `ActivityFeed` đã cho. Ngoài ra, hãy giả định rằng các model `Photo` "có nhiều" model `Tag` và các model `Post` "có nhiều" model `Comment`.
 
-Now, let's imagine we want to retrieve `ActivityFeed` instances and eager load the `parentable` parent models for each `ActivityFeed` instance. In addition, we want to retrieve the number of tags that are associated with each parent photo and the number of comments that are associated with each parent post:
+Bây giờ, hãy tưởng tượng chúng ta muốn truy xuất các instance `ActivityFeed` và eager load các model cha `parentable` cho mỗi instance `ActivityFeed`. Ngoài ra, chúng ta muốn truy xuất số lượng thẻ được liên kết với mỗi ảnh cha và số lượng bình luận được liên kết với mỗi bài đăng cha:
 
 ```php
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -1921,7 +1921,7 @@ $activities = ActivityFeed::with([
 <a name="morph-to-deferred-count-loading"></a>
 #### Deferred Count Loading
 
-Let's assume we have already retrieved a set of `ActivityFeed` models and now we would like to load the nested relationship counts for the various `parentable` models associated with the activity feeds. You may use the `loadMorphCount` method to accomplish this:
+Hãy giả sử chúng ta đã truy xuất một tập hợp các model `ActivityFeed` và bây giờ chúng ta muốn tải các số đếm mối quan hệ lồng nhau cho các model `parentable` khác nhau liên quan đến các hoạt động. Bạn có thể sử dụng phương thức `loadMorphCount` để thực hiện điều này:
 
 ```php
 $activities = ActivityFeed::with('parentable')->get();
@@ -1935,7 +1935,7 @@ $activities->loadMorphCount('parentable', [
 <a name="eager-loading"></a>
 ## Eager Loading
 
-When accessing Eloquent relationships as properties, the related models are "lazy loaded". This means the relationship data is not actually loaded until you first access the property. However, Eloquent can "eager load" relationships at the time you query the parent model. Eager loading alleviates the "N + 1" query problem. To illustrate the N + 1 query problem, consider a `Book` model that "belongs to" to an `Author` model:
+Khi truy cập các mối quan hệ Eloquent dưới dạng thuộc tính, các model liên quan được "lazy loaded". Điều này có nghĩa là dữ liệu mối quan hệ không thực sự được tải cho đến khi bạn lần đầu tiên truy cập thuộc tính. Tuy nhiên, Eloquent có thể "eager load" các mối quan hệ tại thời điểm bạn truy vấn model cha. Eager loading làm giảm vấn đề truy vấn "N + 1". Để minh họa vấn đề truy vấn N + 1, hãy xem xét một model `Book` "belongs to" một model `Author`:
 
 ```php
 <?php
@@ -1957,7 +1957,7 @@ class Book extends Model
 }
 ```
 
-Now, let's retrieve all books and their authors:
+Bây giờ, hãy truy xuất tất cả các sách và tác giả của chúng:
 
 ```php
 use App\Models\Book;
@@ -1969,9 +1969,9 @@ foreach ($books as $book) {
 }
 ```
 
-This loop will execute one query to retrieve all of the books within the database table, then another query for each book in order to retrieve the book's author. So, if we have 25 books, the code above would run 26 queries: one for the original book, and 25 additional queries to retrieve the author of each book.
+Vòng lặp này sẽ thực thi một truy vấn để truy xuất tất cả các sách trong bảng database, sau đó một truy vấn khác cho mỗi sách để truy xuất tác giả của sách. Vì vậy, nếu chúng ta có 25 sách, mã trên sẽ chạy 26 truy vấn: một cho sách gốc, và 25 truy vấn bổ sung để truy xuất tác giả của mỗi sách.
 
-Thankfully, we can use eager loading to reduce this operation to just two queries. When building a query, you may specify which relationships should be eager loaded using the `with` method:
+May mắn thay, chúng ta có thể sử dụng eager loading để giảm thao tác này xuống chỉ còn hai truy vấn. Khi xây dựng một truy vấn, bạn có thể chỉ định các mối quan hệ nên được eager load bằng cách sử dụng phương thức `with`:
 
 ```php
 $books = Book::with('author')->get();
@@ -1981,7 +1981,7 @@ foreach ($books as $book) {
 }
 ```
 
-For this operation, only two queries will be executed - one query to retrieve all of the books and one query to retrieve all of the authors for all of the books:
+Đối với thao tác này, chỉ hai truy vấn sẽ được thực thi - một truy vấn để truy xuất tất cả các sách và một truy vấn để truy xuất tất cả các tác giả cho tất cả các sách:
 
 ```sql
 select * from books
@@ -1992,7 +1992,7 @@ select * from authors where id in (1, 2, 3, 4, 5, ...)
 <a name="eager-loading-multiple-relationships"></a>
 #### Eager Loading Multiple Relationships
 
-Sometimes you may need to eager load several different relationships. To do so, just pass an array of relationships to the `with` method:
+Đôi khi bạn có thể cần eager load một số mối quan hệ khác nhau. Để làm như vậy, chỉ cần truyền một mảng các mối quan hệ cho phương thức `with`:
 
 ```php
 $books = Book::with(['author', 'publisher'])->get();
@@ -2001,13 +2001,13 @@ $books = Book::with(['author', 'publisher'])->get();
 <a name="nested-eager-loading"></a>
 #### Nested Eager Loading
 
-To eager load a relationship's relationships, you may use "dot" syntax. For example, let's eager load all of the book's authors and all of the author's personal contacts:
+Để eager load các mối quan hệ của một mối quan hệ, bạn có thể sử dụng ký hiệu "dot". Ví dụ, hãy eager load tất cả các tác giả của sách và tất cả các liên hệ cá nhân của tác giả:
 
 ```php
 $books = Book::with('author.contacts')->get();
 ```
 
-Alternatively, you may specify nested eager loaded relationships by providing a nested array to the `with` method, which can be convenient when eager loading multiple nested relationships:
+Ngoài ra, bạn có thể chỉ định các mối quan hệ eager load lồng nhau bằng cách cung cấp một mảng lồng nhau cho phương thức `with`, điều này có thể thuận tiện khi eager load nhiều mối quan hệ lồng nhau:
 
 ```php
 $books = Book::with([
@@ -2021,7 +2021,7 @@ $books = Book::with([
 <a name="nested-eager-loading-morphto-relationships"></a>
 #### Nested Eager Loading `morphTo` Relationships
 
-If you would like to eager load a `morphTo` relationship, as well as nested relationships on the various entities that may be returned by that relationship, you may use the `with` method in combination with the `morphTo` relationship's `morphWith` method. To help illustrate this method, let's consider the following model:
+Nếu bạn muốn eager load một mối quan hệ `morphTo`, cũng như các mối quan hệ lồng nhau trên các thực thể khác nhau có thể được trả về bởi mối quan hệ đó, bạn có thể sử dụng phương thức `with` kết hợp với phương thức `morphWith` của mối quan hệ `morphTo`. Để giúp minh họa phương thức này, hãy xem xét model sau:
 
 ```php
 <?php
@@ -2041,9 +2041,9 @@ class ActivityFeed extends Model
 }
 ```
 
-In this example, let's assume `Event`, `Photo`, and `Post` models may create `ActivityFeed` models. Additionally, let's assume that `Event` models belong to a `Calendar` model, `Photo` models are associated with `Tag` models, and `Post` models belong to an `Author` model.
+Trong ví dụ này, hãy giả sử các model `Event`, `Photo`, và `Post` có thể tạo ra các model `ActivityFeed`. Ngoài ra, hãy giả định rằng các model `Event` thuộc về một model `Calendar`, các model `Photo` được liên kết với các model `Tag`, và các model `Post` thuộc về một model `Author`.
 
-Using these model definitions and relationships, we may retrieve `ActivityFeed` model instances and eager load all `parentable` models and their respective nested relationships:
+Sử dụng các định nghĩa và mối quan hệ model này, chúng ta có thể truy xuất các instance model `ActivityFeed` và eager load tất cả các model `parentable` và các mối quan hệ lồng nhau tương ứng của chúng:
 
 ```php
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -2061,19 +2061,19 @@ $activities = ActivityFeed::query()
 <a name="eager-loading-specific-columns"></a>
 #### Eager Loading Specific Columns
 
-You may not always need every column from the relationships you are retrieving. For this reason, Eloquent allows you to specify which columns of the relationship you would like to retrieve:
+Bạn có thể không luôn cần mọi cột từ các mối quan hệ bạn đang truy xuất. Vì lý do này, Eloquent cho phép bạn chỉ định các cột của mối quan hệ bạn muốn truy xuất:
 
 ```php
 $books = Book::with('author:id,name,book_id')->get();
 ```
 
 > [!WARNING]
-> When using this feature, you should always include the `id` column and any relevant foreign key columns in the list of columns you wish to retrieve.
+> Khi sử dụng tính năng này, bạn nên luôn bao gồm cột `id` và bất kỳ cột khóa ngoại liên quan nào trong danh sách các cột bạn muốn truy xuất.
 
 <a name="eager-loading-by-default"></a>
 #### Eager Loading by Default
 
-Sometimes you might want to always load some relationships when retrieving a model. To accomplish this, you may define a `$with` property on the model:
+Đôi khi bạn có thể muốn luôn tải một số mối quan hệ khi truy xuất một model. Để thực hiện điều này, bạn có thể định nghĩa một thuộc tính `$with` trên model:
 
 ```php
 <?php
@@ -2110,13 +2110,13 @@ class Book extends Model
 }
 ```
 
-If you would like to remove an item from the `$with` property for a single query, you may use the `without` method:
+Nếu bạn muốn xóa một mục khỏi thuộc tính `$with` cho một truy vấn duy nhất, bạn có thể sử dụng phương thức `without`:
 
 ```php
 $books = Book::without('author')->get();
 ```
 
-If you would like to override all items within the `$with` property for a single query, you may use the `withOnly` method:
+Nếu bạn muốn ghi đè tất cả các mục trong thuộc tính `$with` cho một truy vấn duy nhất, bạn có thể sử dụng phương thức `withOnly`:
 
 ```php
 $books = Book::withOnly('genre')->get();
@@ -2125,7 +2125,7 @@ $books = Book::withOnly('genre')->get();
 <a name="constraining-eager-loads"></a>
 ### Constraining Eager Loads
 
-Sometimes you may wish to eager load a relationship but also specify additional query conditions for the eager loading query. You can accomplish this by passing an array of relationships to the `with` method where the array key is a relationship name and the array value is a closure that adds additional constraints to the eager loading query:
+Đôi khi bạn có thể muốn eager load một mối quan hệ nhưng cũng chỉ định các điều kiện truy vấn bổ sung cho truy vấn eager loading. Bạn có thể thực hiện điều này bằng cách truyền một mảng các mối quan hệ cho phương thức `with` trong đó khóa mảng là tên mối quan hệ và giá trị mảng là một closure thêm các ràng buộc bổ sung vào truy vấn eager loading:
 
 ```php
 use App\Models\User;
@@ -2135,7 +2135,7 @@ $users = User::with(['posts' => function ($query) {
 }])->get();
 ```
 
-In this example, Eloquent will only eager load posts where the post's `title` column contains the word `code`. You may call other [query builder](/docs/{{version}}/queries) methods to further customize the eager loading operation:
+Trong ví dụ này, Eloquent sẽ chỉ eager load các bài đăng trong đó cột `title` của bài đăng chứa từ `code`. Bạn có thể gọi các phương thức [query builder](/docs/{{version}}/queries) khác để tùy chỉnh thêm thao tác eager loading:
 
 ```php
 $users = User::with(['posts' => function ($query) {
@@ -2146,7 +2146,7 @@ $users = User::with(['posts' => function ($query) {
 <a name="constraining-eager-loading-of-morph-to-relationships"></a>
 #### Constraining Eager Loading of `morphTo` Relationships
 
-If you are eager loading a `morphTo` relationship, Eloquent will run multiple queries to fetch each type of related model. You may add additional constraints to each of these queries using the `MorphTo` relation's `constrain` method:
+Nếu bạn đang eager load một mối quan hệ `morphTo`, Eloquent sẽ chạy nhiều truy vấn để lấy từng loại model liên quan. Bạn có thể thêm các ràng buộc bổ sung vào từng truy vấn này bằng cách sử dụng phương thức `constrain` của mối quan hệ `MorphTo`:
 
 ```php
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -2163,12 +2163,12 @@ $comments = Comment::with(['commentable' => function (MorphTo $morphTo) {
 }])->get();
 ```
 
-In this example, Eloquent will only eager load posts that have not been hidden and videos that have a `type` value of "educational".
+Trong ví dụ này, Eloquent sẽ chỉ eager load các bài đăng chưa bị ẩn và các video có giá trị `type` là "educational".
 
 <a name="constraining-eager-loads-with-relationship-existence"></a>
 #### Constraining Eager Loads With Relationship Existence
 
-You may sometimes find yourself needing to check for the existence of a relationship while simultaneously loading the relationship based on the same conditions. For example, you may wish to only retrieve `User` models that have child `Post` models matching a given query condition while also eager loading the matching posts. You may accomplish this using the `withWhereHas` method:
+Đôi khi bạn có thể thấy mình cần kiểm tra sự tồn tại của một mối quan hệ trong khi đồng thời tải mối quan hệ dựa trên cùng các điều kiện. Ví dụ, bạn có thể chỉ muốn truy xuất các model `User` có các model con `Post` khớp với một điều kiện truy vấn đã cho trong khi cũng eager load các bài đăng khớp. Bạn có thể thực hiện điều này bằng cách sử dụng phương thức `withWhereHas`:
 
 ```php
 use App\Models\User;
@@ -2181,7 +2181,7 @@ $users = User::withWhereHas('posts', function ($query) {
 <a name="lazy-eager-loading"></a>
 ### Lazy Eager Loading
 
-Sometimes you may need to eager load a relationship after the parent model has already been retrieved. For example, this may be useful if you need to dynamically decide whether to load related models:
+Đôi khi bạn có thể cần eager load một mối quan hệ sau khi model cha đã được truy xuất. Ví dụ, điều này có thể hữu ích nếu bạn cần quyết định động có nên tải các model liên quan hay không:
 
 ```php
 use App\Models\Book;
@@ -2193,7 +2193,7 @@ if ($condition) {
 }
 ```
 
-If you need to set additional query constraints on the eager loading query, you may pass an array keyed by the relationships you wish to load. The array values should be closure instances which receive the query instance:
+Nếu bạn cần đặt các ràng buộc truy vấn bổ sung trên truy vấn eager loading, bạn có thể truyền một mảng được khóa bởi các mối quan hệ bạn muốn tải. Các giá trị mảng nên là các instance closure nhận instance truy vấn:
 
 ```php
 $author->load(['books' => function ($query) {
@@ -2201,18 +2201,18 @@ $author->load(['books' => function ($query) {
 }]);
 ```
 
-To load a relationship only when it has not already been loaded, use the `loadMissing` method:
+Để tải một mối quan hệ chỉ khi nó chưa được tải, hãy sử dụng phương thức `loadMissing`:
 
 ```php
 $book->loadMissing('author');
 ```
 
 <a name="nested-lazy-eager-loading-morphto"></a>
-#### Nested Lazy Eager Loading and `morphTo`
+#### Nested Lazy Eager Loading và `morphTo`
 
-If you would like to eager load a `morphTo` relationship, as well as nested relationships on the various entities that may be returned by that relationship, you may use the `loadMorph` method.
+Nếu bạn muốn eager load một mối quan hệ `morphTo`, cũng như các mối quan hệ lồng nhau trên các thực thể khác nhau có thể được trả về bởi mối quan hệ đó, bạn có thể sử dụng phương thức `loadMorph`.
 
-This method accepts the name of the `morphTo` relationship as its first argument, and an array of model / relationship pairs as its second argument. To help illustrate this method, let's consider the following model:
+Phương thức này chấp nhận tên của mối quan hệ `morphTo` làm đối số đầu tiên, và một mảng các cặp model / mối quan hệ làm đối số thứ hai. Để giúp minh họa phương thức này, hãy xem xét model sau:
 
 ```php
 <?php
@@ -2232,9 +2232,9 @@ class ActivityFeed extends Model
 }
 ```
 
-In this example, let's assume `Event`, `Photo`, and `Post` models may create `ActivityFeed` models. Additionally, let's assume that `Event` models belong to a `Calendar` model, `Photo` models are associated with `Tag` models, and `Post` models belong to an `Author` model.
+Trong ví dụ này, hãy giả sử các model `Event`, `Photo`, và `Post` có thể tạo ra các model `ActivityFeed`. Ngoài ra, hãy giả định rằng các model `Event` thuộc về một model `Calendar`, các model `Photo` được liên kết với các model `Tag`, và các model `Post` thuộc về một model `Author`.
 
-Using these model definitions and relationships, we may retrieve `ActivityFeed` model instances and eager load all `parentable` models and their respective nested relationships:
+Sử dụng các định nghĩa và mối quan hệ model này, chúng ta có thể truy xuất các instance model `ActivityFeed` và eager load tất cả các model `parentable` và các mối quan hệ lồng nhau tương ứng của chúng:
 
 ```php
 $activities = ActivityFeed::with('parentable')
@@ -2250,9 +2250,9 @@ $activities = ActivityFeed::with('parentable')
 ### Automatic Eager Loading
 
 > [!WARNING]
-> This feature is currently in beta in order to gather community feedback. The behavior and functionality of this feature may change even on patch releases.
+> Tính năng này hiện đang ở beta để thu thập phản hồi từ cộng đồng. Hành vi và chức năng của tính năng này có thể thay đổi ngay cả trên các bản vá.
 
-In many cases, Laravel can automatically eager load the relationships you access. To enable automatic eager loading, you should invoke the `Model::automaticallyEagerLoadRelationships` method within the `boot` method of your application's `AppServiceProvider`:
+Trong nhiều trường hợp, Laravel có thể tự động eager load các mối quan hệ bạn truy cập. Để bật eager loading tự động, bạn nên gọi phương thức `Model::automaticallyEagerLoadRelationships` trong phương thức `boot` của `AppServiceProvider` của ứng dụng của bạn:
 
 ```php
 use Illuminate\Database\Eloquent\Model;
@@ -2266,7 +2266,7 @@ public function boot(): void
 }
 ```
 
-When this feature is enabled, Laravel will attempt to automatically load any relationships you access that have not been previously loaded. For example, consider the following scenario:
+Khi tính năng này được bật, Laravel sẽ cố gắng tự động tải bất kỳ mối quan hệ nào bạn truy cập chưa được tải trước đó. Ví dụ, hãy xem xét tình huống sau:
 
 ```php
 use App\Models\User;
@@ -2282,9 +2282,9 @@ foreach ($users as $user) {
 }
 ```
 
-Typically, the code above would execute a query for each user in order to retrieve their posts, as well as a query for each post to retrieve its comments. However, when the `automaticallyEagerLoadRelationships` feature has been enabled, Laravel will automatically [lazy eager load](#lazy-eager-loading) the posts for all users in the user collection when you attempt to access the posts on any of the retrieved users. Likewise, when you attempt to access the comments for any retrieved post, all comments will be lazy eager loaded for all posts that were originally retrieved.
+Thông thường, mã trên sẽ thực thi một truy vấn cho mỗi người dùng để truy xuất các bài đăng của họ, cũng như một truy vấn cho mỗi bài đăng để truy xuất các bình luận của nó. Tuy nhiên, khi tính năng `automaticallyEagerLoadRelationships` đã được bật, Laravel sẽ tự động [lazy eager load](#lazy-eager-loading) các bài đăng cho tất cả người dùng trong collection người dùng khi bạn cố gắng truy cập các bài đăng trên bất kỳ người dùng nào đã được truy xuất. Tương tự, khi bạn cố gắng truy cập các bình luận cho bất kỳ bài đăng nào đã được truy xuất, tất cả các bình luận sẽ được lazy eager load cho tất cả các bài đăng đã được truy xuất ban đầu.
 
-If you do not want to globally enable automatic eager loading, you can still enable this feature for a single Eloquent collection instance by invoking the `withRelationshipAutoloading` method on the collection:
+Nếu bạn không muốn bật eager loading tự động toàn cục, bạn vẫn có thể bật tính năng này cho một instance collection Eloquent duy nhất bằng cách gọi phương thức `withRelationshipAutoloading` trên collection:
 
 ```php
 $users = User::where('vip', true)->get();
@@ -2295,9 +2295,9 @@ return $users->withRelationshipAutoloading();
 <a name="preventing-lazy-loading"></a>
 ### Preventing Lazy Loading
 
-As previously discussed, eager loading relationships can often provide significant performance benefits to your application. Therefore, if you would like, you may instruct Laravel to always prevent the lazy loading of relationships. To accomplish this, you may invoke the `preventLazyLoading` method offered by the base Eloquent model class. Typically, you should call this method within the `boot` method of your application's `AppServiceProvider` class.
+Như đã thảo luận trước đó, eager loading các mối quan hệ thường có thể mang lại lợi ích hiệu suất đáng kể cho ứng dụng của bạn. Do đó, nếu bạn muốn, bạn có thể hướng dẫn Laravel luôn ngăn chặn lazy loading của các mối quan hệ. Để thực hiện điều này, bạn có thể gọi phương thức `preventLazyLoading` được cung cấp bởi lớp model Eloquent cơ sở. Thông thường, bạn nên gọi phương thức này trong phương thức `boot` của lớp `AppServiceProvider` của ứng dụng của bạn.
 
-The `preventLazyLoading` method accepts an optional boolean argument that indicates if lazy loading should be prevented. For example, you may wish to only disable lazy loading in non-production environments so that your production environment will continue to function normally even if a lazy loaded relationship is accidentally present in production code:
+Phương thức `preventLazyLoading` chấp nhận một đối số boolean tùy chọn chỉ ra liệu lazy loading có nên được ngăn chặn hay không. Ví dụ, bạn có thể chỉ muốn vô hiệu hóa lazy loading trong các môi trường không sản xuất để môi trường sản xuất của bạn sẽ tiếp tục hoạt động bình thường ngay cả khi một mối quan hệ lazy load vô tình có trong mã sản xuất:
 
 ```php
 use Illuminate\Database\Eloquent\Model;
@@ -2311,9 +2311,9 @@ public function boot(): void
 }
 ```
 
-After preventing lazy loading, Eloquent will throw a `Illuminate\Database\LazyLoadingViolationException` exception when your application attempts to lazy load any Eloquent relationship.
+Sau khi ngăn chặn lazy loading, Eloquent sẽ ném một ngoại lệ `Illuminate\Database\LazyLoadingViolationException` khi ứng dụng của bạn cố gắng lazy load bất kỳ mối quan hệ Eloquent nào.
 
-You may customize the behavior of lazy loading violations using the `handleLazyLoadingViolationsUsing` method. For example, using this method, you may instruct lazy loading violations to only be logged instead of interrupting the application's execution with exceptions:
+Bạn có thể tùy chỉnh hành vi của các vi phạm lazy loading bằng cách sử dụng phương thức `handleLazyLoadingViolationsUsing`. Ví dụ, sử dụng phương thức này, bạn có thể hướng dẫn các vi phạm lazy loading chỉ được ghi nhật ký thay vì làm gián đoạn việc thực thi ứng dụng với các ngoại lệ:
 
 ```php
 Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation) {
@@ -2329,7 +2329,7 @@ Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation)
 <a name="the-save-method"></a>
 ### The `save` Method
 
-Eloquent provides convenient methods for adding new models to relationships. For example, perhaps you need to add a new comment to a post. Instead of manually setting the `post_id` attribute on the `Comment` model you may insert the comment using the relationship's `save` method:
+Eloquent cung cấp các phương thức thuận tiện để thêm các model mới vào các mối quan hệ. Ví dụ, có thể bạn cần thêm một bình luận mới vào một bài đăng. Thay vì đặt thủ công thuộc tính `post_id` trên model `Comment`, bạn có thể chèn bình luận bằng cách sử dụng phương thức `save` của mối quan hệ:
 
 ```php
 use App\Models\Comment;
@@ -2342,9 +2342,9 @@ $post = Post::find(1);
 $post->comments()->save($comment);
 ```
 
-Note that we did not access the `comments` relationship as a dynamic property. Instead, we called the `comments` method to obtain an instance of the relationship. The `save` method will automatically add the appropriate `post_id` value to the new `Comment` model.
+Lưu ý rằng chúng ta không truy cập mối quan hệ `comments` như một thuộc tính động. Thay vào đó, chúng ta gọi phương thức `comments` để lấy một instance của mối quan hệ. Phương thức `save` sẽ tự động thêm giá trị `post_id` thích hợp vào model `Comment` mới.
 
-If you need to save multiple related models, you may use the `saveMany` method:
+Nếu bạn cần lưu nhiều model liên quan, bạn có thể sử dụng phương thức `saveMany`:
 
 ```php
 $post = Post::find(1);
@@ -2355,7 +2355,7 @@ $post->comments()->saveMany([
 ]);
 ```
 
-The `save` and `saveMany` methods will persist the given model instances, but will not add the newly persisted models to any in-memory relationships that are already loaded onto the parent model. If you plan on accessing the relationship after using the `save` or `saveMany` methods, you may wish to use the `refresh` method to reload the model and its relationships:
+Các phương thức `save` và `saveMany` sẽ duy trì các instance model đã cho, nhưng sẽ không thêm các model mới được duy trì vào bất kỳ mối quan hệ trong bộ nhớ nào đã được tải trên model cha. Nếu bạn định truy cập mối quan hệ sau khi sử dụng các phương thức `save` hoặc `saveMany`, bạn có thể muốn sử dụng phương thức `refresh` để tải lại model và các mối quan hệ của nó:
 
 ```php
 $post->comments()->save($comment);
@@ -2369,7 +2369,7 @@ $post->comments;
 <a name="the-push-method"></a>
 #### Recursively Saving Models and Relationships
 
-If you would like to `save` your model and all of its associated relationships, you may use the `push` method. In this example, the `Post` model will be saved as well as its comments and the comment's authors:
+Nếu bạn muốn `save` model của bạn và tất cả các mối quan hệ liên quan của nó, bạn có thể sử dụng phương thức `push`. Trong ví dụ này, model `Post` sẽ được lưu cũng như các bình luận của nó và tác giả của bình luận:
 
 ```php
 $post = Post::find(1);
@@ -2380,7 +2380,7 @@ $post->comments[0]->author->name = 'Author Name';
 $post->push();
 ```
 
-The `pushQuietly` method may be used to save a model and its associated relationships without raising any events:
+Phương thức `pushQuietly` có thể được sử dụng để lưu một model và các mối quan hệ liên quan của nó mà không kích hoạt bất kỳ sự kiện nào:
 
 ```php
 $post->pushQuietly();
@@ -2389,7 +2389,7 @@ $post->pushQuietly();
 <a name="the-create-method"></a>
 ### The `create` Method
 
-In addition to the `save` and `saveMany` methods, you may also use the `create` method, which accepts an array of attributes, creates a model, and inserts it into the database. The difference between `save` and `create` is that `save` accepts a full Eloquent model instance while `create` accepts a plain PHP `array`. The newly created model will be returned by the `create` method:
+Ngoài các phương thức `save` và `saveMany`, bạn cũng có thể sử dụng phương thức `create`, phương thức này chấp nhận một mảng các thuộc tính, tạo một model, và chèn nó vào database. Sự khác biệt giữa `save` và `create` là `save` chấp nhận một instance model Eloquent đầy đủ trong khi `create` chấp nhận một mảng `array` PHP thuần túy. Model mới được tạo sẽ được trả về bởi phương thức `create`:
 
 ```php
 use App\Models\Post;
@@ -2401,7 +2401,7 @@ $comment = $post->comments()->create([
 ]);
 ```
 
-You may use the `createMany` method to create multiple related models:
+Bạn có thể sử dụng phương thức `createMany` để tạo nhiều model liên quan:
 
 ```php
 $post = Post::find(1);
@@ -2412,7 +2412,7 @@ $post->comments()->createMany([
 ]);
 ```
 
-The `createQuietly` and `createManyQuietly` methods may be used to create a model(s) without dispatching any events:
+Các phương thức `createQuietly` và `createManyQuietly` có thể được sử dụng để tạo một (hoặc nhiều) model mà không gửi bất kỳ sự kiện nào:
 
 ```php
 $user = User::find(1);
@@ -2427,15 +2427,15 @@ $user->posts()->createManyQuietly([
 ]);
 ```
 
-You may also use the `findOrNew`, `firstOrNew`, `firstOrCreate`, and `updateOrCreate` methods to [create and update models on relationships](/docs/{{version}}/eloquent#upserts).
+Bạn cũng có thể sử dụng các phương thức `findOrNew`, `firstOrNew`, `firstOrCreate`, và `updateOrCreate` để [tạo và cập nhật các model trên các mối quan hệ](/docs/{{version}}/eloquent#upserts).
 
 > [!NOTE]
-> Before using the `create` method, be sure to review the [mass assignment](/docs/{{version}}/eloquent#mass-assignment) documentation.
+> Trước khi sử dụng phương thức `create`, hãy đảm bảo xem lại tài liệu [mass assignment](/docs/{{version}}/eloquent#mass-assignment).
 
 <a name="updating-belongs-to-relationships"></a>
 ### Belongs To Relationships
 
-If you would like to assign a child model to a new parent model, you may use the `associate` method. In this example, the `User` model defines a `belongsTo` relationship to the `Account` model. This `associate` method will set the foreign key on the child model:
+Nếu bạn muốn gán một model con cho một model cha mới, bạn có thể sử dụng phương thức `associate`. Trong ví dụ này, model `User` định nghĩa một mối quan hệ `belongsTo` với model `Account`. Phương thức `associate` này sẽ đặt khóa ngoại trên model con:
 
 ```php
 use App\Models\Account;
@@ -2447,7 +2447,7 @@ $user->account()->associate($account);
 $user->save();
 ```
 
-To remove a parent model from a child model, you may use the `dissociate` method. This method will set the relationship's foreign key to `null`:
+Để xóa một model cha khỏi một model con, bạn có thể sử dụng phương thức `dissociate`. Phương thức này sẽ đặt khóa ngoại của mối quan hệ thành `null`:
 
 ```php
 $user->account()->dissociate();
@@ -2461,7 +2461,7 @@ $user->save();
 <a name="attaching-detaching"></a>
 #### Attaching / Detaching
 
-Eloquent also provides methods to make working with many-to-many relationships more convenient. For example, let's imagine a user can have many roles and a role can have many users. You may use the `attach` method to attach a role to a user by inserting a record in the relationship's intermediate table:
+Eloquent cũng cung cấp các phương thức để làm việc với các mối quan hệ nhiều-đến-nhiều thuận tiện hơn. Ví dụ, hãy tưởng tượng một người dùng có thể có nhiều vai trò và một vai trò có thể có nhiều người dùng. Bạn có thể sử dụng phương thức `attach` để gắn một vai trò cho một người dùng bằng cách chèn một bản ghi trong bảng trung gian của mối quan hệ:
 
 ```php
 use App\Models\User;
@@ -2471,13 +2471,13 @@ $user = User::find(1);
 $user->roles()->attach($roleId);
 ```
 
-When attaching a relationship to a model, you may also pass an array of additional data to be inserted into the intermediate table:
+Khi gắn một mối quan hệ vào một model, bạn cũng có thể truyền một mảng dữ liệu bổ sung để chèn vào bảng trung gian:
 
 ```php
 $user->roles()->attach($roleId, ['expires' => $expires]);
 ```
 
-Sometimes it may be necessary to remove a role from a user. To remove a many-to-many relationship record, use the `detach` method. The `detach` method will delete the appropriate record out of the intermediate table; however, both models will remain in the database:
+Đôi khi có thể cần thiết để xóa một vai trò khỏi một người dùng. Để xóa một bản ghi mối quan hệ nhiều-đến-nhiều, hãy sử dụng phương thức `detach`. Phương thức `detach` sẽ xóa bản ghi thích hợp khỏi bảng trung gian; tuy nhiên, cả hai model sẽ vẫn còn trong database:
 
 ```php
 // Detach a single role from the user...
@@ -2487,7 +2487,7 @@ $user->roles()->detach($roleId);
 $user->roles()->detach();
 ```
 
-For convenience, `attach` and `detach` also accept arrays of IDs as input:
+Để thuận tiện, `attach` và `detach` cũng chấp nhận các mảng ID làm đầu vào:
 
 ```php
 $user = User::find(1);
@@ -2503,25 +2503,25 @@ $user->roles()->attach([
 <a name="syncing-associations"></a>
 #### Syncing Associations
 
-You may also use the `sync` method to construct many-to-many associations. The `sync` method accepts an array of IDs to place on the intermediate table. Any IDs that are not in the given array will be removed from the intermediate table. So, after this operation is complete, only the IDs in the given array will exist in the intermediate table:
+Bạn cũng có thể sử dụng phương thức `sync` để xây dựng các liên kết nhiều-đến-nhiều. Phương thức `sync` chấp nhận một mảng ID để đặt trên bảng trung gian. Bất kỳ ID nào không có trong mảng đã cho sẽ bị xóa khỏi bảng trung gian. Vì vậy, sau khi thao tác này hoàn tất, chỉ có các ID trong mảng đã cho sẽ tồn tại trong bảng trung gian:
 
 ```php
 $user->roles()->sync([1, 2, 3]);
 ```
 
-You may also pass additional intermediate table values with the IDs:
+Bạn cũng có thể truyền các giá trị bảng trung gian bổ sung với các ID:
 
 ```php
 $user->roles()->sync([1 => ['expires' => true], 2, 3]);
 ```
 
-If you would like to insert the same intermediate table values with each of the synced model IDs, you may use the `syncWithPivotValues` method:
+Nếu bạn muốn chèn cùng một giá trị bảng trung gian với mỗi ID model được đồng bộ hóa, bạn có thể sử dụng phương thức `syncWithPivotValues`:
 
 ```php
 $user->roles()->syncWithPivotValues([1, 2, 3], ['active' => true]);
 ```
 
-If you do not want to detach existing IDs that are missing from the given array, you may use the `syncWithoutDetaching` method:
+Nếu bạn không muốn xóa các ID hiện có bị thiếu khỏi mảng đã cho, bạn có thể sử dụng phương thức `syncWithoutDetaching`:
 
 ```php
 $user->roles()->syncWithoutDetaching([1, 2, 3]);
@@ -2530,13 +2530,13 @@ $user->roles()->syncWithoutDetaching([1, 2, 3]);
 <a name="toggling-associations"></a>
 #### Toggling Associations
 
-The many-to-many relationship also provides a `toggle` method which "toggles" the attachment status of the given related model IDs. If the given ID is currently attached, it will be detached. Likewise, if it is currently detached, it will be attached:
+Mối quan hệ nhiều-đến-nhiều cũng cung cấp một phương thức `toggle` "chuyển đổi" trạng thái gắn của các ID model liên quan đã cho. Nếu ID đã cho hiện đang được gắn, nó sẽ bị tách. Tương tự, nếu nó hiện đang bị tách, nó sẽ được gắn:
 
 ```php
 $user->roles()->toggle([1, 2, 3]);
 ```
 
-You may also pass additional intermediate table values with the IDs:
+Bạn cũng có thể truyền các giá trị bảng trung gian bổ sung với các ID:
 
 ```php
 $user->roles()->toggle([
@@ -2548,18 +2548,17 @@ $user->roles()->toggle([
 <a name="transactional-pivot-operations"></a>
 #### Transactional Pivot Operations
 
-Each of the pivot operations discussed above also has an `OrFail` variant (`attachOrFail`, `detachOrFail`, `syncOrFail`, `syncWithoutDetachingOrFail`, and `toggleOrFail`) that wraps the operation within a database transaction, so that all changes are automatically rolled back if an exception is thrown:
+Mỗi thao tác pivot được thảo luận ở trên cũng có một biến thể `OrFail` (`attachOrFail`, `detachOrFail`, `syncOrFail`, `syncWithoutDetachingOrFail`, và `toggleOrFail`) bao bọc thao tác trong một giao dịch database, để tất cả các thay đổi được tự động rollback nếu một ngoại lệ được ném:
 
 ```php
 $user->roles()->attachOrFail([1, 2, 3]);
-
 $user->roles()->syncOrFail([1, 2, 3]);
 ```
 
 <a name="updating-a-record-on-the-intermediate-table"></a>
 #### Updating a Record on the Intermediate Table
 
-If you need to update an existing row in your relationship's intermediate table, you may use the `updateExistingPivot` method. This method accepts the intermediate record foreign key and an array of attributes to update:
+Nếu bạn cần cập nhật một hàng hiện có trong bảng trung gian của mối quan hệ của bạn, bạn có thể sử dụng phương thức `updateExistingPivot`. Phương thức này chấp nhận khóa ngoại của bản ghi trung gian và một mảng các thuộc tính để cập nhật:
 
 ```php
 $user = User::find(1);
@@ -2572,9 +2571,9 @@ $user->roles()->updateExistingPivot($roleId, [
 <a name="touching-parent-timestamps"></a>
 ## Touching Parent Timestamps
 
-When a model defines a `belongsTo` or `belongsToMany` relationship to another model, such as a `Comment` which belongs to a `Post`, it is sometimes helpful to update the parent's timestamp when the child model is updated.
+Khi một model định nghĩa một mối quan hệ `belongsTo` hoặc `belongsToMany` với một model khác, chẳng hạn như một `Comment` thuộc về một `Post`, đôi khi có ích để cập nhật timestamp của cha khi model con được cập nhật.
 
-For example, when a `Comment` model is updated, you may want to automatically "touch" the `updated_at` timestamp of the owning `Post` so that it is set to the current date and time. To accomplish this, you may use the `Touches` attribute on your child model containing the names of the relationships that should have their `updated_at` timestamps updated when the child model is updated:
+Ví dụ, khi một model `Comment` được cập nhật, bạn có thể muốn tự động "touch" timestamp `updated_at` của `Post` sở hữu để nó được đặt thành ngày và giờ hiện tại. Để thực hiện điều này, bạn có thể sử dụng thuộc tính `Touches` trên model con của bạn chứa tên của các mối quan hệ nên có timestamp `updated_at` của chúng được cập nhật khi model con được cập nhật:
 
 ```php
 <?php
@@ -2599,4 +2598,4 @@ class Comment extends Model
 ```
 
 > [!WARNING]
-> Parent model timestamps will only be updated if the child model is updated using Eloquent's `save` method.
+> Timestamp của model cha sẽ chỉ được cập nhật nếu model con được cập nhật bằng cách sử dụng phương thức `save` của Eloquent.

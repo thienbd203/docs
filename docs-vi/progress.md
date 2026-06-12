@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 79 files (79%)
+- **Đã dịch:** 80 files (80%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -144,6 +144,7 @@
 - Tuần 27: 1 file (valet.md)
 - Tuần 28: 1 file (horizon.md)
 - Tuần 29: 1 file (homestead.md)
+- Tuần 30: 1 file (eloquent-relationships.md - dịch lại hoàn chỉnh)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -171,7 +172,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 25/30 (83.3%)
+### Priority 10: Miscellaneous - 26/30 (86.7%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -209,5 +210,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (79 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - homestead.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (80 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - eloquent-relationships.md đã được dịch lại hoàn chỉnh
 **Next Update:** Khi có file mới hoàn thành
