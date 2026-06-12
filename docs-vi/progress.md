@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 57 files (57%)
+- **Đã dịch:** 58 files (58%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -126,7 +126,8 @@
 - Tuần 9: 6 files (contracts.md, providers.md, facades.md, pagination.md, container.md, http-client.md)
 - Tuần 10: 4 files (octane.md, horizon.md, fortify.md, scout.md)
 - Tuần 11: 4 files (session.md, localization.md, eloquent-serialization.md, deployment.md)
-- Tuần 12: 3 files (search.md, errors.md, logging.md)
+- Tuần 12: 4 files (search.md, errors.md, logging.md, eloquent-factories.md)
+- Tuần 13: 1 file (eloquent-resources.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -154,7 +155,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 9/30 (30%)
+### Priority 10: Miscellaneous - 10/30 (33.3%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -171,7 +172,7 @@
 ||||||| localization.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| package-development.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| search.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| eloquent-resources.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| eloquent-resources.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| eloquent-serialization.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| eloquent-factories.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| database-testing.md | ✅ Hoàn thành | thienbd203 | - | Đã dịch trong Priority 4 |
@@ -192,5 +193,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (57 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - eloquent-factories.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (58 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - eloquent-resources.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
