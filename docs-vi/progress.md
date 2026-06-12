@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 76 files (76%)
+- **Đã dịch:** 77 files (77%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -141,6 +141,7 @@
 - Tuần 24: 1 file (precognition.md)
 - Tuần 25: 6 files (eloquent-relationships.md, helpers.md, queues.md, requests.md, responses.md, views.md)
 - Tuần 26: 1 file (pulse.md)
+- Tuần 27: 1 file (valet.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -168,7 +169,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 22/30 (73.3%)
+### Priority 10: Miscellaneous - 23/30 (76.7%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -206,5 +207,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (76 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - pulse.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (77 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - valet.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
