@@ -3,7 +3,7 @@
 ## 📊 Tổng quan
 
 - **Tổng số files:** ~100 files
-- **Đã dịch:** 67 files (67%)
+- **Đã dịch:** 68 files (68%)
 - **Đang dịch:** 0 files
 - **Cần dịch:** ~40 files (40%)
 - **Để dịch sau:** 3 files (blade.md - file quá dài 2090 dòng, queues.md - file quá dài 3487 dòng, eloquent-relationships.md - file quá dài 2602 dòng)
@@ -137,6 +137,7 @@
 - Tuần 20: 1 file (contributions.md)
 - Tuần 21: 1 file (reverb.md)
 - Tuần 22: 1 file (envoy.md)
+- Tuần 23: 1 file (processes.md)
 
 ### Contributors:
 - **Translators:** thienbd203
@@ -164,7 +165,7 @@
 
 ---
 
-### Priority 10: Miscellaneous - 19/30 (63.3%)
+### Priority 10: Miscellaneous - 20/30 (66.7%)
 
 ||||||| File | Trạng thái | Translator | Reviewer | Notes |
 |||||||------|------------|------------|----------|-------|
@@ -175,7 +176,7 @@
 ||||||| reverb.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| folio.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| envoy.md | ✅ Hoàn thành | thienbd203 | - | - |
-||||||| processes.md | ⏳ Chưa bắt đầu | - | - | - |
+||||||| processes.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| prompts.md | ⏳ Chưa bắt đầu | - | - | - |
 ||||||| session.md | ✅ Hoàn thành | thienbd203 | - | - |
 ||||||| localization.md | ✅ Hoàn thành | thienbd203 | - | - |
@@ -202,5 +203,5 @@
 
 ---
 
-**Last Updated:** 2026-06-12 (67 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - envoy.md đã được dịch hoàn thành
+**Last Updated:** 2026-06-12 (68 files completed - Priority 1: 9/10, Priority 2: 7/8, Priority 3: 7/7 ✅, Priority 4: 5/5 ✅, Priority 5: 8/9, Priority 6: 8/11, Priority 7: 4/4 ✅, Priority 8: 6/8, Priority 10: 8/30) - processes.md đã được dịch hoàn thành
 **Next Update:** Khi có file mới hoàn thành
