@@ -3,18 +3,18 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Available Prompts](#available-prompts)
-    - [Text](#text)
-    - [Textarea](#textarea)
-    - [Number](#number)
-    - [Password](#password)
-    - [Confirm](#confirm)
-    - [Select](#select)
-    - [Multi-select](#multiselect)
-    - [Suggest](#suggest)
-    - [Search](#search)
-    - [Multi-search](#multisearch)
-    - [Pause](#pause)
-    - [Autocomplete](#autocomplete)
+  - [Text](#text)
+  - [Textarea](#textarea)
+  - [Number](#number)
+  - [Password](#password)
+  - [Confirm](#confirm)
+  - [Select](#select)
+  - [Multi-select](#multiselect)
+  - [Suggest](#suggest)
+  - [Search](#search)
+  - [Multi-search](#multisearch)
+  - [Pause](#pause)
+  - [Autocomplete](#autocomplete)
 - [Transforming Input Before Validation](#transforming-input-before-validation)
 - [Forms](#forms)
 - [Informational Messages](#informational-messages)
@@ -30,6 +30,7 @@
 - [Testing](#testing)
 
 <a name="introduction"></a>
+
 ## Introduction
 
 [Laravel Prompts](https://github.com/laravel/prompts) is a PHP package for adding beautiful and user-friendly forms to your command-line applications, with browser-like features including placeholder text and validation.
@@ -42,6 +43,7 @@ Laravel Prompts is perfect for accepting user input in your [Artisan console com
 > Laravel Prompts supports macOS, Linux, and Windows with WSL. For more information, please see our documentation on [unsupported environments & fallbacks](#fallbacks).
 
 <a name="installation"></a>
+
 ## Installation
 
 Laravel Prompts is already included with the latest release of Laravel.
@@ -53,9 +55,11 @@ composer require laravel/prompts
 ```
 
 <a name="available-prompts"></a>
+
 ## Available Prompts
 
 <a name="text"></a>
+
 ### Text
 
 The `text` function will prompt the user with the given question, accept their input, and then return it:
@@ -78,6 +82,7 @@ $name = text(
 ```
 
 <a name="text-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -99,6 +104,7 @@ $name = text(
 ```
 
 <a name="text-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -126,6 +132,7 @@ $name = text(
 ```
 
 <a name="textarea"></a>
+
 ### Textarea
 
 The `textarea` function will prompt the user with the given question, accept their input via a multi-line textarea, and then return it:
@@ -147,6 +154,7 @@ $story = textarea(
 ```
 
 <a name="textarea-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -168,6 +176,7 @@ $story = textarea(
 ```
 
 <a name="textarea-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -195,6 +204,7 @@ $story = textarea(
 ```
 
 <a name="number"></a>
+
 ### Number
 
 The `number` function will prompt the user with the given question, accept their numeric input, and then return it. The `number` function allows the user to use the up and down arrow keys to manipulate the number:
@@ -217,6 +227,7 @@ $name = number(
 ```
 
 <a name="number-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -238,6 +249,7 @@ $copies = number(
 ```
 
 <a name="number-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -265,6 +277,7 @@ $copies = number(
 ```
 
 <a name="password"></a>
+
 ### Password
 
 The `password` function is similar to the `text` function, but the user's input will be masked as they type in the console. This is useful when asking for sensitive information such as passwords:
@@ -286,6 +299,7 @@ $password = password(
 ```
 
 <a name="password-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -307,6 +321,7 @@ $password = password(
 ```
 
 <a name="password-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -333,6 +348,7 @@ $password = password(
 ```
 
 <a name="confirm"></a>
+
 ### Confirm
 
 If you need to ask the user for a "yes or no" confirmation, you may use the `confirm` function. Users may use the arrow keys or press `y` or `n` to select their response. This function will return either `true` or `false`.
@@ -356,6 +372,7 @@ $confirmed = confirm(
 ```
 
 <a name="confirm-required"></a>
+
 #### Requiring "Yes"
 
 If necessary, you may require your users to select "Yes" by passing the `required` argument:
@@ -377,6 +394,7 @@ $confirmed = confirm(
 ```
 
 <a name="select"></a>
+
 ### Select
 
 If you need the user to select from a predefined set of choices, you may use the `select` function:
@@ -426,6 +444,7 @@ $role = select(
 ```
 
 <a name="select-info"></a>
+
 #### Secondary Information
 
 The `info` argument may be used to display additional information about the currently highlighted option. When a closure is provided, it will receive the value of the currently highlighted option and should return a string or `null`:
@@ -458,6 +477,7 @@ $role = select(
 ```
 
 <a name="select-validation"></a>
+
 #### Additional Validation
 
 Unlike other prompt functions, the `select` function doesn't accept the `required` argument because it is not possible to select nothing. However, you may pass a closure to the `validate` argument if you need to present an option but prevent it from being selected:
@@ -480,6 +500,7 @@ $role = select(
 If the `options` argument is an associative array, then the closure will receive the selected key, otherwise it will receive the selected value. The closure may return an error message, or `null` if the validation passes.
 
 <a name="multiselect"></a>
+
 ### Multi-select
 
 If you need the user to be able to select multiple options, you may use the `multiselect` function:
@@ -532,6 +553,7 @@ $categories = multiselect(
 ```
 
 <a name="multiselect-info"></a>
+
 #### Secondary Information
 
 The `info` argument may be used to display additional information about the currently highlighted option. When a closure is provided, it will receive the value of the currently highlighted option and should return a string or `null`:
@@ -556,6 +578,7 @@ $permissions = multiselect(
 ```
 
 <a name="multiselect-required"></a>
+
 #### Requiring a Value
 
 By default, the user may select zero or more options. You may pass the `required` argument to enforce one or more options instead:
@@ -579,6 +602,7 @@ $categories = multiselect(
 ```
 
 <a name="multiselect-validation"></a>
+
 #### Additional Validation
 
 You may pass a closure to the `validate` argument if you need to present an option but prevent it from being selected:
@@ -601,6 +625,7 @@ $permissions = multiselect(
 If the `options` argument is an associative array then the closure will receive the selected keys, otherwise it will receive the selected values. The closure may return an error message, or `null` if the validation passes.
 
 <a name="suggest"></a>
+
 ### Suggest
 
 The `suggest` function can be used to provide auto-completion for possible choices. The user can still provide any answer, regardless of the auto-completion hints:
@@ -634,6 +659,7 @@ $name = suggest(
 ```
 
 <a name="suggest-info"></a>
+
 #### Secondary Information
 
 The `info` argument may be used to display additional information about the currently highlighted option. When a closure is provided, it will receive the value of the currently highlighted option and should return a string or `null`:
@@ -651,6 +677,7 @@ $name = suggest(
 ```
 
 <a name="suggest-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -674,6 +701,7 @@ $name = suggest(
 ```
 
 <a name="suggest-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -703,6 +731,7 @@ $name = suggest(
 ```
 
 <a name="search"></a>
+
 ### Search
 
 If you have a lot of options for the user to select from, the `search` function allows the user to type a search query to filter the results before using the arrow keys to select an option:
@@ -760,6 +789,7 @@ $id = search(
 ```
 
 <a name="search-info"></a>
+
 #### Secondary Information
 
 The `info` argument may be used to display additional information about the currently highlighted option. When a closure is provided, it will receive the value of the currently highlighted option and should return a string or `null`:
@@ -775,6 +805,7 @@ $id = search(
 ```
 
 <a name="search-validation"></a>
+
 #### Additional Validation
 
 If you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -798,6 +829,7 @@ $id = search(
 If the `options` closure returns an associative array, then the closure will receive the selected key, otherwise, it will receive the selected value. The closure may return an error message, or `null` if the validation passes.
 
 <a name="multisearch"></a>
+
 ### Multi-search
 
 If you have a lot of searchable options and need the user to be able to select multiple items, the `multisearch` function allows the user to type a search query to filter the results before using the arrow keys and space-bar to select options:
@@ -855,6 +887,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-info"></a>
+
 #### Secondary Information
 
 The `info` argument may be used to display additional information about the currently highlighted option. When a closure is provided, it will receive the value of the currently highlighted option and should return a string or `null`:
@@ -870,6 +903,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-required"></a>
+
 #### Requiring a Value
 
 By default, the user may select zero or more options. You may pass the `required` argument to enforce one or more options instead:
@@ -897,6 +931,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-validation"></a>
+
 #### Additional Validation
 
 If you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -920,6 +955,7 @@ $ids = multisearch(
 If the `options` closure returns an associative array, then the closure will receive the selected keys; otherwise, it will receive the selected values. The closure may return an error message, or `null` if the validation passes.
 
 <a name="pause"></a>
+
 ### Pause
 
 The `pause` function may be used to display informational text to the user and wait for them to confirm their desire to proceed by pressing the Enter / Return key:
@@ -931,6 +967,7 @@ pause('Press ENTER to continue.');
 ```
 
 <a name="autocomplete"></a>
+
 ### Autocomplete
 
 The `autocomplete` function can be used to provide inline auto-completion for possible choices. As the user types, suggestions that match their input will appear as ghost text that can be accepted by pressing `Tab` or the right arrow key:
@@ -957,6 +994,7 @@ $name = autocomplete(
 ```
 
 <a name="autocomplete-closure"></a>
+
 #### Dynamic Options
 
 You may also pass a closure to dynamically generate options based on the user's input. The closure will be called each time the user types a character and should return an array of options for auto-completion:
@@ -972,6 +1010,7 @@ $file = autocomplete(
 ```
 
 <a name="autocomplete-required"></a>
+
 #### Required Values
 
 If you require a value to be entered, you may pass the `required` argument:
@@ -995,6 +1034,7 @@ $name = autocomplete(
 ```
 
 <a name="autocomplete-validation"></a>
+
 #### Additional Validation
 
 Finally, if you would like to perform additional validation logic, you may pass a closure to the `validate` argument:
@@ -1014,6 +1054,7 @@ $name = autocomplete(
 The closure will receive the value that has been entered and may return an error message, or `null` if the validation passes.
 
 <a name="transforming-input-before-validation"></a>
+
 ## Transforming Input Before Validation
 
 Sometimes you may want to transform the prompt input before validation takes place. For example, you may wish to remove white space from any provided strings. To accomplish this, many of the prompt functions provide a `transform` argument, which accepts a closure:
@@ -1031,6 +1072,7 @@ $name = text(
 ```
 
 <a name="forms"></a>
+
 ## Forms
 
 Often, you will have multiple prompts that will be displayed in sequence to collect information before performing additional actions. You may use the `form` function to create a grouped set of prompts for the user to complete:
@@ -1087,6 +1129,7 @@ outro("Your name is {$responses['name']} and you are {$responses['age']} years o
 ```
 
 <a name="informational-messages"></a>
+
 ## Informational Messages
 
 The `note`, `info`, `warning`, `error`, and `alert` functions may be used to display informational messages:
@@ -1098,6 +1141,7 @@ info('Package installed successfully.');
 ```
 
 <a name="tables"></a>
+
 ## Tables
 
 The `table` function makes it easy to display multiple rows and columns of data. All you need to do is provide the column names and the data for the table:
@@ -1112,6 +1156,7 @@ table(
 ```
 
 <a name="spin"></a>
+
 ## Spin
 
 The `spin` function displays a spinner along with an optional message while executing a specified callback. It serves to indicate ongoing processes and returns the callback's results upon completion:
@@ -1129,6 +1174,7 @@ $response = spin(
 > The `spin` function requires the [PCNTL](https://www.php.net/manual/en/book.pcntl.php) PHP extension to animate the spinner. When this extension is not available, a static version of the spinner will appear instead.
 
 <a name="progress"></a>
+
 ## Progress Bars
 
 For long running tasks, it can be helpful to show a progress bar that informs users how complete the task is. Using the `progress` function, Laravel will display a progress bar and advance its progress for each iteration over a given iterable value:
@@ -1181,6 +1227,7 @@ $progress->finish();
 ```
 
 <a name="task"></a>
+
 ## Task
 
 The `task` function displays a labeled task with a spinner and a scrolling live output area while a given callback is executing. It is ideal for wrapping long-running processes such as dependency installation or deployment scripts, providing real-time visibility into what is happening:
@@ -1202,6 +1249,7 @@ The callback receives a `Logger` instance that you may use to display log lines,
 > The `task` function requires the [PCNTL](https://www.php.net/manual/en/book.pcntl.php) PHP extension to animate the spinner. When this extension is not available, a static version of the task will appear instead.
 
 <a name="task-logging"></a>
+
 #### Logging Lines
 
 The `line` method writes a single log line to the task's scrolling output area:
@@ -1219,6 +1267,7 @@ task(
 ```
 
 <a name="task-status-messages"></a>
+
 #### Status Messages
 
 You may use the `success`, `warning`, and `error` methods to display status messages. These appear as stable, highlighted messages above the scrolling log area:
@@ -1243,6 +1292,7 @@ task(
 ```
 
 <a name="task-label"></a>
+
 #### Updating the Label
 
 The `label` method allows you to update the task's label while it is running:
@@ -1262,6 +1312,7 @@ task(
 ```
 
 <a name="task-sub-label"></a>
+
 #### Displaying a Sub-Label
 
 The `subLabel` method displays a dim line beneath the task's main label, which is useful for communicating ephemeral status such as the step currently in progress. Pass an empty string to clear the sub-label:
@@ -1292,6 +1343,7 @@ task(
 ```
 
 <a name="task-streaming"></a>
+
 #### Streaming Text
 
 For processes that produce output incrementally, such as AI-generated responses, the `partial` method allows you to stream text word-by-word or chunk-by-chunk. Once the stream is complete, call `commitPartial` to finalize the output:
@@ -1310,6 +1362,7 @@ task(
 ```
 
 <a name="task-limit"></a>
+
 #### Customizing the Output Limit
 
 By default, the task displays up to 10 lines of scrolling output. You may customize this via the `limit` argument:
@@ -1325,6 +1378,7 @@ task(
 ```
 
 <a name="task-keep-summary"></a>
+
 #### Keeping the Summary
 
 By default, the task's output is erased once the callback finishes. If you would like to keep the status messages on screen after the task has completed, you may pass the `keepSummary` argument:
@@ -1342,6 +1396,7 @@ task(
 ```
 
 <a name="stream"></a>
+
 ## Stream
 
 The `stream` function displays text that streams into the terminal, ideal for displaying AI-generated content or any text that arrives incrementally:
@@ -1362,6 +1417,7 @@ $stream->close();
 The `append` method adds text to the stream, rendering it with a gradual fade-in effect. When all content has been streamed, call the `close` method to finalize the output and restore the cursor.
 
 <a name="terminal-title"></a>
+
 ## Terminal Title
 
 The `title` function updates the title of the user's terminal window or tab:
@@ -1379,6 +1435,7 @@ title('');
 ```
 
 <a name="clear"></a>
+
 ## Clearing the Terminal
 
 The `clear` function may be used to clear the user's terminal:
@@ -1390,19 +1447,23 @@ clear();
 ```
 
 <a name="terminal-considerations"></a>
+
 ## Terminal Considerations
 
 <a name="terminal-width"></a>
+
 #### Terminal Width
 
 If the length of any label, option, or validation message exceeds the number of "columns" in the user's terminal, it will be automatically truncated to fit. Consider minimizing the length of these strings if your users may be using narrower terminals. A typically safe maximum length is 74 characters to support an 80-character terminal.
 
 <a name="terminal-height"></a>
+
 #### Terminal Height
 
 For any prompts that accept the `scroll` argument, the configured value will automatically be reduced to fit the height of the user's terminal, including space for a validation message.
 
 <a name="fallbacks"></a>
+
 ## Unsupported Environments and Fallbacks
 
 Laravel Prompts supports macOS, Linux, and Windows with WSL. Due to limitations in the Windows version of PHP, it is not currently possible to use Laravel Prompts on Windows outside of WSL.
@@ -1413,6 +1474,7 @@ For this reason, Laravel Prompts supports falling back to an alternative impleme
 > When using Laravel Prompts with the Laravel framework, fallbacks for each prompt have been configured for you and will be automatically enabled in unsupported environments.
 
 <a name="fallback-conditions"></a>
+
 #### Fallback Conditions
 
 If you are not using Laravel or need to customize when the fallback behavior is used, you may pass a boolean to the `fallbackWhen` static method on the `Prompt` class:
@@ -1426,6 +1488,7 @@ Prompt::fallbackWhen(
 ```
 
 <a name="fallback-behavior"></a>
+
 #### Fallback Behavior
 
 If you are not using Laravel or need to customize the fallback behavior, you may pass a closure to the `fallbackUsing` static method on each prompt class:
@@ -1463,11 +1526,12 @@ TextPrompt::fallbackUsing(function (TextPrompt $prompt) use ($input, $output) {
 Fallbacks must be configured individually for each prompt class. The closure will receive an instance of the prompt class and must return an appropriate type for the prompt.
 
 <a name="testing"></a>
+
 ## Testing
 
 Laravel provides a variety of methods for testing that your command displays the expected Prompt messages:
 
-```php tab=Pest
+```php
 test('report generation', function () {
     $this->artisan('report:generate')
         ->expectsPromptsInfo('Welcome to the application!')
@@ -1487,7 +1551,7 @@ test('report generation', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 public function test_report_generation(): void
 {
     $this->artisan('report:generate')

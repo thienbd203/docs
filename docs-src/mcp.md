@@ -2,62 +2,64 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-    - [Publishing Routes](#publishing-routes)
+  - [Publishing Routes](#publishing-routes)
 - [Creating Servers](#creating-servers)
-    - [Server Registration](#server-registration)
-    - [Web Servers](#web-servers)
-    - [Local Servers](#local-servers)
+  - [Server Registration](#server-registration)
+  - [Web Servers](#web-servers)
+  - [Local Servers](#local-servers)
 - [Tools](#tools)
-    - [Creating Tools](#creating-tools)
-    - [Tool Input Schemas](#tool-input-schemas)
-    - [Tool Output Schemas](#tool-output-schemas)
-    - [Validating Tool Arguments](#validating-tool-arguments)
-    - [Tool Dependency Injection](#tool-dependency-injection)
-    - [Tool Annotations](#tool-annotations)
-    - [Conditional Tool Registration](#conditional-tool-registration)
-    - [Tool Responses](#tool-responses)
+  - [Creating Tools](#creating-tools)
+  - [Tool Input Schemas](#tool-input-schemas)
+  - [Tool Output Schemas](#tool-output-schemas)
+  - [Validating Tool Arguments](#validating-tool-arguments)
+  - [Tool Dependency Injection](#tool-dependency-injection)
+  - [Tool Annotations](#tool-annotations)
+  - [Conditional Tool Registration](#conditional-tool-registration)
+  - [Tool Responses](#tool-responses)
 - [Prompts](#prompts)
-    - [Creating Prompts](#creating-prompts)
-    - [Prompt Arguments](#prompt-arguments)
-    - [Validating Prompt Arguments](#validating-prompt-arguments)
-    - [Prompt Dependency Injection](#prompt-dependency-injection)
-    - [Conditional Prompt Registration](#conditional-prompt-registration)
-    - [Prompt Responses](#prompt-responses)
+  - [Creating Prompts](#creating-prompts)
+  - [Prompt Arguments](#prompt-arguments)
+  - [Validating Prompt Arguments](#validating-prompt-arguments)
+  - [Prompt Dependency Injection](#prompt-dependency-injection)
+  - [Conditional Prompt Registration](#conditional-prompt-registration)
+  - [Prompt Responses](#prompt-responses)
 - [Resources](#resources)
-    - [Creating Resources](#creating-resources)
-    - [Resource Templates](#resource-templates)
-    - [Resource URI and MIME Type](#resource-uri-and-mime-type)
-    - [Resource Request](#resource-request)
-    - [Resource Dependency Injection](#resource-dependency-injection)
-    - [Resource Annotations](#resource-annotations)
-    - [Conditional Resource Registration](#conditional-resource-registration)
-    - [Resource Responses](#resource-responses)
+  - [Creating Resources](#creating-resources)
+  - [Resource Templates](#resource-templates)
+  - [Resource URI and MIME Type](#resource-uri-and-mime-type)
+  - [Resource Request](#resource-request)
+  - [Resource Dependency Injection](#resource-dependency-injection)
+  - [Resource Annotations](#resource-annotations)
+  - [Conditional Resource Registration](#conditional-resource-registration)
+  - [Resource Responses](#resource-responses)
 - [Apps](#apps)
-    - [Creating App Resources](#creating-app-resources)
-    - [Rendering Apps From Tools](#rendering-apps-from-tools)
-    - [App Tool Visibility](#app-tool-visibility)
-    - [App Configuration](#app-configuration)
-    - [Building Apps With Boost](#building-apps-with-boost)
+  - [Creating App Resources](#creating-app-resources)
+  - [Rendering Apps From Tools](#rendering-apps-from-tools)
+  - [App Tool Visibility](#app-tool-visibility)
+  - [App Configuration](#app-configuration)
+  - [Building Apps With Boost](#building-apps-with-boost)
 - [Metadata](#metadata)
 - [Authentication](#authentication)
-    - [OAuth 2.1](#oauth)
-    - [Sanctum](#sanctum)
+  - [OAuth 2.1](#oauth)
+  - [Sanctum](#sanctum)
 - [Authorization](#authorization)
 - [MCP Client](#client)
-    - [Connecting to Servers](#client-connecting)
-    - [Named Clients](#named-clients)
-    - [Client Authentication](#client-authentication)
-    - [Tools](#client-tools)
+  - [Connecting to Servers](#client-connecting)
+  - [Named Clients](#named-clients)
+  - [Client Authentication](#client-authentication)
+  - [Tools](#client-tools)
 - [Testing Servers](#testing-servers)
-    - [MCP Inspector](#mcp-inspector)
-    - [Unit Tests](#unit-tests)
+  - [MCP Inspector](#mcp-inspector)
+  - [Unit Tests](#unit-tests)
 
 <a name="introduction"></a>
+
 ## Introduction
 
 [Laravel MCP](https://github.com/laravel/mcp) provides a simple and elegant way for AI clients to interact with your Laravel application through the [Model Context Protocol](https://modelcontextprotocol.io/docs/getting-started/intro). It offers an expressive, fluent interface for defining servers, tools, resources, and prompts that enable AI-powered interactions with your application.
 
 <a name="installation"></a>
+
 ## Installation
 
 To get started, install Laravel MCP into your project using the Composer package manager:
@@ -67,6 +69,7 @@ composer require laravel/mcp
 ```
 
 <a name="publishing-routes"></a>
+
 ### Publishing Routes
 
 After installing Laravel MCP, execute the `vendor:publish` Artisan command to publish the `routes/ai.php` file where you will define your MCP servers:
@@ -78,6 +81,7 @@ php artisan vendor:publish --tag=ai-routes
 This command creates the `routes/ai.php` file in your application's `routes` directory, which you will use to register your MCP servers.
 
 <a name="creating-servers"></a>
+
 ## Creating Servers
 
 You can create an MCP server using the `make:mcp-server` Artisan command. Servers act as the central communication point that exposes MCP capabilities like tools, resources, and prompts to AI clients:
@@ -133,11 +137,13 @@ class WeatherServer extends Server
 ```
 
 <a name="server-registration"></a>
+
 ### Server Registration
 
 Once you've created a server, you must register it in your `routes/ai.php` file to make it accessible. Laravel MCP provides two methods for registering servers: `web` for HTTP-accessible servers and `local` for command-line servers.
 
 <a name="web-servers"></a>
+
 ### Web Servers
 
 Web servers are the most common types of servers and are accessible via HTTP POST requests, making them ideal for remote AI clients or web-based integrations. Register a web server using the `web` method:
@@ -157,6 +163,7 @@ Mcp::web('/mcp/weather', WeatherServer::class)
 ```
 
 <a name="local-servers"></a>
+
 ### Local Servers
 
 Local servers run as Artisan commands, perfect for building local AI assistant integrations like [Laravel Boost](/docs/{{version}}/installation#installing-laravel-boost). Register a local server using the `local` method:
@@ -171,6 +178,7 @@ Mcp::local('weather', WeatherServer::class);
 Once registered, you should not typically need to manually run the `mcp:start` Artisan command yourself. Instead, configure your MCP client (AI agent) to start the server or use the [MCP Inspector](#mcp-inspector).
 
 <a name="tools"></a>
+
 ## Tools
 
 Tools enable your server to expose functionality that AI clients can call. They allow language models to perform actions, run code, or interact with external systems:
@@ -218,6 +226,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="creating-tools"></a>
+
 ### Creating Tools
 
 To create a tool, run the `make:mcp-tool` Artisan command:
@@ -250,6 +259,7 @@ class WeatherServer extends Server
 ```
 
 <a name="tool-name-title-description"></a>
+
 #### Tool Name, Title, and Description
 
 By default, the tool's name and title are derived from the class name. For example, `CurrentWeatherTool` will have a name of `current-weather` and a title of `Current Weather Tool`. You may customize these values using the `Name` and `Title` attributes:
@@ -282,6 +292,7 @@ class CurrentWeatherTool extends Tool
 > The description is a critical part of the tool's metadata, as it helps AI models understand when and how to use the tool effectively.
 
 <a name="tool-input-schemas"></a>
+
 ### Tool Input Schemas
 
 Tools can define input schemas to specify what arguments they accept from AI clients. Use Laravel's `Illuminate\Contracts\JsonSchema\JsonSchema` builder to define your tool's input requirements:
@@ -318,6 +329,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="tool-output-schemas"></a>
+
 ### Tool Output Schemas
 
 Tools can define [output schemas](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#output-schema) to specify the structure of their responses. This enables better integration with AI clients that need parseable tool results. Use the `outputSchema` method to define your tool's output structure:
@@ -357,6 +369,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="validating-tool-arguments"></a>
+
 ### Validating Tool Arguments
 
 JSON Schema definitions provide a basic structure for tool arguments, but you may also want to enforce more complex validation rules.
@@ -402,6 +415,7 @@ $validated = $request->validate([
 ```
 
 <a name="tool-dependency-injection"></a>
+
 #### Tool Dependency Injection
 
 The Laravel [service container](/docs/{{version}}/container) is used to resolve all tools. As a result, you are able to type-hint any dependencies your tool may need in its constructor. The declared dependencies will automatically be resolved and injected into the tool instance:
@@ -456,6 +470,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="tool-annotations"></a>
+
 ### Tool Annotations
 
 You may enhance your tools with [annotations](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations) to provide additional metadata to AI clients. These annotations help AI models understand the tool's behavior and capabilities. Annotations are added to tools via attributes:
@@ -506,6 +521,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="conditional-tool-registration"></a>
+
 ### Conditional Tool Registration
 
 You may conditionally register tools at runtime by implementing the `shouldRegister` method in your tool class. This method allows you to determine whether a tool should be available based on application state, configuration, or request parameters:
@@ -533,6 +549,7 @@ class CurrentWeatherTool extends Tool
 When a tool's `shouldRegister` method returns `false`, it will not appear in the list of available tools and cannot be invoked by AI clients.
 
 <a name="tool-responses"></a>
+
 ### Tool Responses
 
 Tools must return an instance of `Laravel\Mcp\Response`. The Response class provides several convenient methods for creating different types of responses:
@@ -583,6 +600,7 @@ return Response::fromStorage('weather/radar.png', mimeType: 'image/webp');
 ```
 
 <a name="multiple-content-responses"></a>
+
 #### Multiple Content Responses
 
 Tools can return multiple pieces of content by returning an array of `Response` instances:
@@ -608,6 +626,7 @@ public function handle(Request $request): array
 ```
 
 <a name="structured-responses"></a>
+
 #### Structured Responses
 
 Tools can return [structured content](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#structured-content) using the `structured` method. This provides parseable data for AI clients while maintaining backward compatibility with a JSON-encoded text representation:
@@ -632,6 +651,7 @@ return Response::make(
 ```
 
 <a name="streaming-responses"></a>
+
 #### Streaming Responses
 
 For long-running operations or real-time data streaming, tools can return a [generator](https://www.php.net/manual/en/language.generators.overview.php) from their `handle` method. This enables sending intermediate updates to the client before the final response:
@@ -673,11 +693,13 @@ class CurrentWeatherTool extends Tool
 When using web-based servers, streaming responses automatically open an SSE (Server-Sent Events) stream, sending each yielded message as an event to the client.
 
 <a name="prompts"></a>
+
 ## Prompts
 
 [Prompts](https://modelcontextprotocol.io/specification/2025-06-18/server/prompts) enable your server to share reusable prompt templates that AI clients can use to interact with language models. They provide a standardized way to structure common queries and interactions.
 
 <a name="creating-prompts"></a>
+
 ### Creating Prompts
 
 To create a prompt, run the `make:mcp-prompt` Artisan command:
@@ -710,6 +732,7 @@ class WeatherServer extends Server
 ```
 
 <a name="prompt-name-title-and-description"></a>
+
 #### Prompt Name, Title, and Description
 
 By default, the prompt's name and title are derived from the class name. For example, `DescribeWeatherPrompt` will have a name of `describe-weather` and a title of `Describe Weather Prompt`. You may customize these values using the `Name` and `Title` attributes:
@@ -742,6 +765,7 @@ class DescribeWeatherPrompt extends Prompt
 > The description is a critical part of the prompt's metadata, as it helps AI models understand when and how to get the best use out of the prompt.
 
 <a name="prompt-arguments"></a>
+
 ### Prompt Arguments
 
 Prompts can define arguments that allow AI clients to customize the prompt template with specific values. Use the `arguments` method to define what arguments your prompt accepts:
@@ -775,6 +799,7 @@ class DescribeWeatherPrompt extends Prompt
 ```
 
 <a name="validating-prompt-arguments"></a>
+
 ### Validating Prompt Arguments
 
 Prompt arguments are automatically validated based on their definition, but you may also want to enforce more complex validation rules.
@@ -819,6 +844,7 @@ $validated = $request->validate([
 ```
 
 <a name="prompt-dependency-injection"></a>
+
 ### Prompt Dependency Injection
 
 The Laravel [service container](/docs/{{version}}/container) is used to resolve all prompts. As a result, you are able to type-hint any dependencies your prompt may need in its constructor. The declared dependencies will automatically be resolved and injected into the prompt instance:
@@ -871,6 +897,7 @@ class DescribeWeatherPrompt extends Prompt
 ```
 
 <a name="conditional-prompt-registration"></a>
+
 ### Conditional Prompt Registration
 
 You may conditionally register prompts at runtime by implementing the `shouldRegister` method in your prompt class. This method allows you to determine whether a prompt should be available based on application state, configuration, or request parameters:
@@ -898,6 +925,7 @@ class CurrentWeatherPrompt extends Prompt
 When a prompt's `shouldRegister` method returns `false`, it will not appear in the list of available prompts and cannot be invoked by AI clients.
 
 <a name="prompt-responses"></a>
+
 ### Prompt Responses
 
 Prompts may return a single `Laravel\Mcp\Response` or an iterable of `Laravel\Mcp\Response` instances. These responses encapsulate the content that will be sent to the AI client:
@@ -937,11 +965,13 @@ class DescribeWeatherPrompt extends Prompt
 You can use the `asAssistant()` method to indicate that a response message should be treated as coming from the AI assistant, while regular messages are treated as user input.
 
 <a name="resources"></a>
+
 ## Resources
 
 [Resources](https://modelcontextprotocol.io/specification/2025-06-18/server/resources) enable your server to expose data and content that AI clients can read and use as context when interacting with language models. They provide a way to share static or dynamic information like documentation, configuration, or any data that helps inform AI responses.
 
 <a name="creating-resources"></a>
+
 ## Creating Resources
 
 To create a resource, run the `make:mcp-resource` Artisan command:
@@ -974,6 +1004,7 @@ class WeatherServer extends Server
 ```
 
 <a name="resource-name-title-and-description"></a>
+
 #### Resource Name, Title, and Description
 
 By default, the resource's name and title are derived from the class name. For example, `WeatherGuidelinesResource` will have a name of `weather-guidelines` and a title of `Weather Guidelines Resource`. You may customize these values using the `Name` and `Title` attributes:
@@ -1006,11 +1037,13 @@ class WeatherGuidelinesResource extends Resource
 > The description is a critical part of the resource's metadata, as it helps AI models understand when and how to use the resource effectively.
 
 <a name="resource-templates"></a>
+
 ### Resource Templates
 
 [Resource templates](https://modelcontextprotocol.io/specification/2025-06-18/server/resources#resource-templates) enable your server to expose dynamic resources that match URI patterns with variables. Instead of defining a static URI for each resource, you can create a single resource that handles multiple URIs based on a template pattern.
 
 <a name="creating-resource-templates"></a>
+
 #### Creating Resource Templates
 
 To create a resource template, implement the `HasUriTemplate` interface on your resource class and define a `uriTemplate` method that returns a `UriTemplate` instance:
@@ -1058,6 +1091,7 @@ class UserFileResource extends Resource implements HasUriTemplate
 When a resource implements the `HasUriTemplate` interface, it will be registered as a resource template rather than a static resource. AI clients can then request resources using URIs that match the template pattern, and the variables from the URI will be automatically extracted and made available in your resource's `handle` method.
 
 <a name="uri-template-syntax"></a>
+
 #### URI Template Syntax
 
 URI templates use placeholders enclosed in curly braces to define variable segments in the URI:
@@ -1069,6 +1103,7 @@ new UriTemplate('https://api.example.com/{version}/{resource}/{id}');
 ```
 
 <a name="accessing-template-variables"></a>
+
 #### Accessing Template Variables
 
 When a URI matches your resource template, the extracted variables are automatically merged into the request and can be accessed using the `get` method:
@@ -1109,6 +1144,7 @@ class UserProfileResource extends Resource implements HasUriTemplate
 The `Request` object provides both the extracted variables and the original URI that was requested, giving you full context for processing the resource request.
 
 <a name="resource-uri-and-mime-type"></a>
+
 ### Resource URI and MIME Type
 
 Each resource is identified by a unique URI and has an associated MIME type that helps AI clients understand the resource's format.
@@ -1136,6 +1172,7 @@ class WeatherGuidelinesResource extends Resource
 The URI and MIME type help AI clients determine how to process and interpret the resource content appropriately.
 
 <a name="resource-request"></a>
+
 ### Resource Request
 
 Unlike tools and prompts, resources can not define input schemas or arguments. However, you can still interact with request object within your resource's `handle` method:
@@ -1162,6 +1199,7 @@ class WeatherGuidelinesResource extends Resource
 ```
 
 <a name="resource-dependency-injection"></a>
+
 ### Resource Dependency Injection
 
 The Laravel [service container](/docs/{{version}}/container) is used to resolve all resources. As a result, you are able to type-hint any dependencies your resource may need in its constructor. The declared dependencies will automatically be resolved and injected into the resource instance:
@@ -1214,6 +1252,7 @@ class WeatherGuidelinesResource extends Resource
 ```
 
 <a name="resource-annotations"></a>
+
 ### Resource Annotations
 
 You may enhance your resources with [annotations](https://modelcontextprotocol.io/specification/2025-06-18/schema#resourceannotations) to provide additional metadata to AI clients. Annotations are added to resources via attributes:
@@ -1247,6 +1286,7 @@ Available annotations include:
 | `#[LastModified]` | string        | An ISO 8601 timestamp showing when the resource was last updated.           |
 
 <a name="conditional-resource-registration"></a>
+
 ### Conditional Resource Registration
 
 You may conditionally register resources at runtime by implementing the `shouldRegister` method in your resource class. This method allows you to determine whether a resource should be available based on application state, configuration, or request parameters:
@@ -1274,6 +1314,7 @@ class WeatherGuidelinesResource extends Resource
 When a resource's `shouldRegister` method returns `false`, it will not appear in the list of available resources and cannot be accessed by AI clients.
 
 <a name="resource-responses"></a>
+
 ### Resource Responses
 
 Resources must return an instance of `Laravel\Mcp\Response`. The Response class provides several convenient methods for creating different types of responses:
@@ -1296,6 +1337,7 @@ public function handle(Request $request): Response
 ```
 
 <a name="resource-link-responses"></a>
+
 #### Resource Link Responses
 
 To return a resource link, use the `resourceLink` method, providing the URI and name. Unlike an embedded resource, a resource link returns a URI pointer that the AI client fetches independently:
@@ -1315,6 +1357,7 @@ return Response::resourceLink(new WeatherForecastResource);
 ```
 
 <a name="resource-blob-responses"></a>
+
 #### Blob Responses
 
 To return blob content, use the `blob` method, providing the blob content:
@@ -1341,6 +1384,7 @@ class WeatherGuidelinesResource extends Resource
 ```
 
 <a name="resource-error-responses"></a>
+
 #### Error Responses
 
 To indicate an error occurred during resource retrieval, use the `error()` method:
@@ -1350,6 +1394,7 @@ return Response::error('Unable to fetch weather data for the specified location.
 ```
 
 <a name="apps"></a>
+
 ## Apps
 
 Laravel MCP supports [MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview), an extension of the Model Context Protocol that allows tools to render interactive HTML applications within sandboxed iframes in supported hosts. This allows you to build dashboards, forms, visualizations, and other rich experiences that go beyond plain text responses.
@@ -1360,6 +1405,7 @@ An MCP app consists of two parts working together:
 - A **tool** that is linked to the app resource using the `#[RendersApp]` attribute. When the tool is called, the host fetches and renders the linked resource.
 
 <a name="creating-app-resources"></a>
+
 ### Creating App Resources
 
 You may create an app resource using the `make:mcp-app-resource` Artisan command:
@@ -1424,6 +1470,7 @@ The generated Blade view uses the `<x-mcp::app>` component, which renders a comp
 The `createMcpApp` global is provided by the bundled SDK and handles connecting the iframe to the server, applying host theming, and exposing helpers such as `callServerTool`, `sendMessage`, `openLink`, and event callbacks. For the full client-side API, refer to the [MCP Apps specification](https://modelcontextprotocol.io/extensions/apps/overview).
 
 <a name="rendering-apps-from-tools"></a>
+
 ### Rendering Apps From Tools
 
 To display an app resource, link a tool to it using the `#[RendersApp]` attribute. When the tool is called, Laravel MCP includes the resource's URI in the tool metadata so the host can render the app in a sandboxed iframe:
@@ -1455,6 +1502,7 @@ class ShowWeatherDashboard extends Tool
 Laravel MCP automatically advertises the `io.modelcontextprotocol/ui` capability whenever any `AppResource` is registered, so no additional server configuration is required.
 
 <a name="app-tool-visibility"></a>
+
 ### App Tool Visibility
 
 Each `#[RendersApp]` tool can limit who may invoke it via the `visibility` argument. This is useful for exposing private, app-only tools that the UI calls to load or refresh data without making those tools visible to the model:
@@ -1473,6 +1521,7 @@ class GetWeatherData extends Tool
 The `Visibility` enum has two cases, `Model` and `App`, and defaults to both. Use `[Visibility::App]` for backend actions the UI calls directly, or `[Visibility::Model]` to make a tool unavailable to the UI.
 
 <a name="app-configuration"></a>
+
 ### App Configuration
 
 The `#[AppMeta]` attribute on your app resource configures the iframe's Content Security Policy, browser permissions, and any library scripts that should be included in the view's `<head>`:
@@ -1498,6 +1547,7 @@ The `Library` enum includes pre-configured CDN scripts for common front-end libr
 For computed or dynamic configuration, override the `appMeta` method on your resource using the fluent `AppMeta`, `Csp`, and `Permissions` builders from the `Laravel\Mcp\Server\Ui` namespace.
 
 <a name="building-apps-with-boost"></a>
+
 ### Building Apps With Boost
 
 Laravel MCP includes a dedicated [Boost](/docs/{{version}}/boost) skill reference for building MCP Apps. If you have [Laravel Boost](/docs/{{version}}/boost) installed, your AI coding agent can invoke the `mcp-development` skill and ask it to scaffold an app resource, Blade view, and linked tool for you.
@@ -1505,6 +1555,7 @@ Laravel MCP includes a dedicated [Boost](/docs/{{version}}/boost) skill referenc
 For the complete protocol reference, including the full client-side API and schema details, see the official [MCP Apps documentation](https://modelcontextprotocol.io/extensions/apps/overview).
 
 <a name="metadata"></a>
+
 ## Metadata
 
 Laravel MCP also supports the `_meta` field as defined in the [MCP specification](https://modelcontextprotocol.io/specification/2025-06-18/basic#meta), which is required by certain MCP clients or integrations. Metadata can be applied to all MCP primitives, including tools, resources, and prompts, as well as their responses.
@@ -1562,6 +1613,7 @@ class CurrentWeatherTool extends Tool
 ```
 
 <a name="authentication"></a>
+
 ## Authentication
 
 Just like routes, you can authenticate web MCP servers with middleware. Adding authentication to your MCP server will require a user to authenticate before using any capability of the server.
@@ -1569,6 +1621,7 @@ Just like routes, you can authenticate web MCP servers with middleware. Adding a
 There are two ways to authenticate access to your MCP server: simple, token based authentication via [Laravel Sanctum](/docs/{{version}}/sanctum) or any token which is passed via the `Authorization` HTTP header. Or, you may authenticate via OAuth using [Laravel Passport](/docs/{{version}}/passport).
 
 <a name="oauth"></a>
+
 ### OAuth 2.1
 
 The most robust way to protect your web-based MCP servers is with OAuth using [Laravel Passport](/docs/{{version}}/passport).
@@ -1587,7 +1640,7 @@ Mcp::web('/mcp/weather', WeatherExample::class)
 
 #### New Passport Installation
 
-If your application is not already using Laravel Passport, follow Passport's  [installation and deployment guide](/docs/{{version}}/passport#installation) to add Passport to your application. You should have an `OAuthenticatable` model, new authentication guard, and passport keys before moving on.
+If your application is not already using Laravel Passport, follow Passport's [installation and deployment guide](/docs/{{version}}/passport#installation) to add Passport to your application. You should have an `OAuthenticatable` model, new authentication guard, and passport keys before moving on.
 
 Next, you should publish Laravel MCP's provided Passport authorization view:
 
@@ -1631,6 +1684,7 @@ OAuth2.1 is the documented authentication mechanism in the Model Context Protoco
 If your application is already using [Sanctum](/docs/{{version}}/sanctum) then adding Passport may be cumbersome. In this instance, we recommend using Sanctum without Passport until you have a clear, necessary requirement to use an MCP client that only supports OAuth.
 
 <a name="sanctum"></a>
+
 ### Sanctum
 
 If you would like to protect your MCP server using [Sanctum](/docs/{{version}}/sanctum), simply add Sanctum's authentication middleware to your server in your `routes/ai.php` file. Then, ensure your MCP clients provide an `Authorization: Bearer <token>` header to ensure successful authentication:
@@ -1644,11 +1698,13 @@ Mcp::web('/mcp/demo', WeatherExample::class)
 ```
 
 <a name="custom-mcp-authentication"></a>
+
 #### Custom MCP Authentication
 
 If your application issues its own custom API tokens, you may authenticate your MCP server by assigning any middleware you wish to your `Mcp::web` routes. Your custom middleware can inspect the `Authorization` header manually to authenticate the incoming MCP request.
 
 <a name="authorization"></a>
+
 ## Authorization
 
 You may access the currently authenticated user via the `$request->user()` method, allowing you to perform [authorization checks](/docs/{{version}}/authorization) within your MCP tools and resources:
@@ -1671,11 +1727,13 @@ public function handle(Request $request): Response
 ```
 
 <a name="client"></a>
+
 ## MCP Client
 
 In addition to building servers, Laravel MCP includes a client for connecting to other MCP servers, whether first-party or third-party. The client lets your application discover and call the tools exposed by an MCP server, which is especially useful for giving your [AI agents](/docs/{{version}}/ai-sdk#mcp-tools) access to capabilities provided by external MCP servers.
 
 <a name="client-connecting"></a>
+
 ### Connecting to Servers
 
 You may connect to an HTTP-accessible MCP server using the `Client::web` method, passing the server's URL:
@@ -1715,6 +1773,7 @@ $client = Client::web('https://mcp.example.com')->withTimeout(30);
 ```
 
 <a name="named-clients"></a>
+
 ### Named Clients
 
 Instead of constructing a client each time you need it, you may register reusable, named clients. This is typically done in the `boot` method of a service provider using the `Mcp` facade:
@@ -1737,6 +1796,7 @@ $client = Mcp::client('github');
 Named clients are resolved once per request and automatically disconnected at the end of the request lifecycle.
 
 <a name="client-authentication"></a>
+
 ### Client Authentication
 
 To connect to a web MCP server that is protected by a bearer token, use the `withToken` method. You may pass a token string or a closure that lazily resolves the token:
@@ -1792,6 +1852,7 @@ return redirect()->route('mcp.oauth.github.connect');
 ```
 
 <a name="client-tools"></a>
+
 ### Tools
 
 You may retrieve the tools exposed by an MCP server using the `tools` method, which returns a collection of tools keyed by name:
@@ -1843,11 +1904,13 @@ $result = $tools['current-weather']->call([
 If you are building agents with the [Laravel AI SDK](/docs/{{version}}/ai-sdk), you may also provide tools from an MCP client directly to an agent, allowing the model to call them while responding to a prompt. See the [MCP Tools](/docs/{{version}}/ai-sdk#mcp-tools) section of the AI SDK documentation for more information.
 
 <a name="testing-servers"></a>
+
 ## Testing Servers
 
 You may test your MCP servers using the built-in MCP Inspector or by writing unit tests.
 
 <a name="mcp-inspector"></a>
+
 ### MCP Inspector
 
 The [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) is an interactive tool for testing and debugging your MCP servers. Use it to connect to your server, verify authentication, and try out tools, resources, and prompts.
@@ -1865,13 +1928,14 @@ php artisan mcp:inspector weather
 This command launches the MCP Inspector and provides the client settings that you may copy into your MCP client to ensure everything is configured correctly. If your web server is protected by an authentication middleware, make sure to include the required headers, such as an `Authorization` bearer token, when connecting.
 
 <a name="unit-tests"></a>
+
 ### Unit Tests
 
 You may write unit tests for your MCP servers, tools, resources, and prompts.
 
 To get started, create a new test case and invoke the desired primitive on the server that registers it. For example, to test a tool on the `WeatherServer`:
 
-```php tab=Pest
+```php
 test('tool', function () {
     $response = WeatherServer::tool(CurrentWeatherTool::class, [
         'location' => 'New York City',
@@ -1884,7 +1948,7 @@ test('tool', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 /**
  * Test a tool.
  */

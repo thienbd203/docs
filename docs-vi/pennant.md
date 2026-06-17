@@ -4,39 +4,41 @@
 - [Cài đặt](#installation)
 - [Cấu hình](#configuration)
 - [Định nghĩa Features](#defining-features)
-    - [Features dựa trên Class](#class-based-features)
+  - [Features dựa trên Class](#class-based-features)
 - [Kiểm tra Features](#checking-features)
-    - [Thực thi có điều kiện](#conditional-execution)
-    - [Trait `HasFeatures`](#the-has-features-trait)
-    - [Blade Directive](#blade-directive)
-    - [Middleware](#middleware)
-    - [Chặn kiểm tra Feature](#intercepting-feature-checks)
-    - [Cache trong bộ nhớ](#in-memory-cache)
+  - [Thực thi có điều kiện](#conditional-execution)
+  - [Trait `HasFeatures`](#the-has-features-trait)
+  - [Blade Directive](#blade-directive)
+  - [Middleware](#middleware)
+  - [Chặn kiểm tra Feature](#intercepting-feature-checks)
+  - [Cache trong bộ nhớ](#in-memory-cache)
 - [Scope](#scope)
-    - [Chỉ định Scope](#specifying-the-scope)
-    - [Scope mặc định](#default-scope)
-    - [Scope nullable](#nullable-scope)
-    - [Xác định Scope](#identifying-scope)
-    - [Serialize Scope](#serializing-scope)
+  - [Chỉ định Scope](#specifying-the-scope)
+  - [Scope mặc định](#default-scope)
+  - [Scope nullable](#nullable-scope)
+  - [Xác định Scope](#identifying-scope)
+  - [Serialize Scope](#serializing-scope)
 - [Giá trị Feature phong phú](#rich-feature-values)
 - [Lấy nhiều Features](#retrieving-multiple-features)
 - [Eager Loading](#eager-loading)
 - [Cập nhật giá trị](#updating-values)
-    - [Cập nhật hàng loạt](#bulk-updates)
-    - [Xóa Features](#purging-features)
+  - [Cập nhật hàng loạt](#bulk-updates)
+  - [Xóa Features](#purging-features)
 - [Testing](#testing)
 - [Thêm Pennant Drivers tùy chỉnh](#adding-custom-pennant-drivers)
-    - [Triển khai Driver](#implementing-the-driver)
-    - [Đăng ký Driver](#registering-the-driver)
-    - [Định nghĩa Features bên ngoài](#defining-features-externally)
+  - [Triển khai Driver](#implementing-the-driver)
+  - [Đăng ký Driver](#registering-the-driver)
+  - [Định nghĩa Features bên ngoài](#defining-features-externally)
 - [Events](#events)
 
 <a name="introduction"></a>
+
 ## Giới thiệu
 
 [Laravel Pennant](https://github.com/laravel/pennant) là một gói feature flag đơn giản và nhẹ nhàng - không có những thứ không cần thiết. Feature flags cho phép bạn triển khai dần dần các tính năng ứng dụng mới một cách tự tin, A/B test các thiết kế giao diện mới, bổ sung cho chiến lược phát triển trunk-based, và nhiều hơn nữa.
 
 <a name="installation"></a>
+
 ## Cài đặt
 
 Đầu tiên, cài đặt Pennant vào dự án của bạn bằng trình quản lý gói Composer:
@@ -58,6 +60,7 @@ php artisan migrate
 ```
 
 <a name="configuration"></a>
+
 ## Cấu hình
 
 Sau khi xuất bản tài sản của Pennant, file cấu hình của nó sẽ nằm tại `config/pennant.php`. File cấu hình này cho phép bạn chỉ định cơ chế lưu trữ mặc định mà Pennant sẽ sử dụng để lưu trữ các giá trị feature flag đã giải quyết.
@@ -65,6 +68,7 @@ Sau khi xuất bản tài sản của Pennant, file cấu hình của nó sẽ n
 Pennant bao gồm hỗ trợ lưu trữ các giá trị feature flag đã giải quyết trong một mảng trong bộ nhớ thông qua driver `array`. Hoặc, Pennant có thể lưu trữ các giá trị feature flag đã giải quyết một cách liên tục trong cơ sở dữ liệu quan hệ thông qua driver `database`, đây là cơ chế lưu trữ mặc định được sử dụng bởi Pennant.
 
 <a name="defining-features"></a>
+
 ## Định nghĩa Features
 
 Để định nghĩa một feature, bạn có thể sử dụng phương thức `define` được cung cấp bởi facade `Feature`. Bạn sẽ cần cung cấp tên cho feature, cũng như một closure sẽ được gọi để giải quyết giá trị ban đầu của feature.
@@ -110,6 +114,7 @@ Lần đầu tiên feature `new-api` được kiểm tra cho một người dùn
     Feature::define('site-redesign', Lottery::odds(1, 1000));
 
 <a name="class-based-features"></a>
+
 ### Features dựa trên Class
 
 Pennant cũng cho phép bạn định nghĩa các feature dựa trên class. Khác với định nghĩa feature dựa trên closure, không cần đăng ký feature dựa trên class trong một service provider. Để tạo một feature dựa trên class, bạn có thể gọi lệnh Artisan `pennant:feature`. Theo mặc định, class feature sẽ được đặt trong thư mục `app/Features` của ứng dụng:
@@ -174,6 +179,7 @@ class NewApi
 ```
 
 <a name="checking-features"></a>
+
 ## Kiểm tra Features
 
 Để xác định xem một feature có hoạt động hay không, bạn có thể sử dụng phương thức `active` trên facade `Feature`. Theo mặc định, các feature được kiểm tra dựa trên người dùng hiện đang được xác thực:
@@ -234,6 +240,7 @@ Feature::someAreInactive(['new-api', 'site-redesign']);
 > Khi sử dụng Pennant ngoài ngữ cảnh HTTP, chẳng hạn như trong lệnh Artisan hoặc job được xếp hàng, bạn thường nên [chỉ định rõ scope của feature](#specifying-the-scope). Ngoài ra, bạn có thể định nghĩa một [scope mặc định](#default-scope) bao gồm cả ngữ cảnh HTTP đã xác thực và ngữ cảnh chưa xác thực.
 
 <a name="checking-class-based-features"></a>
+
 #### Kiểm tra Features dựa trên Class
 
 Đối với các feature dựa trên class, bạn nên cung cấp tên class khi kiểm tra feature:
@@ -265,6 +272,7 @@ class PodcastController
 ```
 
 <a name="conditional-execution"></a>
+
 ### Thực thi có điều kiện
 
 Phương thức `when` có thể được sử dụng để thực hiện một closure cụ thể một cách trôi chảy nếu feature hoạt động. Ngoài ra, một closure thứ hai có thể được cung cấp và sẽ được thực thi nếu feature không hoạt động:
@@ -306,6 +314,7 @@ return Feature::unless(NewApi::class,
 ```
 
 <a name="the-has-features-trait"></a>
+
 ### Trait `HasFeatures`
 
 Trait `HasFeatures` của Pennant có thể được thêm vào model `User` của ứng dụng (hoặc bất kỳ model nào khác có features) để cung cấp một cách trôi chảy, thuận tiện để kiểm tra features trực tiếp từ model:
@@ -363,6 +372,7 @@ $user->features()->unless('new-api',
 ```
 
 <a name="blade-directive"></a>
+
 ### Blade Directive
 
 Để làm cho việc kiểm tra features trong Blade trở nên liền mạch, Pennant cung cấp các directive `@feature` và `@featureany`:
@@ -380,6 +390,7 @@ $user->features()->unless('new-api',
 ```
 
 <a name="middleware"></a>
+
 ### Middleware
 
 Pennant cũng bao gồm một [middleware](/docs/{{version}}/middleware) có thể được sử dụng để xác minh người dùng hiện đang được xác thực có quyền truy cập vào một feature trước khi route được gọi. Bạn có thể gán middleware cho một route và chỉ định các feature cần thiết để truy cập route. Nếu bất kỳ feature nào được chỉ định không hoạt động cho người dùng hiện đang được xác thực, phản hồi HTTP `400 Bad Request` sẽ được trả về bởi route. Nhiều feature có thể được truyền cho phương thức tĩnh `using`.
@@ -394,6 +405,7 @@ Route::get('/api/servers', function () {
 ```
 
 <a name="customizing-the-response"></a>
+
 #### Tùy chỉnh phản hồi
 
 Nếu bạn muốn tùy chỉnh phản hồi được trả về bởi middleware khi một trong các feature được liệt kê không hoạt động, bạn có thể sử dụng phương thức `whenInactive` được cung cấp bởi middleware `EnsureFeaturesAreActive`. Thông thường, phương thức này nên được gọi trong phương thức `boot` của một trong các service provider của ứng dụng:
@@ -419,6 +431,7 @@ public function boot(): void
 ```
 
 <a name="intercepting-feature-checks"></a>
+
 ### Chặn kiểm tra Feature
 
 Đôi khi có thể hữu ích để thực hiện một số kiểm tra trong bộ nhớ trước khi truy xuất giá trị được lưu trữ của một feature cụ thể. Hãy tưởng tượng bạn đang phát triển một API mới sau một feature flag và muốn khả năng vô hiệu hóa API mới mà không mất bất kỳ giá trị feature nào đã giải quyết trong bộ lưu trữ. Nếu bạn nhận thấy một lỗi trong API mới, bạn có thể dễ dàng vô hiệu hóa nó cho mọi người ngoại trừ thành viên nội bộ, sửa lỗi, sau đó bật lại API mới cho những người dùng trước đó đã có quyền truy cập vào feature.
@@ -491,6 +504,7 @@ class NewApi
 ```
 
 <a name="in-memory-cache"></a>
+
 ### Cache trong bộ nhớ
 
 Khi kiểm tra một feature, Pennant sẽ tạo một cache trong bộ nhớ của kết quả. Nếu bạn đang sử dụng driver `database`, điều này có nghĩa là kiểm tra lại cùng một feature flag trong một request duy nhất sẽ không kích hoạt các truy vấn cơ sở dữ liệu bổ sung. Điều này cũng đảm bảo rằng feature có kết quả nhất quán trong suốt thời gian của request.
@@ -502,9 +516,11 @@ Feature::flushCache();
 ```
 
 <a name="scope"></a>
+
 ## Scope
 
 <a name="specifying-the-scope"></a>
+
 ### Chỉ định Scope
 
 Như đã thảo luận, các feature thường được kiểm tra dựa trên người dùng hiện đang được xác thực. Tuy nhiên, điều này có thể không luôn phù hợp với nhu cầu của bạn. Do đó, có thể chỉ định scope mà bạn muốn kiểm tra một feature cụ thể thông qua phương thức `for` của facade `Feature`:
@@ -547,6 +563,7 @@ if (Feature::for($user->team)->active('billing-v2')) {
 ```
 
 <a name="default-scope"></a>
+
 ### Scope mặc định
 
 Cũng có thể tùy chỉnh scope mặc định mà Pennant sử dụng để kiểm tra features. Ví dụ, có lẽ tất cả các feature của bạn được kiểm tra dựa trên nhóm của người dùng hiện đang được xác thực thay vì người dùng. Thay vì phải gọi `Feature::for($user->team)` mỗi lần bạn kiểm tra một feature, bạn có thể chỉ định nhóm làm scope mặc định. Thông thường, điều này nên được thực hiện trong một trong các service provider của ứng dụng:
@@ -585,6 +602,7 @@ Feature::for($user->team)->active('billing-v2');
 ```
 
 <a name="nullable-scope"></a>
+
 ### Scope Nullable
 
 Nếu scope bạn cung cấp khi kiểm tra một feature là `null` và định nghĩa của feature không hỗ trợ `null` thông qua một loại nullable hoặc bằng cách bao gồm `null` trong một loại union, Pennant sẽ tự động trả về `false` làm giá trị kết quả của feature.
@@ -608,6 +626,7 @@ Feature::define('new-api', fn (User|null $user) => match (true) {// [tl! add]
 ```
 
 <a name="identifying-scope"></a>
+
 ### Xác định Scope
 
 Các driver lưu trữ `array` và `database` tích hợp sẵn của Pennant biết cách lưu trữ đúng các định danh scope cho tất cả các loại dữ liệu PHP cũng như các model Eloquent. Tuy nhiên, nếu ứng dụng của bạn sử dụng một driver Pennant bên thứ ba, driver đó có thể không biết cách lưu trữ đúng một định danh cho một model Eloquent hoặc các loại tùy chỉnh khác trong ứng dụng của bạn.
@@ -641,6 +660,7 @@ class User extends Model implements FeatureScopeable
 ```
 
 <a name="serializing-scope"></a>
+
 ### Serialize Scope
 
 Theo mặc định, Pennant sẽ sử dụng tên class đầy đủ khi lưu trữ một feature liên kết với một model Eloquent. Nếu bạn đã sử dụng [Eloquent morph map](/docs/{{version}}/eloquent-relationships#custom-polymorphic-types), bạn có thể chọn để Pennant cũng sử dụng morph map để tách rời feature được lưu trữ khỏi cấu trúc ứng dụng.
@@ -660,6 +680,7 @@ Feature::useMorphMap();
 ```
 
 <a name="rich-feature-values"></a>
+
 ## Giá trị Feature phong phú
 
 Cho đến nay, chúng ta chủ yếu hiển thị các feature ở trạng thái nhị phân, nghĩa là chúng要么 "hoạt động"要么 "không hoạt động", nhưng Pennant cũng cho phép bạn lưu trữ các giá trị phong phú.
@@ -717,6 +738,7 @@ Feature::unless('purchase-button',
 ```
 
 <a name="retrieving-multiple-features"></a>
+
 ## Lấy nhiều Features
 
 Phương thức `values` cho phép truy xuất nhiều features cho một scope cụ thể:
@@ -782,6 +804,7 @@ Feature::all();
 ```
 
 <a name="eager-loading"></a>
+
 ## Eager Loading
 
 Mặc dù Pennant giữ một cache trong bộ nhớ của tất cả các feature đã giải quyết cho một request duy nhất, vẫn có thể gặp vấn đề về hiệu suất. Để giảm bớt điều này, Pennant cung cấp khả năng eager load các giá trị feature.
@@ -827,6 +850,7 @@ Feature::for($users)->loadAll();
 ```
 
 <a name="updating-values"></a>
+
 ## Cập nhật giá trị
 
 Khi giá trị của một feature được giải quyết lần đầu tiên, driver cơ bản sẽ lưu trữ kết quả trong bộ lưu trữ. Điều này thường cần thiết để đảm bảo trải nghiệm nhất quán cho người dùng của bạn trên các request. Tuy nhiên, đôi khi, bạn có thể muốn cập nhật thủ công giá trị được lưu trữ của feature.
@@ -856,6 +880,7 @@ Feature::forget('purchase-button');
 ```
 
 <a name="bulk-updates"></a>
+
 ### Cập nhật hàng loạt
 
 Để cập nhật các giá trị feature được lưu trữ hàng loạt, bạn có thể sử dụng các phương thức `activateForEveryone` và `deactivateForEveryone`.
@@ -880,6 +905,7 @@ Feature::deactivateForEveryone('new-api');
 > Điều này sẽ chỉ cập nhật các giá trị feature đã giải quyết đã được lưu trữ bởi driver lưu trữ của Pennant. Bạn cũng sẽ cần cập nhật định nghĩa feature trong ứng dụng của mình.
 
 <a name="purging-features"></a>
+
 ### Xóa Features
 
 Đôi khi, có thể hữu ích để xóa toàn bộ một feature khỏi bộ lưu trữ. Điều này thường cần thiết nếu bạn đã xóa feature khỏi ứng dụng của mình hoặc bạn đã thực hiện các điều chỉnh đối với định nghĩa feature mà bạn muốn triển khai cho tất cả người dùng.
@@ -921,6 +947,7 @@ php artisan pennant:purge --except-registered
 ```
 
 <a name="testing"></a>
+
 ## Testing
 
 Khi kiểm tra mã tương tác với feature flags, cách dễ nhất để kiểm soát giá trị trả về của feature flag trong các bài kiểm tra của bạn là đơn giản là định nghĩa lại feature. Ví dụ, hãy tưởng tượng bạn có feature sau được định nghĩa trong một trong các service provider của ứng dụng:
@@ -938,7 +965,7 @@ Feature::define('purchase-button', fn () => Arr::random([
 
 Để sửa đổi giá trị trả về của feature trong các bài kiểm tra của bạn, bạn có thể định nghĩa lại feature ở đầu bài kiểm tra. Bài kiểm tra sau sẽ luôn vượt qua, mặc dù việc triển khai `Arr::random()` vẫn còn trong service provider:
 
-```php tab=Pest
+```php
 use Laravel\Pennant\Feature;
 
 test('it can control feature values', function () {
@@ -948,7 +975,7 @@ test('it can control feature values', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 use Laravel\Pennant\Feature;
 
 public function test_it_can_control_feature_values()
@@ -961,7 +988,7 @@ public function test_it_can_control_feature_values()
 
 Cách tiếp cận tương tự có thể được sử dụng cho các feature dựa trên class:
 
-```php tab=Pest
+```php
 use Laravel\Pennant\Feature;
 
 test('it can control feature values', function () {
@@ -971,7 +998,7 @@ test('it can control feature values', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 use App\Features\NewApi;
 use Laravel\Pennant\Feature;
 
@@ -986,6 +1013,7 @@ public function test_it_can_control_feature_values()
 Nếu feature của bạn trả về một instance `Lottery`, có một số [helper kiểm tra hữu ích có sẵn](/docs/{{version}}/helpers#testing-lotteries).
 
 <a name="store-configuration"></a>
+
 #### Cấu hình Store
 
 Bạn có thể cấu hình store mà Pennant sẽ sử dụng trong quá trình kiểm tra bằng cách định nghĩa biến môi trường `PENNANT_STORE` trong file `phpunit.xml` của ứng dụng:
@@ -1002,9 +1030,11 @@ Bạn có thể cấu hình store mà Pennant sẽ sử dụng trong quá trình
 ```
 
 <a name="adding-custom-pennant-drivers"></a>
+
 ## Thêm Pennant Drivers tùy chỉnh
 
 <a name="implementing-the-driver"></a>
+
 #### Triển khai Driver
 
 Nếu không có driver lưu trữ hiện có nào của Pennant phù hợp với nhu cầu của ứng dụng, bạn có thể viết driver lưu trữ của riêng mình. Driver tùy chỉnh của bạn nên triển khai interface `Laravel\Pennant\Contracts\Driver`:
@@ -1035,6 +1065,7 @@ Bây giờ, chúng ta chỉ cần triển khai từng phương thức này bằn
 > Laravel không đi kèm với một thư mục để chứa các phần mở rộng của bạn. Bạn có thể đặt chúng ở bất cứ đâu bạn thích. Trong ví dụ này, chúng ta đã tạo một thư mục `Extensions` để chứa `RedisFeatureDriver`.
 
 <a name="registering-the-driver"></a>
+
 #### Đăng ký Driver
 
 Sau khi driver của bạn đã được triển khai, bạn đã sẵn sàng để đăng ký nó với Laravel. Để thêm các driver bổ sung vào Pennant, bạn có thể sử dụng phương thức `extend` được cung cấp bởi facade `Feature`. Bạn nên gọi phương thức `extend` từ phương thức `boot` của một trong các [service provider](/docs/{{version}}/providers) của ứng dụng:
@@ -1087,6 +1118,7 @@ Sau khi driver đã được đăng ký, bạn có thể sử dụng driver `red
 ```
 
 <a name="defining-features-externally"></a>
+
 ### Định nghĩa Features bên ngoài
 
 Nếu driver của bạn là một wrapper xung quanh một nền tảng feature flag bên thứ ba, bạn có thể sẽ định nghĩa các feature trên nền tảng thay vì sử dụng phương thức `Feature::define` của Pennant. Nếu đó là trường hợp, driver tùy chỉnh của bạn cũng nên triển khai interface `Laravel\Pennant\Contracts\DefinesFeaturesExternally`:
@@ -1113,6 +1145,7 @@ class FeatureFlagServiceDriver implements Driver, DefinesFeaturesExternally
 Phương thức `definedFeaturesForScope` nên trả về danh sách tên feature được định nghĩa cho scope được cung cấp.
 
 <a name="events"></a>
+
 ## Events
 
 Pennant gửi đi nhiều sự kiện có thể hữu ích khi theo dõi feature flags trong suốt ứng dụng của bạn.

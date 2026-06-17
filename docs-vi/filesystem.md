@@ -2,35 +2,37 @@
 
 - [Introduction](#introduction)
 - [Configuration](#configuration)
-    - [The Local Driver](#the-local-driver)
-    - [The Public Disk](#the-public-disk)
-    - [Driver Prerequisites](#driver-prerequisites)
-    - [Scoped and Read-Only Filesystems](#scoped-and-read-only-filesystems)
-    - [Amazon S3 Compatible Filesystems](#amazon-s3-compatible-filesystems)
+  - [The Local Driver](#the-local-driver)
+  - [The Public Disk](#the-public-disk)
+  - [Driver Prerequisites](#driver-prerequisites)
+  - [Scoped and Read-Only Filesystems](#scoped-and-read-only-filesystems)
+  - [Amazon S3 Compatible Filesystems](#amazon-s3-compatible-filesystems)
 - [Obtaining Disk Instances](#obtaining-disk-instances)
-    - [On-Demand Disks](#on-demand-disks)
+  - [On-Demand Disks](#on-demand-disks)
 - [Retrieving Files](#retrieving-files)
-    - [Downloading Files](#downloading-files)
-    - [File URLs](#file-urls)
-    - [Temporary URLs](#temporary-urls)
-    - [File Metadata](#file-metadata)
+  - [Downloading Files](#downloading-files)
+  - [File URLs](#file-urls)
+  - [Temporary URLs](#temporary-urls)
+  - [File Metadata](#file-metadata)
 - [Storing Files](#storing-files)
-    - [Prepending and Appending To Files](#prepending-appending-to-files)
-    - [Copying and Moving Files](#copying-moving-files)
-    - [Automatic Streaming](#automatic-streaming)
-    - [File Uploads](#file-uploads)
-    - [File Visibility](#file-visibility)
+  - [Prepending and Appending To Files](#prepending-appending-to-files)
+  - [Copying and Moving Files](#copying-moving-files)
+  - [Automatic Streaming](#automatic-streaming)
+  - [File Uploads](#file-uploads)
+  - [File Visibility](#file-visibility)
 - [Deleting Files](#deleting-files)
 - [Directories](#directories)
 - [Testing](#testing)
 - [Custom Filesystems](#custom-filesystems)
 
 <a name="introduction"></a>
+
 ## Introduction
 
 Laravel cung cấp một filesystem abstraction mạnh mẽ nhờ vào [Flysystem](https://github.com/thephpleague/flysystem) PHP package tuyệt vời của Frank de Jonge. Laravel Flysystem integration cung cấp các drivers đơn giản để làm việc với local filesystems, SFTP, và Amazon S3. Hơn nữa, việc chuyển đổi giữa các tùy chọn lưu trữ này giữa local development machine và production server cực kỳ đơn giản vì API vẫn giữ nguyên cho mỗi hệ thống.
 
 <a name="configuration"></a>
+
 ## Configuration
 
 File cấu hình filesystem của Laravel nằm tại `config/filesystems.php`. Trong file này, bạn có thể cấu hình tất cả các filesystem "disks" của mình. Mỗi disk đại diện cho một storage driver và storage location cụ thể. Các cấu hình ví dụ cho mỗi driver được hỗ trợ được bao gồm trong file cấu hình để bạn có thể sửa đổi cấu hình để phản ánh preferences và credentials của mình.
@@ -41,6 +43,7 @@ Driver `local` tương tác với các files được lưu trữ locally trên s
 > Bạn có thể cấu hình bao nhiêu disks tùy thích và thậm chí có thể có nhiều disks sử dụng cùng một driver.
 
 <a name="the-local-driver"></a>
+
 ### The Local Driver
 
 Khi sử dụng driver `local`, tất cả các file operations đều tương đối với directory `root` được định nghĩa trong file cấu hình `filesystems` của bạn. Theo mặc định, giá trị này được đặt thành directory `storage/app/private`. Do đó, method sau sẽ viết vào `storage/app/private/example.txt`:
@@ -52,6 +55,7 @@ Storage::disk('local')->put('example.txt', 'Contents');
 ```
 
 <a name="the-public-disk"></a>
+
 ### The Public Disk
 
 Disk `public` được bao gồm trong file cấu hình `filesystems` của ứng dụng được dành cho các files sẽ được publicly accessible. Theo mặc định, disk `public` sử dụng driver `local` và lưu trữ các files của nó trong `storage/app/public`.
@@ -86,9 +90,11 @@ php artisan storage:unlink
 ```
 
 <a name="driver-prerequisites"></a>
+
 ### Driver Prerequisites
 
 <a name="s3-driver-configuration"></a>
+
 #### S3 Driver Configuration
 
 Trước khi sử dụng driver S3, bạn sẽ cần cài đặt Flysystem S3 package thông qua trình quản lý gói Composer:
@@ -110,6 +116,7 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 Để thuận tiện, các biến môi trường này khớp với quy ước đặt tên được sử dụng bởi AWS CLI.
 
 <a name="ftp-driver-configuration"></a>
+
 #### FTP Driver Configuration
 
 Trước khi sử dụng driver FTP, bạn sẽ cần cài đặt Flysystem FTP package thông qua trình quản lý gói Composer:
@@ -137,6 +144,7 @@ Laravel Flysystem integrations hoạt động rất tốt với FTP; tuy nhiên,
 ```
 
 <a name="sftp-driver-configuration"></a>
+
 #### SFTP Driver Configuration
 
 Trước khi sử dụng driver SFTP, bạn sẽ cần cài đặt Flysystem SFTP package thông qua trình quản lý gói Composer:
@@ -176,6 +184,7 @@ Laravel Flysystem integrations hoạt động rất tốt với SFTP; tuy nhiên
 ```
 
 <a name="scoped-and-read-only-filesystems"></a>
+
 ### Scoped and Read-Only Filesystems
 
 Scoped disks cho phép bạn định nghĩa một filesystem nơi tất cả các paths được tự động prefix với một path prefix nhất định. Trước khi tạo một scoped filesystem disk, bạn sẽ cần cài đặt một Flysystem package bổ sung thông qua trình quản lý gói Composer:
@@ -211,6 +220,7 @@ Tiếp theo, bạn có thể bao gồm tùy chọn cấu hình `read-only` trong
 ```
 
 <a name="amazon-s3-compatible-filesystems"></a>
+
 ### Amazon S3 Compatible Filesystems
 
 Theo mặc định, file cấu hình `filesystems` của ứng dụng chứa một cấu hình disk cho disk `s3`. Ngoài việc sử dụng disk này để tương tác với [Amazon S3](https://aws.amazon.com/s3/), bạn có thể sử dụng nó để tương tác với bất kỳ S3-compatible file storage service nào như [RustFS](https://github.com/rustfs/rustfs), [DigitalOcean Spaces](https://www.digitalocean.com/products/spaces/), [Vultr Object Storage](https://www.vultr.com/products/object-storage/), [Cloudflare R2](https://www.cloudflare.com/developer-platform/products/r2/), hoặc [Hetzner Cloud Storage](https://www.hetzner.com/storage/object-storage/).
@@ -222,6 +232,7 @@ Thông thường, sau khi cập nhật credentials của disk để khớp với
 ```
 
 <a name="obtaining-disk-instances"></a>
+
 ## Obtaining Disk Instances
 
 Facade `Storage` có thể được sử dụng để tương tác với bất kỳ disks được cấu hình nào của bạn. Ví dụ, bạn có thể sử dụng method `put` trên facade để lưu trữ một avatar trên default disk. Nếu bạn gọi các methods trên facade `Storage` mà không gọi method `disk` trước, method sẽ tự động được chuyển đến default disk:
@@ -239,6 +250,7 @@ Storage::disk('s3')->put('avatars/1', $content);
 ```
 
 <a name="on-demand-disks"></a>
+
 ### On-Demand Disks
 
 Đôi khi bạn có thể muốn tạo một disk tại runtime bằng cách sử dụng một cấu hình nhất định mà cấu hình đó thực sự không có trong file cấu hình `filesystems` của ứng dụng. Để thực hiện điều này, bạn có thể chuyển một mảng cấu hình cho method `build` của facade `Storage`:
@@ -255,6 +267,7 @@ $disk->put('image.jpg', $content);
 ```
 
 <a name="retrieving-files"></a>
+
 ## Retrieving Files
 
 Method `get` có thể được sử dụng để truy xuất nội dung của một file. Nội dung string raw của file sẽ được trả về bởi method. Hãy nhớ rằng, tất cả các file paths nên được chỉ định tương đối với location "root" của disk:
@@ -286,6 +299,7 @@ if (Storage::disk('s3')->missing('file.jpg')) {
 ```
 
 <a name="downloading-files"></a>
+
 ### Downloading Files
 
 Method `download` có thể được sử dụng để tạo một response buộc browser của người dùng tải xuống file tại path đã cho. Method `download` chấp nhận một filename làm đối số thứ hai cho method, sẽ xác định filename được nhìn thấy bởi người dùng tải xuống file. Cuối cùng, bạn có thể chuyển một mảng HTTP headers làm đối số thứ ba cho method:
@@ -297,6 +311,7 @@ return Storage::download('file.jpg', $name, $headers);
 ```
 
 <a name="file-urls"></a>
+
 ### File URLs
 
 Bạn có thể sử dụng method `url` để lấy URL cho một file nhất định. Nếu bạn đang sử dụng driver `local`, điều này thường chỉ prepend `/storage` vào path đã cho và trả về một relative URL đến file. Nếu bạn đang sử dụng driver `s3`, fully qualified remote URL sẽ được trả về:
@@ -313,6 +328,7 @@ Khi sử dụng driver `local`, tất cả các files nên publicly accessible n
 > Khi sử dụng driver `local`, giá trị trả về của `url` không được URL encode. Vì lý do này, chúng tôi khuyến nghị luôn lưu trữ các files của bạn bằng cách sử dụng các tên sẽ tạo ra các URLs hợp lệ.
 
 <a name="url-host-customization"></a>
+
 #### URL Host Customization
 
 Nếu bạn muốn sửa đổi host cho các URLs được tạo bằng cách sử dụng facade `Storage`, bạn có thể thêm hoặc thay đổi tùy chọn `url` trong mảng cấu hình của disk:
@@ -328,6 +344,7 @@ Nếu bạn muốn sửa đổi host cho các URLs được tạo bằng cách s
 ```
 
 <a name="temporary-urls"></a>
+
 ### Temporary URLs
 
 Sử dụng method `temporaryUrl`, bạn có thể tạo các temporary URLs đến các files được lưu trữ bằng cách sử dụng các drivers `local` và `s3`. Method này chấp nhận một path và một instance `DateTime` chỉ định khi nào URL nên hết hạn:
@@ -341,6 +358,7 @@ $url = Storage::temporaryUrl(
 ```
 
 <a name="enabling-local-temporary-urls"></a>
+
 #### Enabling Local Temporary URLs
 
 Nếu bạn bắt đầu phát triển ứng dụng của mình trước khi hỗ trợ cho temporary URLs được giới thiệu đến driver `local`, bạn có thể cần bật local temporary URLs. Để làm như vậy, thêm tùy chọn `serve` vào mảng cấu hình disk `local` của bạn trong file cấu hình `config/filesystems.php`:
@@ -355,6 +373,7 @@ Nếu bạn bắt đầu phát triển ứng dụng của mình trước khi h�
 ```
 
 <a name="s3-request-parameters"></a>
+
 #### S3 Request Parameters
 
 Nếu bạn cần chỉ định các [S3 request parameters](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html#RESTObjectGET-requests) bổ sung, bạn có thể chuyển mảng các request parameters làm đối số thứ ba cho method `temporaryUrl`:
@@ -371,6 +390,7 @@ $url = Storage::temporaryUrl(
 ```
 
 <a name="customizing-temporary-urls"></a>
+
 #### Customizing Temporary URLs
 
 Nếu bạn cần tùy chỉnh cách temporary URLs được tạo cho một storage disk cụ thể, bạn có thể sử dụng method `buildTemporaryUrlsUsing`. Ví dụ, điều này có thể hữu ích nếu bạn có một controller cho phép bạn tải xuống các files được lưu trữ qua một disk thường không hỗ trợ temporary URLs. Thông thường, method này nên được gọi từ method `boot` của một service provider:
@@ -406,6 +426,7 @@ class AppServiceProvider extends ServiceProvider
 ```
 
 <a name="temporary-upload-urls"></a>
+
 #### Temporary Upload URLs
 
 > [!WARNING]
@@ -424,6 +445,7 @@ use Illuminate\Support\Facades\Storage;
 Method này chủ yếu hữu ích trong các môi trường serverless yêu cầu client-side application tải lên files trực tiếp đến một cloud storage system như Amazon S3.
 
 <a name="file-metadata"></a>
+
 ### File Metadata
 
 Ngoài việc đọc và viết files, Laravel cũng có thể cung cấp thông tin về chính các files. Ví dụ, method `size` có thể được sử dụng để lấy kích thước của một file tính bằng bytes:
@@ -447,6 +469,7 @@ $mime = Storage::mimeType('file.jpg');
 ```
 
 <a name="file-paths"></a>
+
 #### File Paths
 
 Bạn có thể sử dụng method `path` để lấy path cho một file nhất định. Nếu bạn đang sử dụng driver `local`, điều này sẽ trả về absolute path đến file. Nếu bạn đang sử dụng driver `s3`, method này sẽ trả về relative path đến file trong S3 bucket:
@@ -458,6 +481,7 @@ $path = Storage::path('file.jpg');
 ```
 
 <a name="storing-files"></a>
+
 ## Storing Files
 
 Method `put` có thể được sử dụng để lưu trữ nội dung file trên một disk. Bạn cũng có thể chuyển một PHP `resource` cho method `put`, sẽ sử dụng stream support cơ bản của Flysystem. Hãy nhớ rằng, tất cả các file paths nên được chỉ định tương đối với location "root" được cấu hình cho disk:
@@ -471,6 +495,7 @@ Storage::put('file.jpg', $resource);
 ```
 
 <a name="failed-writes"></a>
+
 #### Failed Writes
 
 Nếu method `put` (hoặc các operations "write" khác) không thể viết file vào disk, `false` sẽ được trả về:
@@ -492,6 +517,7 @@ Nếu bạn muốn, bạn có thể định nghĩa tùy chọn `throw` trong m�
 ```
 
 <a name="prepending-appending-to-files"></a>
+
 ### Prepending and Appending To Files
 
 Các methods `prepend` và `append` cho phép bạn viết vào đầu hoặc cuối một file:
@@ -503,6 +529,7 @@ Storage::append('file.log', 'Appended Text');
 ```
 
 <a name="copying-moving-files"></a>
+
 ### Copying and Moving Files
 
 Method `copy` có thể được sử dụng để copy một file hiện có đến một location mới trên disk, trong khi method `move` có thể được sử dụng để đổi tên hoặc di chuyển một file hiện có đến một location mới:
@@ -514,6 +541,7 @@ Storage::move('old/file.jpg', 'new/file.jpg');
 ```
 
 <a name="automatic-streaming"></a>
+
 ### Automatic Streaming
 
 Streaming files đến storage cung cấp giảm sử dụng bộ nhớ đáng kể. Nếu bạn muốn Laravel tự động quản lý streaming một file nhất định đến storage location của bạn, bạn có thể sử dụng method `putFile` hoặc `putFileAs`. Method này chấp nhận một instance `Illuminate\Http\File` hoặc `Illuminate\Http\UploadedFile` và sẽ tự động stream file đến location mong muốn của bạn:
@@ -538,6 +566,7 @@ Storage::putFile('photos', new File('/path/to/photo'), 'public');
 ```
 
 <a name="file-uploads"></a>
+
 ### File Uploads
 
 Trong các ứng dụng web, một trong các use-cases phổ biến nhất để lưu trữ files là lưu trữ các files được tải lên bởi người dùng như photos và documents. Laravel làm cho việc lưu trữ uploaded files rất dễ dàng bằng cách sử dụng method `store` trên một uploaded file instance. Gọi method `store` với path mà bạn muốn lưu trữ uploaded file:
@@ -572,6 +601,7 @@ $path = Storage::putFile('avatars', $request->file('avatar'));
 ```
 
 <a name="specifying-a-file-name"></a>
+
 #### Specifying a File Name
 
 Nếu bạn không muốn một filename được gán tự động cho file được lưu trữ của mình, bạn có thể sử dụng method `storeAs`, nhận path, filename, và (tùy chọn) disk làm các đối số của nó:
@@ -594,6 +624,7 @@ $path = Storage::putFileAs(
 > Các ký tự unprintable và unicode không hợp lệ sẽ tự động bị xóa khỏi file paths. Do đó, bạn có thể muốn sanitize file paths của mình trước khi chuyển chúng đến các methods file storage của Laravel. File paths được normalize bằng cách sử dụng method `League\Flysystem\WhitespacePathNormalizer::normalizePath`.
 
 <a name="specifying-a-disk"></a>
+
 #### Specifying a Disk
 
 Theo mặc định, method `store` của uploaded file này sẽ sử dụng default disk của bạn. Nếu bạn muốn chỉ định một disk khác, chuyển tên disk làm đối số thứ hai cho method `store`:
@@ -615,6 +646,7 @@ $path = $request->file('avatar')->storeAs(
 ```
 
 <a name="other-uploaded-file-information"></a>
+
 #### Other Uploaded File Information
 
 Nếu bạn muốn lấy tên gốc và extension của uploaded file, bạn có thể làm như vậy bằng cách sử dụng các methods `getClientOriginalName` và `getClientOriginalExtension`:
@@ -636,6 +668,7 @@ $extension = $file->extension(); // Determine the file's extension based on the 
 ```
 
 <a name="file-visibility"></a>
+
 ### File Visibility
 
 Trong Laravel Flysystem integration, "visibility" là một abstraction của file permissions trên nhiều platforms. Files có thể được khai báo `public` hoặc `private`. Khi một file được khai báo `public`, bạn đang chỉ định rằng file nên có thể truy cập được cho người khác nói chung. Ví dụ, khi sử dụng driver S3, bạn có thể truy xuất các URLs cho các files `public`.
@@ -669,6 +702,7 @@ $path = $request->file('avatar')->storePubliclyAs(
 ```
 
 <a name="local-files-and-visibility"></a>
+
 #### Local Files and Visibility
 
 Khi sử dụng driver `local`, visibility `public` [visibility](#file-visibility) chuyển thành permissions `0755` cho directories và permissions `0644` cho files. Bạn có thể sửa đổi các mappings permissions trong file cấu hình `filesystems` của ứng dụng:
@@ -692,6 +726,7 @@ Khi sử dụng driver `local`, visibility `public` [visibility](#file-visibilit
 ```
 
 <a name="deleting-files"></a>
+
 ## Deleting Files
 
 Method `delete` chấp nhận một filename đơn lẻ hoặc một mảng các files để xóa:
@@ -713,9 +748,11 @@ Storage::disk('s3')->delete('path/file.jpg');
 ```
 
 <a name="directories"></a>
+
 ## Directories
 
 <a name="get-all-files-within-a-directory"></a>
+
 #### Get All Files Within a Directory
 
 Method `files` trả về một mảng tất cả các files trong một directory nhất định. Nếu bạn muốn truy xuất một danh sách tất cả các files trong một directory nhất định bao gồm subdirectories, bạn có thể sử dụng method `allFiles`:
@@ -729,6 +766,7 @@ $files = Storage::allFiles($directory);
 ```
 
 <a name="get-all-directories-within-a-directory"></a>
+
 #### Get All Directories Within a Directory
 
 Method `directories` trả về một mảng tất cả các directories trong một directory nhất định. Nếu bạn muốn truy xuất một danh sách tất cả các directories trong một directory nhất định bao gồm subdirectories, bạn có thể sử dụng method `allDirectories`:
@@ -740,6 +778,7 @@ $directories = Storage::allDirectories($directory);
 ```
 
 <a name="create-a-directory"></a>
+
 #### Create a Directory
 
 Method `makeDirectory` sẽ tạo directory đã cho, bao gồm bất kỳ subdirectories cần thiết nào:
@@ -749,6 +788,7 @@ Storage::makeDirectory($directory);
 ```
 
 <a name="delete-a-directory"></a>
+
 #### Delete a Directory
 
 Cuối cùng, method `deleteDirectory` có thể được sử dụng để xóa một directory và tất cả các files của nó:
@@ -758,11 +798,12 @@ Storage::deleteDirectory($directory);
 ```
 
 <a name="testing"></a>
+
 ## Testing
 
 Method `fake` của facade `Storage` cho phép bạn dễ dàng tạo một fake disk mà, kết hợp với các utilities tạo file của class `Illuminate\Http\UploadedFile`, đơn giản hóa đáng kể việc testing file uploads. Ví dụ:
 
-```php tab=Pest
+```php
 <?php
 
 use Illuminate\Http\UploadedFile;
@@ -792,7 +833,7 @@ test('albums can be uploaded', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;
@@ -835,6 +876,7 @@ Theo mặc định, method `fake` sẽ xóa tất cả các files trong temporar
 > Method `image` yêu cầu [GD extension](https://www.php.net/manual/en/book.image.php).
 
 <a name="custom-filesystems"></a>
+
 ## Custom Filesystems
 
 Laravel Flysystem integration cung cấp hỗ trợ cho một số "drivers" out of the box; tuy nhiên, Flysystem không giới hạn ở những cái này và có adapters cho nhiều storage systems khác. Bạn có thể tạo một custom driver nếu bạn muốn sử dụng một trong các adapters bổ sung này trong ứng dụng Laravel của mình.

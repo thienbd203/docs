@@ -4,12 +4,13 @@
 - [Environment](#environment)
 - [Creating Tests](#creating-tests)
 - [Running Tests](#running-tests)
-    - [Running Tests in Parallel](#running-tests-in-parallel)
-    - [Reporting Test Coverage](#reporting-test-coverage)
-    - [Profiling Tests](#profiling-tests)
+  - [Running Tests in Parallel](#running-tests-in-parallel)
+  - [Reporting Test Coverage](#reporting-test-coverage)
+  - [Profiling Tests](#profiling-tests)
 - [Configuration Caching](#configuration-caching)
 
 <a name="introduction"></a>
+
 ## Introduction
 
 Laravel được xây dựng với tính năng testing trong tâm trí. Thực tế, hỗ trợ testing với [Pest](https://pestphp.com) và [PHPUnit](https://phpunit.de) được tích hợp sẵn và file `phpunit.xml` đã được thiết lập cho ứng dụng của bạn. Framework cũng cung cấp các helper method tiện lợi cho phép bạn test ứng dụng một cách rõ ràng.
@@ -21,6 +22,7 @@ Feature test có thể test một phần lớn hơn của code, bao gồm cách 
 File `ExampleTest.php` được cung cấp trong cả hai thư mục test `Feature` và `Unit`. Sau khi cài đặt một ứng dụng Laravel mới, thực thi lệnh `vendor/bin/pest`, `vendor/bin/phpunit`, hoặc `php artisan test` để chạy các test của bạn.
 
 <a name="environment"></a>
+
 ## Environment
 
 Khi chạy test, Laravel sẽ tự động thiết lập [configuration environment](/docs/{{version}}/configuration#environment-configuration) thành `testing` vì các environment variable được định nghĩa trong file `phpunit.xml`. Laravel cũng tự động cấu hình session và cache thành driver `array` để không có session hoặc cache data nào được lưu lại khi testing.
@@ -28,11 +30,13 @@ Khi chạy test, Laravel sẽ tự động thiết lập [configuration environm
 Bạn có thể tự do định nghĩa các giá trị configuration environment testing khác nếu cần. Các environment variable `testing` có thể được cấu hình trong file `phpunit.xml` của ứng dụng, nhưng hãy đảm bảo xóa configuration cache của bạn bằng lệnh Artisan `config:clear` trước khi chạy test!
 
 <a name="the-env-testing-environment-file"></a>
+
 #### The `.env.testing` Environment File
 
 Ngoài ra, bạn có thể tạo file `.env.testing` trong root của project. File này sẽ được sử dụng thay cho file `.env` khi chạy Pest và PHPUnit test hoặc thực thi các lệnh Artisan với tùy chọn `--env=testing`.
 
 <a name="creating-tests"></a>
+
 ## Creating Tests
 
 Để tạo một test case mới, sử dụng lệnh Artisan `make:test`. Theo mặc định, test sẽ được đặt trong thư mục `tests/Feature`:
@@ -49,7 +53,7 @@ php artisan make:test UserTest --unit
 
 Nếu bạn có một test class chủ yếu dựa vào các tính năng testing của Laravel, nhưng một test method cụ thể không cần framework được khởi động, bạn có thể áp dụng attribute `#[UnitTest]` vào method đó để bỏ qua việc khởi động ứng dụng cho chỉ test đó.
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;
@@ -77,7 +81,7 @@ class LocationServiceTest extends TestCase
 
 Sau khi test đã được tạo, bạn có thể định nghĩa test như bình thường sử dụng Pest hoặc PHPUnit. Để chạy các test của bạn, thực thi lệnh `vendor/bin/pest`, `vendor/bin/phpunit`, hoặc `php artisan test` từ terminal:
 
-```php tab=Pest
+```php
 <?php
 
 test('basic', function () {
@@ -85,7 +89,7 @@ test('basic', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Unit;
@@ -108,6 +112,7 @@ class ExampleTest extends TestCase
 > Nếu bạn định nghĩa các method `setUp` / `tearDown` của riêng mình trong một test class, hãy đảm bảo gọi các method `parent::setUp()` / `parent::tearDown()` tương ứng trên parent class. Thông thường, bạn nên gọi `parent::setUp()` ở đầu method `setUp` của riêng bạn, và `parent::tearDown()` ở cuối method `tearDown` của bạn.
 
 <a name="running-tests"></a>
+
 ## Running Tests
 
 Như đã đề cập trước đó, sau khi bạn đã viết test, bạn có thể chạy chúng bằng `pest` hoặc `phpunit`:
@@ -133,6 +138,7 @@ php artisan test --testsuite=Feature --stop-on-failure
 ```
 
 <a name="running-tests-in-parallel"></a>
+
 ### Running Tests in Parallel
 
 Theo mặc định, Laravel và Pest / PHPUnit thực thi các test của bạn tuần tự trong một single process. Tuy nhiên, bạn có thể giảm đáng kể thời gian chạy test bằng cách chạy test đồng thời trên nhiều process. Để bắt đầu, bạn nên cài đặt Composer package `brianium/paratest` như một dependency "dev". Sau đó, bao gồm tùy chọn `--parallel` khi thực thi lệnh Artisan `test`:
@@ -153,6 +159,7 @@ php artisan test --parallel --processes=4
 > Khi chạy test song song, một số tùy chọn Pest / PHPUnit (như `--do-not-cache-result`) có thể không khả dụng.
 
 <a name="parallel-testing-and-databases"></a>
+
 #### Parallel Testing and Databases
 
 Miễn là bạn đã cấu hình một primary database connection, Laravel tự động xử lý việc tạo và migrate một test database cho mỗi parallel process đang chạy test của bạn. Các test database sẽ được thêm hậu tố với một process token là duy nhất cho mỗi process. Ví dụ, nếu bạn có hai parallel test processes, Laravel sẽ tạo và sử dụng các test database `your_db_test_1` và `your_db_test_2`.
@@ -164,6 +171,7 @@ php artisan test --parallel --recreate-databases
 ```
 
 <a name="parallel-testing-hooks"></a>
+
 #### Parallel Testing Hooks
 
 Thỉnh thoảng, bạn có thể cần chuẩn bị một số resources được sử dụng bởi test của ứng dụng để chúng có thể được sử dụng an toàn bởi nhiều test processes.
@@ -212,6 +220,7 @@ class AppServiceProvider extends ServiceProvider
 ```
 
 <a name="accessing-the-parallel-testing-token"></a>
+
 #### Accessing the Parallel Testing Token
 
 Nếu bạn muốn truy cập "token" của parallel process hiện tại từ bất kỳ vị trí nào khác trong test code của ứng dụng, bạn có thể sử dụng method `token`. Token này là một định danh chuỗi duy nhất cho một test process riêng lẻ và có thể được sử dụng để phân chia resources trên các parallel test processes. Ví dụ, Laravel tự động thêm token này vào cuối các test database được tạo bởi mỗi parallel testing process:
@@ -219,6 +228,7 @@ Nếu bạn muốn truy cập "token" của parallel process hiện tại từ b
     $token = ParallelTesting::token();
 
 <a name="reporting-test-coverage"></a>
+
 ### Reporting Test Coverage
 
 > [!WARNING]
@@ -231,6 +241,7 @@ php artisan test --coverage
 ```
 
 <a name="enforcing-a-minimum-coverage-threshold"></a>
+
 #### Enforcing a Minimum Coverage Threshold
 
 Bạn có thể sử dụng tùy chọn `--min` để định nghĩa một minimum test coverage threshold cho ứng dụng của bạn. Test suite sẽ thất bại nếu threshold này không được đáp ứng:
@@ -240,6 +251,7 @@ php artisan test --coverage --min=80.3
 ```
 
 <a name="profiling-tests"></a>
+
 ### Profiling Tests
 
 Artisan test runner cũng bao gồm một cơ chế tiện lợi để liệt kê các test chậm nhất của ứng dụng. Gọi lệnh `test` với tùy chọn `--profile` để được hiển thị danh sách mười test chậm nhất của bạn, cho phép bạn dễ dàng điều tra các test nào có thể được cải thiện để tăng tốc test suite:
@@ -249,11 +261,12 @@ php artisan test --profile
 ```
 
 <a name="configuration-caching"></a>
+
 ## Configuration Caching
 
-Khi chạy test, Laravel khởi động ứng dụng cho mỗi test method riêng lẻ.  Nếu không có file configuration được cache, mỗi configuration file trong ứng dụng của bạn phải được tải ở đầu của một test. Để xây dựng configuration một lần và tái sử dụng nó cho tất cả test trong một lần chạy, bạn có thể sử dụng trait `Illuminate\Foundation\Testing\WithCachedConfig`:
+Khi chạy test, Laravel khởi động ứng dụng cho mỗi test method riêng lẻ. Nếu không có file configuration được cache, mỗi configuration file trong ứng dụng của bạn phải được tải ở đầu của một test. Để xây dựng configuration một lần và tái sử dụng nó cho tất cả test trong một lần chạy, bạn có thể sử dụng trait `Illuminate\Foundation\Testing\WithCachedConfig`:
 
-```php tab=Pest
+```php
 <?php
 
 use Illuminate\Foundation\Testing\WithCachedConfig;
@@ -263,7 +276,7 @@ pest()->use(WithCachedConfig::class);
 // ...
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;

@@ -1,22 +1,24 @@
 # Database Testing
 
 - [Introduction](#introduction)
-    - [Resetting the Database After Each Test](#resetting-the-database-after-each-test)
+  - [Resetting the Database After Each Test](#resetting-the-database-after-each-test)
 - [Model Factories](#model-factories)
 - [Running Seeders](#running-seeders)
 - [Available Assertions](#available-assertions)
 
 <a name="introduction"></a>
+
 ## Introduction
 
 Laravel cung cấp nhiều công cụ và assertion hữu ích để giúp việc test các ứng dụng database-driven dễ dàng hơn. Ngoài ra, Laravel model factories và seeders làm cho việc tạo test database records sử dụng Eloquent models và relationships của ứng dụng trở nên dễ dàng. Chúng ta sẽ thảo luận về tất cả các tính năng mạnh mẽ này trong tài liệu sau.
 
 <a name="resetting-the-database-after-each-test"></a>
+
 ### Resetting the Database After Each Test
 
 Trước khi đi xa hơn, hãy thảo luận về cách reset database của bạn sau mỗi test để data từ một test trước đó không can thiệp vào các test tiếp theo. Trait `Illuminate\Foundation\Testing\RefreshDatabase` được tích hợp sẵn của Laravel sẽ lo việc này cho bạn. Chỉ cần sử dụng trait trên test class của bạn:
 
-```php tab=Pest
+```php
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,7 +32,7 @@ test('basic example', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;
@@ -59,13 +61,14 @@ Trait `Illuminate\Foundation\Testing\RefreshDatabase` không migrate database c�
 Nếu bạn muốn hoàn toàn reset database, bạn có thể sử dụng các traits `Illuminate\Foundation\Testing\DatabaseMigrations` hoặc `Illuminate\Foundation\Testing\DatabaseTruncation` thay thế. Tuy nhiên, cả hai tùy chọn này đều chậm hơn đáng kể so với trait `RefreshDatabase`.
 
 <a name="model-factories"></a>
+
 ## Model Factories
 
 Khi test, bạn có thể cần chèn một vài records vào database của bạn trước khi thực thi test. Thay vì chỉ định thủ công giá trị của mỗi column khi bạn tạo test data này, Laravel cho phép bạn định nghĩa một tập hợp default attributes cho mỗi [Eloquent models](/docs/{{version}}/eloquent) của bạn sử dụng [model factories](/docs/{{version}}/eloquent-factories).
 
 Để tìm hiểu thêm về việc tạo và sử dụng model factories để tạo models, vui lòng tham khảo tài liệu [model factory documentation](/docs/{{version}}/eloquent-factories) đầy đủ. Sau khi bạn đã định nghĩa một model factory, bạn có thể sử dụng factory trong test của bạn để tạo models:
 
-```php tab=Pest
+```php
 use App\Models\User;
 
 test('models can be instantiated', function () {
@@ -75,7 +78,7 @@ test('models can be instantiated', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 use App\Models\User;
 
 public function test_models_can_be_instantiated(): void
@@ -87,11 +90,12 @@ public function test_models_can_be_instantiated(): void
 ```
 
 <a name="running-seeders"></a>
+
 ## Running Seeders
 
 Nếu bạn muốn sử dụng [database seeders](/docs/{{version}}/seeding) để populate database của bạn trong một feature test, bạn có thể gọi method `seed`. Theo mặc định, method `seed` sẽ thực thi `DatabaseSeeder`, nên thực thi tất cả các seeders khác của bạn. Ngoài ra, bạn có thể truyền một seeder class name cụ thể cho method `seed`:
 
-```php tab=Pest
+```php
 <?php
 
 use Database\Seeders\OrderStatusSeeder;
@@ -118,7 +122,7 @@ test('orders can be created', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;
@@ -193,11 +197,13 @@ class OrderTest extends TestCase
 ```
 
 <a name="available-assertions"></a>
+
 ## Available Assertions
 
 Laravel cung cấp nhiều database assertions cho [Pest](https://pestphp.com) hoặc [PHPUnit](https://phpunit.de) feature tests của bạn. Chúng ta sẽ thảo luận về từng assertion này dưới đây.
 
 <a name="assert-database-count"></a>
+
 #### assertDatabaseCount
 
 Xác nhận rằng một table trong database chứa số lượng records đã cho:
@@ -207,6 +213,7 @@ $this->assertDatabaseCount('users', 5);
 ```
 
 <a name="assert-database-empty"></a>
+
 #### assertDatabaseEmpty
 
 Xác nhận rằng một table trong database không chứa bất kỳ records nào:
@@ -216,6 +223,7 @@ $this->assertDatabaseEmpty('users');
 ```
 
 <a name="assert-database-has"></a>
+
 #### assertDatabaseHas
 
 Xác nhận rằng một table trong database chứa records khớp với các key / value query constraints đã cho:
@@ -227,6 +235,7 @@ $this->assertDatabaseHas('users', [
 ```
 
 <a name="assert-database-missing"></a>
+
 #### assertDatabaseMissing
 
 Xác nhận rằng một table trong database không chứa records khớp với các key / value query constraints đã cho:
@@ -238,6 +247,7 @@ $this->assertDatabaseMissing('users', [
 ```
 
 <a name="assert-deleted"></a>
+
 #### assertSoftDeleted
 
 Method `assertSoftDeleted` có thể được sử dụng để xác nhận một Eloquent model đã cho đã được "soft deleted":
@@ -247,6 +257,7 @@ $this->assertSoftDeleted($user);
 ```
 
 <a name="assert-not-deleted"></a>
+
 #### assertNotSoftDeleted
 
 Method `assertNotSoftDeleted` có thể được sử dụng để xác nhận một Eloquent model đã cho chưa được "soft deleted":
@@ -256,6 +267,7 @@ $this->assertNotSoftDeleted($user);
 ```
 
 <a name="assert-model-exists"></a>
+
 #### assertModelExists
 
 Xác nhận rằng một model hoặc collection của models đã cho tồn tại trong database:
@@ -269,6 +281,7 @@ $this->assertModelExists($user);
 ```
 
 <a name="assert-model-missing"></a>
+
 #### assertModelMissing
 
 Xác nhận rằng một model hoặc collection của models đã cho không tồn tại trong database:
@@ -284,6 +297,7 @@ $this->assertModelMissing($user);
 ```
 
 <a name="expects-database-query-count"></a>
+
 #### expectsDatabaseQueryCount
 
 Method `expectsDatabaseQueryCount` có thể được gọi ở đầu test của bạn để chỉ định tổng số database queries mà bạn mong đợi được chạy trong test. Nếu số lượng thực tế của các queries được thực thi không khớp chính xác với mong đợi này, test sẽ thất bại:

@@ -3,18 +3,18 @@
 - [Giới thiệu](#introduction)
 - [Cài đặt](#installation)
 - [Các Prompts Có Sẵn](#available-prompts)
-    - [Text](#text)
-    - [Textarea](#textarea)
-    - [Number](#number)
-    - [Password](#password)
-    - [Confirm](#confirm)
-    - [Select](#select)
-    - [Multi-select](#multiselect)
-    - [Suggest](#suggest)
-    - [Search](#search)
-    - [Multi-search](#multisearch)
-    - [Pause](#pause)
-    - [Autocomplete](#autocomplete)
+  - [Text](#text)
+  - [Textarea](#textarea)
+  - [Number](#number)
+  - [Password](#password)
+  - [Confirm](#confirm)
+  - [Select](#select)
+  - [Multi-select](#multiselect)
+  - [Suggest](#suggest)
+  - [Search](#search)
+  - [Multi-search](#multisearch)
+  - [Pause](#pause)
+  - [Autocomplete](#autocomplete)
 - [Chuyển đổi Input Trước Khi Validate](#transforming-input-before-validation)
 - [Forms](#forms)
 - [Thông báo Thông tin](#informational-messages)
@@ -30,6 +30,7 @@
 - [Testing](#testing)
 
 <a name="introduction"></a>
+
 ## Giới thiệu
 
 [Laravel Prompts](https://github.com/laravel/prompts) là một gói PHP để thêm các form đẹp mắt và thân thiện với người dùng vào các ứng dụng dòng lệnh của bạn, với các tính năng giống như trình duyệt bao gồm văn bản placeholder và validation.
@@ -42,6 +43,7 @@ Laravel Prompts rất phù hợp để chấp nhận input từ người dùng t
 > Laravel Prompts hỗ trợ macOS, Linux và Windows với WSL. Để biết thêm thông tin, vui lòng xem tài liệu của chúng tôi về [môi trường không được hỗ trợ & fallbacks](#fallbacks).
 
 <a name="installation"></a>
+
 ## Cài đặt
 
 Laravel Prompts đã được bao gồm trong bản phát hành mới nhất của Laravel.
@@ -53,9 +55,11 @@ composer require laravel/prompts
 ```
 
 <a name="available-prompts"></a>
+
 ## Các Prompts Có Sẵn
 
 <a name="text"></a>
+
 ### Text
 
 Hàm `text` sẽ hỏi người dùng với câu hỏi đã cho, chấp nhận input của họ, và sau đó trả về nó:
@@ -78,6 +82,7 @@ $name = text(
 ```
 
 <a name="text-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -99,6 +104,7 @@ $name = text(
 ```
 
 <a name="text-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -126,6 +132,7 @@ $name = text(
 ```
 
 <a name="textarea"></a>
+
 ### Textarea
 
 Hàm `textarea` sẽ hỏi người dùng với câu hỏi đã cho, chấp nhận input của họ thông qua một textarea đa dòng, và sau đó trả về nó:
@@ -147,6 +154,7 @@ $story = textarea(
 ```
 
 <a name="textarea-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -168,6 +176,7 @@ $story = textarea(
 ```
 
 <a name="textarea-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -195,6 +204,7 @@ $story = textarea(
 ```
 
 <a name="number"></a>
+
 ### Number
 
 Hàm `number` sẽ hỏi người dùng với câu hỏi đã cho, chấp nhận input số của họ, và sau đó trả về nó. Hàm `number` cho phép người dùng sử dụng các phím mũi tên lên và xuống để thao tác với số:
@@ -217,6 +227,7 @@ $name = number(
 ```
 
 <a name="number-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -238,6 +249,7 @@ $copies = number(
 ```
 
 <a name="number-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -265,6 +277,7 @@ $copies = number(
 ```
 
 <a name="password"></a>
+
 ### Password
 
 Hàm `password` tương tự như hàm `text`, nhưng input của người dùng sẽ được che khi họ gõ trong console. Điều này hữu ích khi hỏi thông tin nhạy cảm như mật khẩu:
@@ -286,6 +299,7 @@ $password = password(
 ```
 
 <a name="password-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -307,6 +321,7 @@ $password = password(
 ```
 
 <a name="password-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -333,6 +348,7 @@ $password = password(
 ```
 
 <a name="confirm"></a>
+
 ### Confirm
 
 Nếu bạn cần hỏi người dùng để xác nhận "có hoặc không", bạn có thể sử dụng hàm `confirm`. Người dùng có thể sử dụng các phím mũi tên hoặc nhấn `y` hoặc `n` để chọn câu trả lời của họ. Hàm này sẽ trả về `true` hoặc `false`.
@@ -356,6 +372,7 @@ $confirmed = confirm(
 ```
 
 <a name="confirm-required"></a>
+
 #### Yêu cầu "Yes"
 
 Nếu cần thiết, bạn có thể yêu cầu người dùng của mình chọn "Yes" bằng cách truyền đối số `required`:
@@ -377,6 +394,7 @@ $confirmed = confirm(
 ```
 
 <a name="select"></a>
+
 ### Select
 
 Nếu bạn cần người dùng chọn từ một tập hợp các lựa chọn được xác định trước, bạn có thể sử dụng hàm `select`:
@@ -426,6 +444,7 @@ $role = select(
 ```
 
 <a name="select-info"></a>
+
 #### Thông tin Phụ
 
 Đối số `info` có thể được sử dụng để hiển thị thông tin bổ sung về tùy chọn hiện đang được làm nổi bật. Khi một closure được cung cấp, nó sẽ nhận giá trị của tùy chọn hiện đang được làm nổi bật và nên trả về một chuỗi hoặc `null`:
@@ -458,6 +477,7 @@ $role = select(
 ```
 
 <a name="select-validation"></a>
+
 #### Validation Bổ sung
 
 Khác với các hàm prompt khác, hàm `select` không chấp nhận đối số `required` vì không thể không chọn gì cả. Tuy nhiên, bạn có thể truyền một closure cho đối số `validate` nếu bạn cần hiển thị một tùy chọn nhưng ngăn việc chọn nó:
@@ -480,6 +500,7 @@ $role = select(
 Nếu đối số `options` là một mảng kết hợp, thì closure sẽ nhận khóa được chọn, nếu không nó sẽ nhận giá trị được chọn. Closure có thể trả về thông báo lỗi, hoặc `null` nếu validation vượt qua.
 
 <a name="multiselect"></a>
+
 ### Multi-select
 
 Nếu bạn cần người dùng có thể chọn nhiều tùy chọn, bạn có thể sử dụng hàm `multiselect`:
@@ -532,6 +553,7 @@ $categories = multiselect(
 ```
 
 <a name="multiselect-info"></a>
+
 #### Thông tin Phụ
 
 Đối số `info` có thể được sử dụng để hiển thị thông tin bổ sung về tùy chọn hiện đang được làm nổi bật. Khi một closure được cung cấp, nó sẽ nhận giá trị của tùy chọn hiện đang được làm nổi bật và nên trả về một chuỗi hoặc `null`:
@@ -556,6 +578,7 @@ $permissions = multiselect(
 ```
 
 <a name="multiselect-required"></a>
+
 #### Yêu cầu một Giá trị
 
 Theo mặc định, người dùng có thể chọn không hoặc nhiều tùy chọn. Bạn có thể truyền đối số `required` để thực thi một hoặc nhiều tùy chọn thay thế:
@@ -579,6 +602,7 @@ $categories = multiselect(
 ```
 
 <a name="multiselect-validation"></a>
+
 #### Validation Bổ sung
 
 Bạn có thể truyền một closure cho đối số `validate` nếu bạn cần hiển thị một tùy chọn nhưng ngăn việc chọn nó:
@@ -601,6 +625,7 @@ $permissions = multiselect(
 Nếu đối số `options` là một mảng kết hợp thì closure sẽ nhận các khóa được chọn, nếu không nó sẽ nhận các giá trị được chọn. Closure có thể trả về thông báo lỗi, hoặc `null` nếu validation vượt qua.
 
 <a name="suggest"></a>
+
 ### Suggest
 
 Hàm `suggest` có thể được sử dụng để cung cấp tự động hoàn thành cho các lựa chọn có thể. Người dùng vẫn có thể cung cấp bất kỳ câu trả lời nào, bất kể các gợi ý tự động hoàn thành:
@@ -634,6 +659,7 @@ $name = suggest(
 ```
 
 <a name="suggest-info"></a>
+
 #### Thông tin Phụ
 
 Đối số `info` có thể được sử dụng để hiển thị thông tin bổ sung về tùy chọn hiện đang được làm nổi bật. Khi một closure được cung cấp, nó sẽ nhận giá trị của tùy chọn hiện đang được làm nổi bật và nên trả về một chuỗi hoặc `null`:
@@ -651,6 +677,7 @@ $name = suggest(
 ```
 
 <a name="suggest-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -674,6 +701,7 @@ $name = suggest(
 ```
 
 <a name="suggest-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -703,6 +731,7 @@ $name = suggest(
 ```
 
 <a name="search"></a>
+
 ### Search
 
 Nếu bạn có nhiều tùy chọn để người dùng chọn, hàm `search` cho phép người dùng gõ một truy vấn tìm kiếm để lọc kết quả trước khi sử dụng các phím mũi tên để chọn một tùy chọn:
@@ -760,6 +789,7 @@ $id = search(
 ```
 
 <a name="search-info"></a>
+
 #### Thông tin Phụ
 
 Đối số `info` có thể được sử dụng để hiển thị thông tin bổ sung về tùy chọn hiện đang được làm nổi bật. Khi một closure được cung cấp, nó sẽ nhận giá trị của tùy chọn hiện đang được làm nổi bật và nên trả về một chuỗi hoặc `null`:
@@ -775,6 +805,7 @@ $id = search(
 ```
 
 <a name="search-validation"></a>
+
 #### Validation Bổ sung
 
 Nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -798,6 +829,7 @@ $id = search(
 Nếu closure `options` trả về một mảng kết hợp, thì closure sẽ nhận khóa được chọn, nếu không, nó sẽ nhận giá trị được chọn. Closure có thể trả về thông báo lỗi, hoặc `null` nếu validation vượt qua.
 
 <a name="multisearch"></a>
+
 ### Multi-search
 
 Nếu bạn có nhiều tùy chọn có thể tìm kiếm và cần người dùng có thể chọn nhiều mục, hàm `multisearch` cho phép người dùng gõ một truy vấn tìm kiếm để lọc kết quả trước khi sử dụng các phím mũi tên và thanh khoảng trắng để chọn các tùy chọn:
@@ -855,6 +887,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-info"></a>
+
 #### Thông tin Phụ
 
 Đối số `info` có thể được sử dụng để hiển thị thông tin bổ sung về tùy chọn hiện đang được làm nổi bật. Khi một closure được cung cấp, nó sẽ nhận giá trị của tùy chọn hiện đang được làm nổi bật và nên trả về một chuỗi hoặc `null`:
@@ -870,6 +903,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-required"></a>
+
 #### Yêu cầu một Giá trị
 
 Theo mặc định, người dùng có thể chọn không hoặc nhiều tùy chọn. Bạn có thể truyền đối số `required` để thực thi một hoặc nhiều tùy chọn thay thế:
@@ -897,6 +931,7 @@ $ids = multisearch(
 ```
 
 <a name="multisearch-validation"></a>
+
 #### Validation Bổ sung
 
 Nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -920,6 +955,7 @@ $ids = multisearch(
 Nếu closure `options` trả về một mảng kết hợp, thì closure sẽ nhận các khóa được chọn; nếu không, nó sẽ nhận các giá trị được chọn. Closure có thể trả về thông báo lỗi, hoặc `null` nếu validation vượt qua.
 
 <a name="pause"></a>
+
 ### Pause
 
 Hàm `pause` có thể được sử dụng để hiển thị văn bản thông tin cho người dùng và chờ họ xác nhận mong muốn tiếp tục bằng cách nhấn phím Enter / Return:
@@ -931,6 +967,7 @@ pause('Press ENTER to continue.');
 ```
 
 <a name="autocomplete"></a>
+
 ### Autocomplete
 
 Hàm `autocomplete` có thể được sử dụng để cung cấp tự động hoàn thành nội tuyến cho các lựa chọn có thể. Khi người dùng gõ, các gợi ý khớp với input của họ sẽ xuất hiện dưới dạng văn bản ma có thể được chấp nhận bằng cách nhấn `Tab` hoặc phím mũi tên phải:
@@ -957,6 +994,7 @@ $name = autocomplete(
 ```
 
 <a name="autocomplete-closure"></a>
+
 #### Tùy chọn Động
 
 Bạn cũng có thể truyền một closure để tạo tùy chọn động dựa trên input của người dùng. Closure sẽ được gọi mỗi khi người dùng gõ một ký tự và nên trả về một mảng các tùy chọn để tự động hoàn thành:
@@ -972,6 +1010,7 @@ $file = autocomplete(
 ```
 
 <a name="autocomplete-required"></a>
+
 #### Giá trị Bắt buộc
 
 Nếu bạn yêu cầu một giá trị phải được nhập, bạn có thể truyền đối số `required`:
@@ -995,6 +1034,7 @@ $name = autocomplete(
 ```
 
 <a name="autocomplete-validation"></a>
+
 #### Validation Bổ sung
 
 Cuối cùng, nếu bạn muốn thực hiện logic validation bổ sung, bạn có thể truyền một closure cho đối số `validate`:
@@ -1014,6 +1054,7 @@ $name = autocomplete(
 Closure sẽ nhận giá trị đã được nhập và có thể trả về thông báo lỗi, hoặc `null` nếu validation vượt qua.
 
 <a name="transforming-input-before-validation"></a>
+
 ## Chuyển đổi Input Trước Khi Validate
 
 Đôi khi bạn có thể muốn chuyển đổi input của prompt trước khi validation diễn ra. Ví dụ, bạn có thể muốn xóa khoảng trắng từ bất kỳ chuỗi nào được cung cấp. Để thực hiện điều này, nhiều hàm prompt cung cấp đối số `transform`, chấp nhận một closure:
@@ -1031,6 +1072,7 @@ $name = text(
 ```
 
 <a name="forms"></a>
+
 ## Forms
 
 Thường thì, bạn sẽ có nhiều prompt sẽ được hiển thị theo trình tự để thu thập thông tin trước khi thực hiện các hành động bổ sung. Bạn có thể sử dụng hàm `form` để tạo một tập hợp các prompt được nhóm lại để người dùng hoàn thành:
@@ -1087,6 +1129,7 @@ outro("Your name is {$responses['name']} and you are {$responses['age']} years o
 ```
 
 <a name="informational-messages"></a>
+
 ## Thông báo Thông tin
 
 Các hàm `note`, `info`, `warning`, `error`, và `alert` có thể được sử dụng để hiển thị các thông báo thông tin:
@@ -1098,6 +1141,7 @@ info('Package installed successfully.');
 ```
 
 <a name="tables"></a>
+
 ## Bảng
 
 Hàm `table` giúp dễ dàng hiển thị nhiều hàng và cột dữ liệu. Tất cả những gì bạn cần làm là cung cấp tên cột và dữ liệu cho bảng:
@@ -1112,6 +1156,7 @@ table(
 ```
 
 <a name="spin"></a>
+
 ## Spin
 
 Hàm `spin` hiển thị một spinner cùng với một thông báo tùy chọn trong khi thực hiện một callback được chỉ định. Nó phục vụ để chỉ ra các quá trình đang diễn ra và trả về kết quả của callback khi hoàn thành:
@@ -1129,6 +1174,7 @@ $response = spin(
 > Hàm `spin` yêu cầu phần mở rộng PHP [PCNTL](https://www.php.net/manual/en/book.pcntl.php) để tạo hoạt ảnh cho spinner. Khi phần mở rộng này không khả dụng, một phiên bản tĩnh của spinner sẽ xuất hiện thay thế.
 
 <a name="progress"></a>
+
 ## Thanh Tiến độ
 
 Đối với các tác vụ chạy lâu, có thể hữu ích khi hiển thị thanh tiến độ thông báo cho người dùng mức độ hoàn thành của tác vụ. Sử dụng hàm `progress`, Laravel sẽ hiển thị thanh tiến độ và tăng tiến độ của nó cho mỗi lần lặp qua một giá trị có thể lặp được:
@@ -1181,6 +1227,7 @@ $progress->finish();
 ```
 
 <a name="task"></a>
+
 ## Task
 
 Hàm `task` hiển thị một tác vụ được gắn nhãn với một spinner và một vùng output trực tiếp cuộn trong khi một callback được chỉ định đang thực thi. Nó lý tưởng để bao bọc các quá trình chạy lâu như cài đặt dependency hoặc script triển khai, cung cấp khả năng hiển thị thời gian thực về những gì đang xảy ra:
@@ -1202,6 +1249,7 @@ Callback nhận một instance `Logger` mà bạn có thể sử dụng để hi
 > Hàm `task` yêu cầu phần mở rộng PHP [PCNTL](https://www.php.net/manual/en/book.pcntl.php) để tạo hoạt ảnh cho spinner. Khi phần mở rộng này không khả dụng, một phiên bản tĩnh của tác vụ sẽ xuất hiện thay thế.
 
 <a name="task-logging"></a>
+
 #### Ghi log Các dòng
 
 Phương thức `line` ghi một dòng log đơn vào vùng output cuộn của tác vụ:
@@ -1219,6 +1267,7 @@ task(
 ```
 
 <a name="task-status-messages"></a>
+
 #### Thông báo Trạng thái
 
 Bạn có thể sử dụng các phương thức `success`, `warning`, và `error` để hiển thị thông báo trạng thái. Các thông báo này xuất hiện dưới dạng các thông báo được làm nổi bật, ổn định ở trên vùng log cuộn:
@@ -1243,6 +1292,7 @@ task(
 ```
 
 <a name="task-label"></a>
+
 #### Cập nhật Nhãn
 
 Phương thức `label` cho phép bạn cập nhật nhãn của tác vụ trong khi nó đang chạy:
@@ -1262,6 +1312,7 @@ task(
 ```
 
 <a name="task-sub-label"></a>
+
 #### Hiển thị Sub-Label
 
 Phương thức `subLabel` hiển thị một dòng mờ bên dưới nhãn chính của tác vụ, hữu ích để giao tiếp trạng thái tạm thời như bước hiện đang trong tiến trình. Truyền một chuỗi rỗng để xóa sub-label:
@@ -1292,6 +1343,7 @@ task(
 ```
 
 <a name="task-streaming"></a>
+
 #### Truyền Văn bản
 
 Đối với các quá trình tạo output dần dần, chẳng hạn như phản hồi được tạo bởi AI, phương thức `partial` cho phép bạn truyền văn bản từng từ hoặc từng đoạn. Khi luồng hoàn tất, gọi `commitPartial` để hoàn tất output:
@@ -1310,6 +1362,7 @@ task(
 ```
 
 <a name="task-limit"></a>
+
 #### Tùy chỉnh Giới hạn Output
 
 Theo mặc định, tác vụ hiển thị tối đa 10 dòng output cuộn. Bạn có thể tùy chỉnh điều này thông qua đối số `limit`:
@@ -1325,6 +1378,7 @@ task(
 ```
 
 <a name="task-keep-summary"></a>
+
 #### Giữ lại Tóm tắt
 
 Theo mặc định, output của tác vụ bị xóa khi callback hoàn tất. Nếu bạn muốn giữ các thông báo trạng thái trên màn hình sau khi tác vụ đã hoàn thành, bạn có thể truyền đối số `keepSummary`:
@@ -1342,6 +1396,7 @@ task(
 ```
 
 <a name="stream"></a>
+
 ## Stream
 
 Hàm `stream` hiển thị văn bản được truyền vào terminal, lý tưởng để hiển thị nội dung được tạo bởi AI hoặc bất kỳ văn bản nào đến dần dần:
@@ -1362,6 +1417,7 @@ $stream->close();
 Phương thức `append` thêm văn bản vào luồng, hiển thị nó với hiệu ứng fade-in dần. Khi tất cả nội dung đã được truyền, gọi phương thức `close` để hoàn tất output và khôi phục con trỏ.
 
 <a name="terminal-title"></a>
+
 ## Tiêu đề Terminal
 
 Hàm `title` cập nhật tiêu đề của cửa sổ hoặc tab terminal của người dùng:
@@ -1379,6 +1435,7 @@ title('');
 ```
 
 <a name="clear"></a>
+
 ## Xóa Terminal
 
 Hàm `clear` có thể được sử dụng để xóa terminal của người dùng:
@@ -1390,19 +1447,23 @@ clear();
 ```
 
 <a name="terminal-considerations"></a>
+
 ## Các Lưu ý về Terminal
 
 <a name="terminal-width"></a>
+
 #### Chiều rộng Terminal
 
 Nếu độ dài của bất kỳ nhãn, tùy chọn, hoặc thông báo validation vượt quá số lượng "cột" trong terminal của người dùng, nó sẽ tự động bị cắt ngắn để vừa. Hãy xem xét giảm thiểu độ dài của các chuỗi này nếu người dùng của bạn có thể sử dụng các terminal hẹp hơn. Độ dài tối đa an toàn thường là 74 ký tự để hỗ trợ terminal 80 ký tự.
 
 <a name="terminal-height"></a>
+
 #### Chiều cao Terminal
 
 Đối với bất kỳ prompt nào chấp nhận đối số `scroll`, giá trị được cấu hình sẽ tự động được giảm để vừa với chiều cao của terminal của người dùng, bao gồm không gian cho thông báo validation.
 
 <a name="fallbacks"></a>
+
 ## Môi trường Không được Hỗ trợ và Fallbacks
 
 Laravel Prompts hỗ trợ macOS, Linux và Windows với WSL. Do các hạn chế trong phiên bản Windows của PHP, hiện không thể sử dụng Laravel Prompts trên Windows ngoài WSL.
@@ -1413,6 +1474,7 @@ Vì lý do này, Laravel Prompts hỗ trợ chuyển sang một triển khai tha
 > Khi sử dụng Laravel Prompts với framework Laravel, các fallback cho mỗi prompt đã được cấu hình cho bạn và sẽ tự động được kích hoạt trong các môi trường không được hỗ trợ.
 
 <a name="fallback-conditions"></a>
+
 #### Điều kiện Fallback
 
 Nếu bạn không sử dụng Laravel hoặc cần tùy chỉnh khi hành vi fallback được sử dụng, bạn có thể truyền một boolean cho phương thức tĩnh `fallbackWhen` trên lớp `Prompt`:
@@ -1426,6 +1488,7 @@ Prompt::fallbackWhen(
 ```
 
 <a name="fallback-behavior"></a>
+
 #### Hành vi Fallback
 
 Nếu bạn không sử dụng Laravel hoặc cần tùy chỉnh hành vi fallback, bạn có thể truyền một closure cho phương thức tĩnh `fallbackUsing` trên mỗi lớp prompt:
@@ -1463,11 +1526,12 @@ TextPrompt::fallbackUsing(function (TextPrompt $prompt) use ($input, $output) {
 Fallbacks phải được cấu hình riêng cho mỗi lớp prompt. Closure sẽ nhận một instance của lớp prompt và phải trả về một loại phù hợp cho prompt.
 
 <a name="testing"></a>
+
 ## Testing
 
 Laravel cung cấp nhiều phương thức để kiểm tra rằng lệnh của bạn hiển thị các thông báo Prompt mong đợi:
 
-```php tab=Pest
+```php
 test('report generation', function () {
     $this->artisan('report:generate')
         ->expectsPromptsInfo('Welcome to the application!')
@@ -1487,7 +1551,7 @@ test('report generation', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 public function test_report_generation(): void
 {
     $this->artisan('report:generate')

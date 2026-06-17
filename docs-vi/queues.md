@@ -1,68 +1,69 @@
 # Hàng đợi
 
 - [Giới thiệu](#introduction)
-    - [Kết nối vs. Hàng đợi](#connections-vs-queues)
-    - [Ghi chú Driver và Điều kiện tiên quyết](#driver-prerequisites)
+  - [Kết nối vs. Hàng đợi](#connections-vs-queues)
+  - [Ghi chú Driver và Điều kiện tiên quyết](#driver-prerequisites)
 - [Tạo Jobs](#creating-jobs)
-    - [Tạo Lớp Job](#generating-job-classes)
-    - [Cấu trúc Lớp](#class-structure)
-    - [Job Độc nhất](#unique-jobs)
-    - [Job Debounce](#debounced-jobs)
-    - [Job Được Mã hóa](#encrypted-jobs)
+  - [Tạo Lớp Job](#generating-job-classes)
+  - [Cấu trúc Lớp](#class-structure)
+  - [Job Độc nhất](#unique-jobs)
+  - [Job Debounce](#debounced-jobs)
+  - [Job Được Mã hóa](#encrypted-jobs)
 - [Middleware Job](#job-middleware)
-    - [Giới hạn Tỷ lệ](#rate-limiting)
-    - [Ngăn Chặn Ghi đè Job](#preventing-job-overlaps)
-    - [Giới hạn Exception](#throttling-exceptions)
-    - [Bỏ qua Jobs](#skipping-jobs)
+  - [Giới hạn Tỷ lệ](#rate-limiting)
+  - [Ngăn Chặn Ghi đè Job](#preventing-job-overlaps)
+  - [Giới hạn Exception](#throttling-exceptions)
+  - [Bỏ qua Jobs](#skipping-jobs)
 - [Dispatch Jobs](#dispatching-jobs)
-    - [Dispatch Trì hoãn](#delayed-dispatching)
-    - [Dispatch Đồng bộ](#synchronous-dispatching)
-    - [Dispatch Hàng loạt](#bulk-dispatching)
-    - [Chuẩn bị Jobs Trước khi Dispatch](#preparing-jobs-before-dispatch)
-    - [Jobs & Giao dịch Database](#jobs-and-database-transactions)
-    - [Chuỗi Job](#job-chaining)
-    - [Tùy chỉnh Hàng đợi và Kết nối](#customizing-the-queue-and-connection)
-    - [Chỉ định Số lần Thử Tối đa / Giá trị Timeout](#max-job-attempts-and-timeout)
-    - [SQS FIFO và Hàng đợi Công bằng](#sqs-fifo-and-fair-queues)
-    - [Failover Hàng đợi](#queue-failover)
-    - [Xử lý Lỗi](#error-handling)
+  - [Dispatch Trì hoãn](#delayed-dispatching)
+  - [Dispatch Đồng bộ](#synchronous-dispatching)
+  - [Dispatch Hàng loạt](#bulk-dispatching)
+  - [Chuẩn bị Jobs Trước khi Dispatch](#preparing-jobs-before-dispatch)
+  - [Jobs & Giao dịch Database](#jobs-and-database-transactions)
+  - [Chuỗi Job](#job-chaining)
+  - [Tùy chỉnh Hàng đợi và Kết nối](#customizing-the-queue-and-connection)
+  - [Chỉ định Số lần Thử Tối đa / Giá trị Timeout](#max-job-attempts-and-timeout)
+  - [SQS FIFO và Hàng đợi Công bằng](#sqs-fifo-and-fair-queues)
+  - [Failover Hàng đợi](#queue-failover)
+  - [Xử lý Lỗi](#error-handling)
 - [Batching Jobs](#job-batching)
-    - [Định nghĩa Jobs Có thể Batch](#defining-batchable-jobs)
-    - [Dispatch Batches](#dispatching-batches)
-    - [Chuỗi và Batches](#chains-and-batches)
-    - [Thêm Jobs vào Batches](#adding-jobs-to-batches)
-    - [Kiểm tra Batches](#inspecting-batches)
-    - [Hủy Batches](#cancelling-batches)
-    - [Lỗi Batch](#batch-failures)
-    - [Dọn dẹp Batches](#pruning-batches)
-    - [Lưu trữ Batches trong DynamoDB](#storing-batches-in-dynamodb)
+  - [Định nghĩa Jobs Có thể Batch](#defining-batchable-jobs)
+  - [Dispatch Batches](#dispatching-batches)
+  - [Chuỗi và Batches](#chains-and-batches)
+  - [Thêm Jobs vào Batches](#adding-jobs-to-batches)
+  - [Kiểm tra Batches](#inspecting-batches)
+  - [Hủy Batches](#cancelling-batches)
+  - [Lỗi Batch](#batch-failures)
+  - [Dọn dẹp Batches](#pruning-batches)
+  - [Lưu trữ Batches trong DynamoDB](#storing-batches-in-dynamodb)
 - [Đặt Closures vào Hàng đợi](#queueing-closures)
 - [Chạy Queue Worker](#running-the-queue-worker)
-    - [Lệnh `queue:work`](#the-queue-work-command)
-    - [Ưu tiên Hàng đợi](#queue-priorities)
-    - [Queue Workers và Triển khai](#queue-workers-and-deployment)
-    - [Phản hồi với Tín hiệu Worker](#reacting-to-worker-signals)
-    - [Hết hạn và Timeout của Job](#job-expirations-and-timeouts)
-    - [Tạm dừng và Tiếp tục Queue Workers](#pausing-and-resuming-queue-workers)
+  - [Lệnh `queue:work`](#the-queue-work-command)
+  - [Ưu tiên Hàng đợi](#queue-priorities)
+  - [Queue Workers và Triển khai](#queue-workers-and-deployment)
+  - [Phản hồi với Tín hiệu Worker](#reacting-to-worker-signals)
+  - [Hết hạn và Timeout của Job](#job-expirations-and-timeouts)
+  - [Tạm dừng và Tiếp tục Queue Workers](#pausing-and-resuming-queue-workers)
 - [Cấu hình Supervisor](#supervisor-configuration)
 - [Xử lý với Jobs Thất bại](#dealing-with-failed-jobs)
-    - [Dọn dẹp Sau khi Jobs Thất bại](#cleaning-up-after-failed-jobs)
-    - [Thử lại Jobs Thất bại](#retrying-failed-jobs)
-    - [Bỏ qua Models Thiếu](#ignoring-missing-models)
-    - [Dọn dẹp Jobs Thất bại](#pruning-failed-jobs)
-    - [Lưu trữ Jobs Thất bại trong DynamoDB](#storing-failed-jobs-in-dynamodb)
-    - [Vô hiệu hóa Lưu trữ Job Thất bại](#disabling-failed-job-storage)
-    - [Sự kiện Job Thất bại](#failed-job-events)
+  - [Dọn dẹp Sau khi Jobs Thất bại](#cleaning-up-after-failed-jobs)
+  - [Thử lại Jobs Thất bại](#retrying-failed-jobs)
+  - [Bỏ qua Models Thiếu](#ignoring-missing-models)
+  - [Dọn dẹp Jobs Thất bại](#pruning-failed-jobs)
+  - [Lưu trữ Jobs Thất bại trong DynamoDB](#storing-failed-jobs-in-dynamodb)
+  - [Vô hiệu hóa Lưu trữ Job Thất bại](#disabling-failed-job-storage)
+  - [Sự kiện Job Thất bại](#failed-job-events)
 - [Xóa Jobs khỏi Hàng đợi](#clearing-jobs-from-queues)
 - [Giám sát Hàng đợi của Bạn](#monitoring-your-queues)
 - [Kiểm thử](#testing)
-    - [Giả lập Một Tập con Jobs](#faking-a-subset-of-jobs)
-    - [Kiểm thử Chuỗi Job](#testing-job-chains)
-    - [Kiểm thử Batch Job](#testing-job-batches)
-    - [Kiểm thử Tương tác Job / Hàng đợi](#testing-job-queue-interactions)
+  - [Giả lập Một Tập con Jobs](#faking-a-subset-of-jobs)
+  - [Kiểm thử Chuỗi Job](#testing-job-chains)
+  - [Kiểm thử Batch Job](#testing-job-batches)
+  - [Kiểm thử Tương tác Job / Hàng đợi](#testing-job-queue-interactions)
 - [Sự kiện Job](#job-events)
 
 <a name="introduction"></a>
+
 ## Giới thiệu
 
 Khi xây dựng ứng dụng web của bạn, bạn có thể có một số tác vụ, chẳng hạn như phân tích và lưu trữ tệp CSV đã tải lên, mất quá nhiều thời gian để thực hiện trong một yêu cầu web điển hình. May mắn thay, Laravel cho phép bạn dễ dàng tạo các jobs được xếp hàng đợi có thể được xử lý trong nền. Bằng cách chuyển các tác vụ tốn thời gian sang hàng đợi, ứng dụng của bạn có thể phản hồi các yêu cầu web với tốc độ cực nhanh và cung cấp trải nghiệm người dùng tốt hơn cho khách hàng của bạn.
@@ -75,6 +76,7 @@ Các tùy chọn cấu hình hàng đợi của Laravel được lưu trữ tron
 > Laravel Horizon là một bảng điều khiển và hệ thống cấu hình đẹp mắt cho các hàng đợi chạy bằng Redis của bạn. Hãy xem tài liệu [Horizon](/docs/{{version}}/horizon) đầy đủ để biết thêm thông tin.
 
 <a name="connections-vs-queues"></a>
+
 ### Kết nối vs. Hàng đợi
 
 Trước khi bắt đầu với hàng đợi Laravel, điều quan trọng là phải hiểu sự khác biệt giữa "kết nối" và "hàng đợi". Trong tệp cấu hình `config/queue.php` của bạn, có một mảng cấu hình `connections`. Tùy chọn này định nghĩa các kết nối với các dịch vụ hàng đợi backend như Amazon SQS, Beanstalk, hoặc Redis. Tuy nhiên, bất kỳ kết nối hàng đợi nào có thể có nhiều "hàng đợi" có thể được coi là các ngăn xếp hoặc đống jobs được xếp hàng đợi khác nhau.
@@ -98,9 +100,11 @@ php artisan queue:work --queue=high,default
 ```
 
 <a name="driver-prerequisites"></a>
+
 ### Ghi chú Driver và Điều kiện tiên quyết
 
 <a name="database"></a>
+
 #### Database
 
 Để sử dụng driver hàng đợi `database`, bạn sẽ cần một bảng database để giữ các jobs. Thông thường, điều này được bao gồm trong migration database mặc định `0001_01_01_000002_create_jobs_table.php` của Laravel; tuy nhiên, nếu ứng dụng của bạn không chứa migration này, bạn có thể sử dụng lệnh Artisan `make:queue-table` để tạo nó:
@@ -112,6 +116,7 @@ php artisan migrate
 ```
 
 <a name="redis"></a>
+
 #### Redis
 
 Để sử dụng driver hàng đợi `redis`, bạn nên cấu hình một kết nối database Redis trong tệp cấu hình `config/database.php` của bạn.
@@ -120,6 +125,7 @@ php artisan migrate
 > Các tùy chọn Redis `serializer` và `compression` không được hỗ trợ bởi driver hàng đợi `redis`.
 
 <a name="redis-cluster"></a>
+
 ##### Redis Cluster
 
 Nếu kết nối hàng đợi Redis của bạn sử dụng [Redis Cluster](https://redis.io/docs/latest/operate/rs/databases/durability-ha/clustering), tên hàng đợi của bạn phải chứa một [key hash tag](https://redis.io/docs/latest/develop/using-commands/keyspace/#hashtags). Điều này được yêu cầu để đảm bảo tất cả các Redis keys cho một hàng đợi nhất định được đặt vào cùng một hash slot:
@@ -136,6 +142,7 @@ Nếu kết nối hàng đợi Redis của bạn sử dụng [Redis Cluster](htt
 ```
 
 <a name="blocking"></a>
+
 ##### Blocking
 
 Khi sử dụng hàng đợi Redis, bạn có thể sử dụng tùy chọn cấu hình `block_for` để chỉ định driver nên chờ bao lâu để một job trở nên khả dụng trước khi lặp qua vòng lặp worker và thăm dò lại database Redis.
@@ -157,6 +164,7 @@ Khi sử dụng hàng đợi Redis, bạn có thể sử dụng tùy chọn cấ
 > Đặt `block_for` thành `0` sẽ khiến queue workers chặn vô thời hạn cho đến khi một job khả dụng. Điều này cũng sẽ ngăn các tín hiệu như `SIGTERM` được xử lý cho đến khi job tiếp theo đã được xử lý.
 
 <a name="sqs-overflow-storage"></a>
+
 #### Lưu trữ Overflow SQS
 
 Amazon SQS giới hạn kích thước tối đa của payload tin nhắn được xếp hàng đợi. Nếu bạn cần dispatch các jobs với payloads có thể vượt quá giới hạn này, bạn có thể cấu hình Laravel để lưu trữ các payloads SQS quá lớn trong một cache store và gửi một con trỏ qua SQS thay thế. Để bật tính năng này, thêm một mảng `overflow` vào cấu hình kết nối hàng đợi SQS của bạn:
@@ -186,6 +194,7 @@ Khi lưu trữ overflow được bật, Laravel sẽ lưu trữ các payloads c�
 Nếu tùy chọn `flush_on_clear` là `true`, cache store overflow được cấu hình sẽ được xóa khi lệnh `queue:clear` xóa hàng đợi SQS. Vì việc xóa một cache store có thể xóa tất cả các mục khỏi store đó, bạn nên cấu hình lưu trữ overflow SQS để sử dụng một cache store chuyên dụng khi bật tùy chọn này.
 
 <a name="other-driver-prerequisites"></a>
+
 #### Điều kiện tiên quyết Driver Khác
 
 Các phụ thuộc sau đây được cần thiết cho các driver hàng đợi được liệt kê. Các phụ thuộc này có thể được cài đặt thông qua trình quản lý gói Composer:
@@ -200,9 +209,11 @@ Các phụ thuộc sau đây được cần thiết cho các driver hàng đợi
 </div>
 
 <a name="creating-jobs"></a>
+
 ## Tạo Jobs
 
 <a name="generating-job-classes"></a>
+
 ### Tạo Lớp Job
 
 Theo mặc định, tất cả các jobs có thể xếp hàng đợi cho ứng dụng của bạn được lưu trữ trong thư mục `app/Jobs`. Nếu thư mục `app/Jobs` không tồn tại, nó sẽ được tạo khi bạn chạy lệnh Artisan `make:job`:
@@ -217,6 +228,7 @@ Lớp được tạo sẽ triển khai interface `Illuminate\Contracts\Queue\Sho
 > Job stubs có thể được tùy chỉnh bằng cách sử dụng [stub publishing](/docs/{{version}}/artisan#stub-customization).
 
 <a name="class-structure"></a>
+
 ### Cấu trúc Lớp
 
 Các lớp job rất đơn giản, thường chỉ chứa một phương thức `handle` được gọi khi job được xử lý bởi hàng đợi. Để bắt đầu, hãy xem một lớp job ví dụ. Trong ví dụ này, chúng ta sẽ giả sử chúng ta quản lý một dịch vụ xuất bản podcast và cần xử lý các tệp podcast đã tải lên trước khi chúng được xuất bản:
@@ -257,6 +269,7 @@ Trong ví dụ này, lưu ý rằng chúng ta có thể chuyển một [Eloquent
 Nếu job được xếp hàng đợi của bạn chấp nhận một Eloquent model trong constructor của nó, chỉ có định danh cho model sẽ được serialize lên hàng đợi. Khi job thực sự được xử lý, hệ thống hàng đợi sẽ tự động truy xuất lại toàn bộ instance model và các relationships đã tải của nó từ database. Cách tiếp cận này đối với model serialization cho phép gửi các payloads job nhỏ hơn nhiều đến driver hàng đợi của bạn.
 
 <a name="handle-method-dependency-injection"></a>
+
 #### Phương thức `handle` Dependency Injection
 
 Phương thức `handle` được gọi khi job được xử lý bởi hàng đợi. Lưu ý rằng chúng ta có thể type-hint các dependencies trên phương thức `handle` của job. [service container](/docs/{{version}}/container) của Laravel tự động inject các dependencies này.
@@ -277,6 +290,7 @@ $this->app->bindMethod([ProcessPodcast::class, 'handle'], function (ProcessPodca
 > Dữ liệu nhị phân, chẳng hạn như nội dung hình ảnh thô, nên được chuyển qua hàm `base64_encode` trước khi được chuyển đến một job được xếp hàng đợi. Nếu không, job có thể không serialize đúng sang JSON khi được đặt trên hàng đợi.
 
 <a name="handling-relationships"></a>
+
 #### Relationships Được xếp hàng đợi
 
 Vì tất cả các relationships Eloquent model đã tải cũng được serialize khi một job được xếp hàng đợi, chuỗi job được serialize đôi khi có thể trở nên khá lớn. Hơn nữa, khi một job được deserialize và các relationships model được truy xuất lại từ database, chúng sẽ được truy xuất hoàn toàn. Bất kỳ các ràng buộc relationship nào trước đó đã được áp dụng trước khi model được serialize trong quá trình xếp hàng đợi job sẽ không được áp dụng khi job được deserialize. Do đó, nếu bạn muốn làm việc với một tập con của một relationship nhất định, bạn nên ràng buộc lại relationship đó trong job được xếp hàng đợi của mình.
@@ -345,6 +359,7 @@ class ProcessPodcast implements ShouldQueue
 Nếu một job nhận được một collection hoặc mảng của các Eloquent models thay vì một model đơn lẻ, các models trong collection đó sẽ không có các relationships của chúng được khôi phục khi job được deserialize và thực thi. Điều này là để ngăn việc sử dụng tài nguyên quá mức trên các jobs xử lý số lượng lớn models.
 
 <a name="unique-jobs"></a>
+
 ### Job Độc nhất
 
 > [!WARNING]
@@ -399,12 +414,14 @@ class UpdateSearchIndex implements ShouldQueue, ShouldBeUnique
     }
 }
 ```
+
 Trong ví dụ trên, job `UpdateSearchIndex` là độc nhất theo một ID sản phẩm. Vì vậy, bất kỳ dispatch mới nào của job với cùng ID sản phẩm sẽ bị bỏ qua cho đến khi job hiện tại đã hoàn thành xử lý. Ngoài ra, nếu job hiện tại không được xử lý trong vòng một giờ, lock độc nhất sẽ được giải phóng và một job khác với cùng key độc nhất có thể được dispatch đến hàng đợi.
 
 > [!WARNING]
 > Nếu ứng dụng của bạn dispatch jobs từ nhiều web servers hoặc containers, bạn nên đảm bảo rằng tất cả các servers của bạn đang giao tiếp với cùng một cache server trung tâm để Laravel có thể xác định chính xác xem một job có độc nhất hay không.
 
 <a name="keeping-jobs-unique-until-processing-begins"></a>
+
 #### Giữ Jobs Độc nhất Cho đến khi Bắt đầu Xử lý
 
 Theo mặc định, các jobs độc nhất được "mở khóa" sau khi một job hoàn thành xử lý hoặc thất bại tất cả các lần thử lại của nó. Tuy nhiên, có thể có những tình huống mà bạn muốn job của mình mở khóa ngay lập tức trước khi nó được xử lý. Để thực hiện điều này, job của bạn nên triển khai contract `ShouldBeUniqueUntilProcessing` thay vì contract `ShouldBeUnique`:
@@ -422,6 +439,7 @@ class UpdateSearchIndex implements ShouldQueue, ShouldBeUniqueUntilProcessing
 ```
 
 <a name="unique-job-locks"></a>
+
 #### Locks Job Độc nhất
 
 Đằng sau hậu trường, khi một job `ShouldBeUnique` được dispatch, Laravel cố gắng có được một [lock](/docs/{{version}}/cache#atomic-locks) với key `uniqueId`. Nếu lock đã được giữ, job sẽ không được dispatch. Lock này được giải phóng khi job hoàn thành xử lý hoặc thất bại tất cả các lần thử lại của nó. Theo mặc định, Laravel sẽ sử dụng driver cache mặc định để có được lock này. Tuy nhiên, nếu bạn muốn sử dụng driver khác để có được lock, bạn có thể định nghĩa một phương thức `uniqueVia` trả về driver cache nên được sử dụng:
@@ -448,6 +466,7 @@ class UpdateSearchIndex implements ShouldQueue, ShouldBeUnique
 > Nếu bạn chỉ cần giới hạn xử lý đồng thời của một job, hãy sử dụng [middleware job WithoutOverlapping](/docs/{{version}}/queues#preventing-job-overlaps) thay thế.
 
 <a name="debounced-jobs"></a>
+
 ### Jobs Debounce
 
 Đôi khi, bạn có thể muốn đảm bảo rằng khi cùng một job được dispatch nhiều lần trong một khoảng thời gian ngắn, chỉ có dispatch mới nhất thực sự thực thi. Bạn có thể làm như vậy bằng cách thêm attribute `DebounceFor` vào job của bạn:
@@ -518,6 +537,7 @@ Nếu một job debounced bị thay thế bởi một dispatch mới hơn, Larav
 > Nếu ứng dụng của bạn dispatch các jobs debounced từ nhiều web servers hoặc containers, bạn nên đảm bảo rằng tất cả các servers của bạn đang giao tiếp với cùng một cache server trung tâm.
 
 <a name="encrypted-jobs"></a>
+
 ### Jobs Được Mã hóa
 
 Laravel cho phép bạn đảm bảo quyền riêng tư và tính toàn vẹn của dữ liệu job thông qua [mã hóa](/docs/{{version}}/encryption). Để bắt đầu, chỉ cần thêm interface `ShouldBeEncrypted` vào lớp job. Khi interface này đã được thêm vào lớp, Laravel sẽ tự động mã hóa job của bạn trước khi đẩy nó lên hàng đợi:
@@ -535,6 +555,7 @@ class UpdateSearchIndex implements ShouldQueue, ShouldBeEncrypted
 ```
 
 <a name="job-middleware"></a>
+
 ## Middleware Job
 
 Middleware job cho phép bạn bọc logic tùy chỉnh xung quanh việc thực thi các jobs được xếp hàng đợi, giảm boilerplate trong chính các jobs. Ví dụ, hãy xem xét phương thức `handle` sau đây tận dụng các tính năng giới hạn tỷ lệ Redis của Laravel để chỉ cho phép một job xử lý mỗi năm giây:
@@ -615,6 +636,7 @@ public function middleware(): array
 > Middleware job cũng có thể được gán cho [event listeners có thể xếp hàng đợi](/docs/{{version}}/events#queued-event-listeners), [mailables](/docs/{{version}}/mail#queueing-mail), và [notifications](/docs/{{version}}/notifications#queueing-notifications).
 
 <a name="rate-limiting"></a>
+
 ### Giới hạn Tỷ lệ
 
 Mặc dù chúng ta vừa chứng minh cách viết middleware giới hạn tỷ lệ job của riêng bạn, Laravel thực sự bao gồm một middleware giới hạn tỷ lệ mà bạn có thể sử dụng để giới hạn tỷ lệ jobs. Giống như [rate limiters route](/docs/{{version}}/routing#defining-rate-limiters), rate limiters job được định nghĩa bằng phương thức `for` của facade `RateLimiter`.
@@ -691,6 +713,7 @@ public function middleware(): array
 ```
 
 <a name="rate-limiting-with-redis"></a>
+
 #### Giới hạn Tỷ lệ Với Redis
 
 Nếu bạn đang sử dụng Redis, bạn có thể sử dụng middleware `Illuminate\Queue\Middleware\RateLimitedWithRedis`, được tinh chỉnh cho Redis và hiệu quả hơn middleware giới hạn tỷ lệ cơ bản:
@@ -711,6 +734,7 @@ return [(new RateLimitedWithRedis('backups'))->connection('limiter')];
 ```
 
 <a name="preventing-job-overlaps"></a>
+
 ### Ngăn Chặn Ghi đè Job
 
 Laravel bao gồm một middleware `Illuminate\Queue\Middleware\WithoutOverlapping` cho phép bạn ngăn chặn các ghi đè job dựa trên một key tùy ý. Điều này có thể hữu ích khi một job được xếp hàng đợi đang sửa đổi một tài nguyên chỉ nên được sửa đổi bởi một job tại một thời điểm.
@@ -779,11 +803,12 @@ public function middleware(): array
 > Middleware `WithoutOverlapping` yêu cầu một driver cache hỗ trợ [locks](/docs/{{version}}/cache#atomic-locks). Hiện tại, các driver cache `memcached`, `redis`, `dynamodb`, `database`, `file`, và `array` hỗ trợ atomic locks.
 
 <a name="sharing-lock-keys"></a>
+
 #### Chia sẻ Keys Lock Across Các Lớp Job
 
 Theo mặc định, middleware `WithoutOverlapping` sẽ chỉ ngăn chặn các jobs ghi đè của cùng một lớp. Vì vậy, mặc dù hai lớp job khác nhau có thể sử dụng cùng một key lock, chúng sẽ không bị ngăn chặn ghi đè. Tuy nhiên, bạn có thể hướng dẫn Laravel áp dụng key across các lớp job bằng phương thức `shared`:
 
-```php
+````php
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 class ProviderIsDown
@@ -808,9 +833,10 @@ class ProviderIsDown
         ];
     }
 }
-```
+````
 
 <a name="throttling-exceptions"></a>
+
 ### Throttling Exceptions
 
 Laravel bao gồm middleware `Illuminate\Queue\Middleware\ThrottlesExceptions` cho phép bạn throttle các exception. Khi job ném ra một số lượng exception nhất định, tất cả các lần thử tiếp theo để thực thi job sẽ bị trì hoãn cho đến khi khoảng thời gian quy định trôi qua. Middleware này đặc biệt hữu ích cho các job tương tác với các dịch vụ bên thứ ba không ổn định.
@@ -952,6 +978,7 @@ public function middleware(): array
 ```
 
 <a name="throttling-exceptions-with-redis"></a>
+
 #### Throttling Exceptions With Redis
 
 Nếu bạn đang sử dụng Redis, bạn có thể sử dụng middleware `Illuminate\Queue\Middleware\ThrottlesExceptionsWithRedis`, được tinh chỉnh cho Redis và hiệu quả hơn middleware throttling exception cơ bản:
@@ -972,6 +999,7 @@ return [(new ThrottlesExceptionsWithRedis(10, 10 * 60))->connection('limiter')];
 ```
 
 <a name="skipping-jobs"></a>
+
 ### Skipping Jobs
 
 Middleware `Skip` cho phép bạn chỉ định rằng một job nên được bỏ qua / xóa mà không cần sửa đổi logic của job. Phương thức `Skip::when` sẽ xóa job nếu điều kiện đã cho đánh giá là `true`, trong khi phương thức `Skip::unless` sẽ xóa job nếu điều kiện đánh giá là `false`:
@@ -1009,6 +1037,7 @@ public function middleware(): array
 ```
 
 <a name="dispatching-jobs"></a>
+
 ## Dispatching Jobs
 
 Khi bạn đã viết lớp job của mình, bạn có thể dispatch nó bằng phương thức `dispatch` trên chính job đó. Các đối số được truyền cho phương thức `dispatch` sẽ được đưa cho constructor của job:
@@ -1052,6 +1081,7 @@ ProcessPodcast::dispatchUnless($accountSuspended, $podcast);
 Trong các ứng dụng Laravel mới, kết nối `database` được định nghĩa là queue mặc định. Bạn có thể chỉ định một kết nối queue mặc định khác bằng cách thay đổi biến môi trường `QUEUE_CONNECTION` trong file `.env` của ứng dụng.
 
 <a name="delayed-dispatching"></a>
+
 ### Delayed Dispatching
 
 Nếu bạn muốn chỉ định rằng một job không nên có sẵn để xử lý ngay lập tức bởi queue worker, bạn có thể sử dụng phương thức `delay` khi dispatch job. Ví dụ, hãy chỉ định rằng một job không nên có sẵn để xử lý cho đến 10 phút sau khi nó đã được dispatch:
@@ -1095,6 +1125,7 @@ ProcessPodcast::dispatch($podcast)->withoutDelay();
 > Dịch vụ queue Amazon SQS có thời gian trễ tối đa là 15 phút.
 
 <a name="synchronous-dispatching"></a>
+
 ### Synchronous Dispatching
 
 Nếu bạn muốn dispatch một job ngay lập tức (đồng bộ), bạn có thể sử dụng phương thức `dispatchSync`. Khi sử dụng phương thức này, job sẽ không được đưa vào queue và sẽ được thực thi ngay lập tức trong tiến trình hiện tại:
@@ -1128,6 +1159,7 @@ class PodcastController extends Controller
 ```
 
 <a name="deferred-dispatching"></a>
+
 #### Deferred Dispatching
 
 Sử dụng deferred synchronous dispatching, bạn có thể dispatch một job để được xử lý trong tiến trình hiện tại, nhưng sau khi phản hồi HTTP đã được gửi cho người dùng. Điều này cho phép bạn xử lý các job "queued" đồng bộ mà không làm chậm trải nghiệm ứng dụng của người dùng. Để trì hoãn thực thi của một job đồng bộ, dispatch job đến kết nối `deferred`:
@@ -1145,6 +1177,7 @@ RecordDelivery::dispatch($order)->onConnection('background');
 ```
 
 <a name="bulk-dispatching"></a>
+
 ### Bulk Dispatching
 
 Nếu bạn cần dispatch nhiều job độc lập cùng một lúc và không cần theo dõi hoặc callback [batch](#job-batching), bạn có thể sử dụng phương thức `bulk` của facade `Bus`. Laravel sẽ nhóm các job theo kết nối queue và tên queue được cấu hình của chúng và đẩy từng nhóm đến queue thích hợp hàng loạt:
@@ -1159,6 +1192,7 @@ Bus::bulk(
 ```
 
 <a name="preparing-jobs-before-dispatch"></a>
+
 ### Preparing Jobs Before Dispatch
 
 Nếu một job cần chuẩn bị hoặc kiểm tra trạng thái của nó trước khi được đẩy lên queue, job có thể thực hiện interface `Illuminate\Contracts\Queue\PreparesForDispatch`. Laravel sẽ gọi phương thức `prepareForDispatch` của job trước khi dispatch job. Nếu phương thức này trả về `false`, job sẽ không được dispatch:
@@ -1197,6 +1231,7 @@ class SyncPodcasts implements PreparesForDispatch, ShouldQueue
 ```
 
 <a name="jobs-and-database-transactions"></a>
+
 ### Jobs & Database Transactions
 
 Mặc dù hoàn toàn ổn để dispatch job trong các transaction cơ sở dữ liệu, bạn nên đặc biệt chú ý để đảm bảo rằng job của bạn thực sự có thể thực thi thành công. Khi dispatch một job trong một transaction, có thể job sẽ được xử lý bởi worker trước khi transaction cha đã commit. Khi điều này xảy ra, bất kỳ cập nhật nào bạn đã thực hiện cho các model hoặc bản ghi cơ sở dữ liệu trong transaction cơ sở dữ liệu có thể chưa được phản ánh trong cơ sở dữ liệu. Ngoài ra, bất kỳ model hoặc bản ghi cơ sở dữ liệu nào được tạo trong transaction có thể không tồn tại trong cơ sở dữ liệu.
@@ -1219,6 +1254,7 @@ Nếu một transaction được rollback do một exception xảy ra trong tran
 > Đặt tùy chọn cấu hình `after_commit` thành `true` cũng sẽ khiến bất kỳ queued event listeners, mailables, notifications, và broadcast events nào được dispatch sau khi tất cả các transaction cơ sở dữ liệu mở đã được commit.
 
 <a name="specifying-commit-dispatch-behavior-inline"></a>
+
 #### Specifying Commit Dispatch Behavior Inline
 
 Nếu bạn không đặt tùy chọn cấu hình kết nối queue `after_commit` thành `true`, bạn vẫn có thể chỉ định rằng một job cụ thể nên được dispatch sau khi tất cả các transaction cơ sở dữ liệu mở đã được commit. Để thực hiện điều này, bạn có thể chuỗi phương thức `afterCommit` vào thao tác dispatch của mình:
@@ -1236,6 +1272,7 @@ ProcessPodcast::dispatch($podcast)->beforeCommit();
 ```
 
 <a name="job-chaining"></a>
+
 ### Job Chaining
 
 Job chaining cho phép bạn chỉ định một danh sách các queued job nên được chạy theo tuần tự sau khi job chính đã thực thi thành công. Nếu một job trong chuỗi thất bại, các job còn lại sẽ không được chạy. Để thực thi một chuỗi job queued, bạn có thể sử dụng phương thức `chain` được cung cấp bởi facade `Bus`. Command bus của Laravel là một thành phần cấp thấp mà queued job dispatching được xây dựng trên đó:
@@ -1269,6 +1306,7 @@ Bus::chain([
 > Xóa job bằng phương thức `$this->delete()` trong job sẽ không ngăn chặn các job được chained khỏi việc được xử lý. Chuỗi sẽ chỉ dừng thực thi nếu một job trong chuỗi thất bại.
 
 <a name="chain-connection-queue"></a>
+
 #### Chain Connection and Queue
 
 Nếu bạn muốn chỉ định kết nối và queue nên được sử dụng cho các job được chained, bạn có thể sử dụng các phương thức `onConnection` và `onQueue`. Các phương thức này chỉ định kết nối queue và tên queue nên được sử dụng trừ khi queued job được gán một kết nối / queue khác một cách rõ ràng:
@@ -1282,6 +1320,7 @@ Bus::chain([
 ```
 
 <a name="adding-jobs-to-the-chain"></a>
+
 #### Adding Jobs to the Chain
 
 Thỉnh thoảng, bạn có thể cần thêm vào đầu hoặc thêm vào cuối một job vào một chuỗi job hiện có từ trong một job khác trong chuỗi đó. Bạn có thể thực hiện điều này bằng cách sử dụng các phương thức `prependToChain` và `appendToChain`:
@@ -1303,6 +1342,7 @@ public function handle(): void
 ```
 
 <a name="chain-failures"></a>
+
 #### Chain Failures
 
 Khi chaining job, bạn có thể sử dụng phương thức `catch` để chỉ định một closure nên được gọi nếu một job trong chuỗi thất bại. Callback đã cho sẽ nhận instance `Throwable` gây ra thất bại của job:
@@ -1324,9 +1364,11 @@ Bus::chain([
 > Vì các callback chuỗi được serialize và thực thi tại một thời điểm sau bởi queue của Laravel, bạn không nên sử dụng biến `$this` trong các callback chuỗi.
 
 <a name="customizing-the-queue-and-connection"></a>
+
 ### Customizing the Queue and Connection
 
 <a name="dispatching-to-a-particular-queue"></a>
+
 #### Dispatching to a Particular Queue
 
 Bằng cách đẩy job đến các queue khác nhau, bạn có thể "phân loại" các queued job của mình và thậm chí ưu tiên số lượng worker bạn gán cho các queue khác nhau. Hãy nhớ rằng, điều này không đẩy job đến các "kết nối" queue khác nhau như được định nghĩa bởi file cấu hình queue của bạn, mà chỉ đến các queue cụ thể trong một kết nối duy nhất. Để chỉ định queue, sử dụng phương thức `onQueue` khi dispatch job:
@@ -1384,6 +1426,7 @@ class ProcessPodcast implements ShouldQueue
 ```
 
 <a name="dispatching-to-a-particular-connection"></a>
+
 #### Dispatching to a Particular Connection
 
 Nếu ứng dụng của bạn tương tác với nhiều kết nối queue, bạn có thể chỉ định kết nối nào để đẩy job đến bằng phương thức `onConnection`:
@@ -1449,6 +1492,7 @@ class ProcessPodcast implements ShouldQueue
 ```
 
 <a name="queue-routing"></a>
+
 #### Queue Routing
 
 Bạn có thể sử dụng phương thức `route` của facade `Queue` để định nghĩa một kết nối và queue mặc định cho các lớp job cụ thể. Điều này hữu ích khi bạn muốn đảm bảo các job cụ thể luôn sử dụng các queue cụ thể mà không cần chỉ định kết nối hoặc queue trên job.
@@ -1492,9 +1536,11 @@ Queue::route([
 > Queue routing vẫn có thể được ghi đè bởi job trên cơ sở từng job.
 
 <a name="max-job-attempts-and-timeout"></a>
+
 ### Specifying Max Job Attempts / Timeout Values
 
 <a name="max-attempts"></a>
+
 #### Max Attempts
 
 Job attempts là một khái niệm cốt lõi của hệ thống queue của Laravel và cung cấp sức mạnh cho nhiều tính năng nâng cao. Mặc dù chúng có thể gây nhầm lẫn lúc đầu, điều quan trọng là phải hiểu cách chúng hoạt động trước khi sửa đổi cấu hình mặc định.
@@ -1555,6 +1601,7 @@ public function tries(): int
 ```
 
 <a name="time-based-attempts"></a>
+
 #### Time Based Attempts
 
 Là một giải pháp thay thế cho việc định nghĩa số lần một job có thể được thử trước khi nó thất bại, bạn có thể định nghĩa một thời điểm mà job không nên được thử nữa. Điều này cho phép một job được thử bất kỳ số lần nào trong một khung thời gian nhất định. Để định nghĩa thời điểm mà job không nên được thử nữa, thêm một phương thức `retryUntil` vào lớp job của bạn. Phương thức này nên trả về một instance `DateTime`:
@@ -1577,6 +1624,7 @@ Nếu cả `retryUntil` và `tries` đều được định nghĩa, Laravel sẽ
 > Bạn cũng có thể định nghĩa một thuộc tính `Tries` hoặc phương thức `retryUntil` trên [queued event listeners](/docs/{{version}}/events#queued-event-listeners) và [queued notifications](/docs/{{version}}/notifications#queueing-notifications) của bạn.
 
 <a name="max-exceptions"></a>
+
 #### Max Exceptions
 
 Đôi khi bạn có thể muốn chỉ định rằng một job có thể được thử nhiều lần, nhưng nên thất bại nếu các lần thử lại được kích hoạt bởi một số lượng exception không được xử lý nhất định (trái ngược với việc được giải phóng bởi phương thức `release` trực tiếp). Để thực hiện điều này, bạn có thể sử dụng các thuộc tính `Tries` và `MaxExceptions` trên lớp job của mình:
@@ -1616,6 +1664,7 @@ class ProcessPodcast implements ShouldQueue
 Trong ví dụ này, job sẽ được release trong mười giây nếu ứng dụng không thể lấy được Redis lock và sẽ tiếp tục được thử lại tối đa 25 lần. Tuy nhiên, job sẽ thất bại nếu ba ngoại lệ không được xử lý được ném ra bởi job.
 
 <a name="timeout"></a>
+
 #### Timeout
 
 Thường thì bạn biết ước tính thời gian job của bạn sẽ mất bao lâu. Vì lý do này, Laravel cho phép bạn chỉ định giá trị "timeout". Theo mặc định, giá trị timeout là 60 giây. Nếu một job đang xử lý lâu hơn số giây được chỉ định bởi giá trị timeout, worker đang xử lý job đó sẽ thoát với lỗi. Thông thường, worker sẽ được khởi động lại tự động bởi [process manager được cấu hình trên server của bạn](#supervisor-configuration).
@@ -1650,6 +1699,7 @@ class ProcessPodcast implements ShouldQueue
 > [Extension PCNTL](https://www.php.net/manual/en/book.pcntl.php) của PHP phải được cài đặt để có thể chỉ định timeout cho job. Ngoài ra, giá trị "timeout" của job phải luôn nhỏ hơn giá trị ["retry after"](#job-expiration) của nó. Nếu không, job có thể được thử lại trước khi nó thực sự hoàn thành việc thực thi hoặc timeout.
 
 <a name="failing-on-timeout"></a>
+
 #### Thất bại khi Timeout
 
 Nếu bạn muốn chỉ định rằng một job nên được đánh dấu là [thất bại](#dealing-with-failed-jobs) khi timeout, bạn có thể sử dụng attribute `FailOnTimeout` trên class job:
@@ -1672,6 +1722,7 @@ class ProcessPodcast implements ShouldQueue
 > Theo mặc định, khi một job timeout, nó tiêu tốn một lần thử và được release lại vào hàng đợi (nếu cho phép thử lại). Tuy nhiên, nếu bạn cấu hình job để thất bại khi timeout, nó sẽ không được thử lại, bất kể giá trị được đặt cho tries.
 
 <a name="sqs-fifo-and-fair-queues"></a>
+
 ### Hàng đợi SQS FIFO và Fair
 
 Laravel hỗ trợ [hàng đợi Amazon SQS FIFO (First-In-First-Out)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queues.html) và [hàng đợi fair](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html). Hàng đợi FIFO cho phép bạn xử lý các job theo đúng thứ tự chúng được gửi đồng thời đảm bảo xử lý chính xác một lần thông qua việc loại bỏ trùng lặp tin nhắn.
@@ -1712,6 +1763,7 @@ class ProcessSubscriptionRenewal implements ShouldQueue
 ```
 
 <a name="fair-queues"></a>
+
 #### Hàng đợi Fair
 
 Nếu bạn đang sử dụng hàng đợi tiêu chuẩn SQS, việc đặt nhóm tin nhắn sẽ kích hoạt hàng đợi fair. Nói cách khác, một khi bạn gán các nhóm, SQS sẽ sử dụng chúng để duy trì phân phối công bằng giữa các tenant / workload. Không cần cấu hình Laravel bổ sung nào.
@@ -1743,6 +1795,7 @@ class ProcessOrder implements ShouldQueue
 ```
 
 <a name="fifo-listeners-mail-and-notifications"></a>
+
 #### Listeners, Mail và Notifications FIFO
 
 Khi sử dụng hàng đợi FIFO, bạn cũng sẽ cần định nghĩa các nhóm tin nhắn trên listeners, mail và notifications. Ngoài ra, bạn có thể dispatch các phiên bản được xếp hàng đợi của các đối tượng này vào hàng đợi không phải FIFO.
@@ -1802,6 +1855,7 @@ $user->notify($invoicePaid);
 ```
 
 <a name="queue-failover"></a>
+
 ### Queue Failover
 
 Driver hàng đợi `failover` cung cấp chức năng failover tự động khi đẩy các job vào hàng đợi. Nếu kết nối hàng đợi chính của cấu hình `failover` thất bại vì bất kỳ lý do gì, Laravel sẽ tự động cố gắng đẩy job vào kết nối được cấu hình tiếp theo trong danh sách. Điều này đặc biệt hữu ích để đảm bảo tính sẵn sàng cao trong môi trường sản xuất nơi độ tin cậy của hàng đợi là quan trọng.
@@ -1841,11 +1895,13 @@ Khi một thao tác kết nối hàng đợi thất bại và failover được 
 > Nếu bạn sử dụng Laravel Horizon, hãy nhớ rằng Horizon chỉ quản lý các hàng đợi Redis. Nếu danh sách failover của bạn bao gồm `database`, bạn nên chạy một quy trình `php artisan queue:work database` thông thường cùng với Horizon.
 
 <a name="error-handling"></a>
+
 ### Xử lý Lỗi
 
 Nếu một ngoại lệ được ném ra trong khi job đang được xử lý, job sẽ tự động được release lại vào hàng đợi để nó có thể được thử lại. Job sẽ tiếp tục được release cho đến khi nó đã được thử số lần tối đa được phép bởi ứng dụng của bạn. Số lần thử tối đa được định nghĩa bởi switch `--tries` được sử dụng trên lệnh Artisan `queue:work`. Ngoài ra, số lần thử tối đa có thể được định nghĩa trên chính class job. Thông tin thêm về việc chạy worker hàng đợi [có thể được tìm thấy bên dưới](#running-the-queue-worker).
 
 <a name="manually-releasing-a-job"></a>
+
 #### Release Job Thủ công
 
 Đôi khi bạn có thể muốn release một job thủ công trở lại vào hàng đợi để nó có thể được thử lại vào một thời điểm sau. Bạn có thể thực hiện điều này bằng cách gọi phương thức `release`:
@@ -1871,6 +1927,7 @@ $this->release(now()->plus(seconds: 10));
 ```
 
 <a name="manually-failing-a-job"></a>
+
 #### Thất bại Job Thủ công
 
 Thỉnh thoảng bạn có thể cần đánh dấu thủ công một job là "thất bại". Để làm điều này, bạn có thể gọi phương thức `fail`:
@@ -1899,6 +1956,7 @@ $this->fail('Something went wrong.');
 > Để biết thêm thông tin về các job thất bại, hãy xem [tài liệu về xử lý các thất bại của job](#dealing-with-failed-jobs).
 
 <a name="fail-jobs-on-exceptions"></a>
+
 #### Thất bại Jobs trên Ngoại lệ Cụ thể
 
 [Job middleware](#job-middleware) `FailOnException` cho phép bạn rút ngắn các lần thử lại khi các ngoại lệ cụ thể được ném ra. Điều này cho phép thử lại trên các ngoại lệ tạm thời như lỗi API bên ngoài, nhưng thất bại job vĩnh viễn trên các ngoại lệ persists, như quyền của người dùng bị thu hồi:
@@ -1955,6 +2013,7 @@ class SyncChatHistory implements ShouldQueue
 ```
 
 <a name="job-batching"></a>
+
 ## Job Batching
 
 Tính năng job batching của Laravel cho phép bạn dễ dàng thực thi một nhóm job song song và sau đó thực hiện một số hành động khi batch của các job đã hoàn thành việc thực thi.
@@ -1968,6 +2027,7 @@ php artisan migrate
 ```
 
 <a name="defining-batchable-jobs"></a>
+
 ### Định nghĩa Batchable Jobs
 
 Để định nghĩa một batchable job, bạn nên [tạo một queueable job](#creating-jobs) như bình thường; tuy nhiên, bạn nên thêm trait `Illuminate\Bus\Batchable` vào class job. Trait này cung cấp quyền truy cập vào phương thức `batch` có thể được sử dụng để truy xuất batch hiện tại mà job đang thực thi trong đó:
@@ -2002,6 +2062,7 @@ class ImportCsv implements ShouldQueue
 ```
 
 <a name="dispatching-batches"></a>
+
 ### Dispatching Batches
 
 Để dispatch một batch job, bạn nên sử dụng phương thức `batch` của facade `Bus`. Tất nhiên, batching chủ yếu hữu ích khi kết hợp với các callback hoàn thành. Vì vậy, bạn có thể sử dụng các phương thức `then`, `catch` và `finally` để định nghĩa các callback hoàn thành cho batch. Mỗi callback này sẽ nhận một instance `Illuminate\Bus\Batch` khi chúng được gọi.
@@ -2043,6 +2104,7 @@ ID của batch, có thể được truy cập thông qua thuộc tính `$batch->
 > Vì các callback batch được serialize và thực thi tại một thời điểm sau bởi hàng đợi Laravel, bạn không nên sử dụng biến `$this` trong các callback. Ngoài ra, vì các batched job được bọc trong các giao dịch cơ sở dữ liệu, các câu lệnh cơ sở dữ liệu kích hoạt các commit ngầm định không nên được thực thi trong các job.
 
 <a name="naming-batches"></a>
+
 #### Đặt tên Batches
 
 Một số công cụ như [Laravel Horizon](/docs/{{version}}/horizon) và [Laravel Telescope](/docs/{{version}}/telescope) có thể cung cấp thông tin debug thân thiện với người dùng hơn cho các batch nếu các batch được đặt tên. Để gán một tên tùy ý cho một batch, bạn có thể gọi phương thức `name` khi định nghĩa batch:
@@ -2056,6 +2118,7 @@ $batch = Bus::batch([
 ```
 
 <a name="batch-connection-queue"></a>
+
 #### Kết nối và Hàng đợi Batch
 
 Nếu bạn muốn chỉ định kết nối và hàng đợi nên được sử dụng cho các batched job, bạn có thể sử dụng các phương thức `onConnection` và `onQueue`. Tất cả các batched job phải thực thi trong cùng một kết nối và hàng đợi:
@@ -2069,6 +2132,7 @@ $batch = Bus::batch([
 ```
 
 <a name="chains-and-batches"></a>
+
 ### Chains và Batches
 
 Bạn có thể định nghĩa một tập hợp [chained jobs](#job-chaining) trong một batch bằng cách đặt các chained jobs trong một mảng. Ví dụ, chúng ta có thể thực thi hai chuỗi job song song và thực thi một callback khi cả hai chuỗi job đã hoàn thành xử lý:
@@ -2115,6 +2179,7 @@ Bus::chain([
 ```
 
 <a name="adding-jobs-to-batches"></a>
+
 ### Thêm Jobs vào Batches
 
 Đôi khi có thể hữu ích để thêm các job bổ sung vào một batch từ trong một batched job. Mẫu này có thể hữu ích khi bạn cần batch hàng nghìn job có thể mất quá nhiều thời gian để dispatch trong một yêu cầu web. Vì vậy, thay vào đó, bạn có thể muốn dispatch một batch ban đầu của các job "loader" hydrate batch với nhiều job hơn:
@@ -2154,6 +2219,7 @@ public function handle(): void
 > Bạn chỉ có thể thêm job vào một batch từ trong một job thuộc về cùng một batch.
 
 <a name="inspecting-batches"></a>
+
 ### Kiểm tra Batches
 
 Instance `Illuminate\Bus\Batch` được cung cấp cho các callback hoàn thành batch có nhiều thuộc tính và phương thức để giúp bạn tương tác và kiểm tra một batch job nhất định:
@@ -2191,6 +2257,7 @@ $batch->cancelled();
 ```
 
 <a name="returning-batches-from-routes"></a>
+
 #### Trả về Batches từ Routes
 
 Tất cả các instance `Illuminate\Bus\Batch` đều có thể serialize JSON, nghĩa là bạn có thể trả về chúng trực tiếp từ một trong các route của ứng dụng để truy xuất một payload JSON chứa thông tin về batch, bao gồm tiến độ hoàn thành của nó. Điều này giúp thuận tiện để hiển thị thông tin về tiến độ hoàn thành của batch trong UI của ứng dụng của bạn.
@@ -2207,6 +2274,7 @@ Route::get('/batch/{batchId}', function (string $batchId) {
 ```
 
 <a name="cancelling-batches"></a>
+
 ### Hủy Batches
 
 Đôi khi bạn có thể cần hủy việc thực thi của một batch nhất định. Điều này có thể được thực hiện bằng cách gọi phương thức `cancel` trên instance `Illuminate\Bus\Batch`:
@@ -2244,11 +2312,13 @@ public function middleware(): array
 ```
 
 <a name="batch-failures"></a>
+
 ### Thất bại Batch
 
 Khi một batched job thất bại, callback `catch` (nếu được gán) sẽ được gọi. Callback này chỉ được gọi cho job đầu tiên thất bại trong batch.
 
 <a name="allowing-failures"></a>
+
 #### Cho phép Thất bại
 
 Khi một job trong một batch thất bại, Laravel sẽ tự động đánh dấu batch là "đã hủy". Nếu bạn muốn, bạn có thể tắt hành vi này để một thất bại job không tự động đánh dấu batch là đã hủy. Điều này có thể được thực hiện bằng cách gọi phương thức `allowFailures` khi dispatch batch:
@@ -2272,6 +2342,7 @@ $batch = Bus::batch([
 ```
 
 <a name="retrying-failed-batch-jobs"></a>
+
 #### Thử lại Các Batch Job Thất bại
 
 Để thuận tiện, Laravel cung cấp lệnh Artisan `queue:retry-batch` cho phép bạn dễ dàng thử lại tất cả các job thất bại cho một batch nhất định. Lệnh này chấp nhận UUID của batch mà các job thất bại của nó nên được thử lại:
@@ -2281,6 +2352,7 @@ php artisan queue:retry-batch 32dbc76c-4f82-4749-b610-a639fe0099b5
 ```
 
 <a name="pruning-batches"></a>
+
 ### Pruning Batches
 
 Nếu không có pruning, bảng `job_batches` có thể tích lũy các bản ghi rất nhanh. Để giảm thiểu điều này, bạn nên [lên lịch](/docs/{{version}}/scheduling) lệnh Artisan `queue:prune-batches` để chạy hàng ngày:
@@ -2316,6 +2388,7 @@ Schedule::command('queue:prune-batches --hours=48 --cancelled=72')->daily();
 ```
 
 <a name="storing-batches-in-dynamodb"></a>
+
 ### Lưu trữ Batches trong DynamoDB
 
 Laravel cũng cung cấp hỗ trợ để lưu trữ thông tin meta batch trong [DynamoDB](https://aws.amazon.com/dynamodb) thay vì cơ sở dữ liệu quan hệ. Tuy nhiên, bạn sẽ cần tạo thủ công một bảng DynamoDB để lưu trữ tất cả các bản ghi batch.
@@ -2323,6 +2396,7 @@ Laravel cũng cung cấp hỗ trợ để lưu trữ thông tin meta batch trong
 Thông thường, bảng này nên được đặt tên là `job_batches`, nhưng bạn nên đặt tên bảng dựa trên giá trị cấu hình `queue.batching.table` trong file cấu hình `queue` của ứng dụng của bạn.
 
 <a name="dynamodb-batch-table-configuration"></a>
+
 #### Cấu hình Bảng DynamoDB Batch
 
 Bảng `job_batches` nên có một khóa phân vùng chính chuỗi tên là `application` và một khóa sắp xếp chính chuỗi tên là `id`. Phần `application` của khóa sẽ chứa tên ứng dụng của bạn như được định nghĩa bởi giá trị cấu hình `name` trong file cấu hình `app` của ứng dụng của bạn. Vì tên ứng dụng là một phần của khóa của bảng DynamoDB, bạn có thể sử dụng cùng một bảng để lưu trữ các batch job cho nhiều ứng dụng Laravel.
@@ -2330,6 +2404,7 @@ Bảng `job_batches` nên có một khóa phân vùng chính chuỗi tên là `a
 Ngoài ra, bạn có thể định nghĩa thuộc tính `ttl` cho bảng của bạn nếu bạn muốn tận dụng [batch pruning tự động](#pruning-batches-in-dynamodb).
 
 <a name="dynamodb-configuration"></a>
+
 #### Cấu hình DynamoDB
 
 Tiếp theo, cài đặt AWS SDK để ứng dụng Laravel của bạn có thể giao tiếp với Amazon DynamoDB:
@@ -2351,6 +2426,7 @@ Sau đó, đặt giá trị tùy chọn cấu hình `queue.batching.driver` thà
 ```
 
 <a name="pruning-batches-in-dynamodb"></a>
+
 #### Pruning Batches trong DynamoDB
 
 Khi sử dụng [DynamoDB](https://aws.amazon.com/dynamodb) để lưu trữ thông tin batch job, các lệnh pruning điển hình được sử dụng để pruning các batch được lưu trữ trong cơ sở dữ liệu quan hệ sẽ không hoạt động. Thay vào đó, bạn có thể sử dụng [chức năng TTL gốc của DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) để tự động xóa các bản ghi cho các batch cũ.
@@ -2370,6 +2446,7 @@ Nếu bạn định nghĩa bảng DynamoDB của mình với thuộc tính `ttl`
 ```
 
 <a name="queueing-closures"></a>
+
 ## Queueing Closures
 
 Thay vì dispatch một class job vào hàng đợi, bạn cũng có thể dispatch một closure. Điều này rất tốt cho các tác vụ nhanh, đơn giản cần được thực thi bên ngoài chu kỳ yêu cầu hiện tại. Khi dispatch các closure vào hàng đợi, nội dung mã của closure được ký tên mật mã để nó không thể được sửa đổi trong quá trình truyền:
@@ -2407,9 +2484,11 @@ dispatch(function () use ($podcast) {
 > Since `catch` callbacks are serialized and executed at a later time by the Laravel queue, you should not use the `$this` variable within `catch` callbacks.
 
 <a name="running-the-queue-worker"></a>
+
 ## Chạy Queue Worker
 
 <a name="the-queue-work-command"></a>
+
 ### Lệnh `queue:work`
 
 Laravel bao gồm một lệnh Artisan sẽ khởi động một queue worker và xử lý các job mới khi chúng được đẩy vào queue. Bạn có thể chạy worker bằng lệnh Artisan `queue:work`. Lưu ý rằng khi lệnh `queue:work` đã được khởi động, nó sẽ tiếp tục chạy cho đến khi được dừng thủ công hoặc bạn đóng terminal:
@@ -2436,11 +2515,13 @@ php artisan queue:listen
 ```
 
 <a name="running-multiple-queue-workers"></a>
+
 #### Chạy Nhiều Queue Workers
 
 Để gán nhiều worker cho một queue và xử lý các job đồng thời, bạn chỉ cần khởi động nhiều tiến trình `queue:work`. Điều này có thể được thực hiện cục bộ thông qua nhiều tab trong terminal của bạn hoặc trong môi trường sản xuất bằng cách sử dụng cài đặt cấu hình của trình quản lý tiến trình của bạn. [Khi sử dụng Supervisor](#supervisor-configuration), bạn có thể sử dụng giá trị cấu hình `numprocs`.
 
 <a name="specifying-the-connection-queue"></a>
+
 #### Chỉ định Kết Nối và Queue
 
 Bạn cũng có thể chỉ định kết nối queue mà worker nên sử dụng. Tên kết nối được truyền cho lệnh `work` phải tương ứng với một trong các kết nối được định nghĩa trong tệp cấu hình `config/queue.php` của bạn:
@@ -2456,6 +2537,7 @@ php artisan queue:work redis --queue=emails
 ```
 
 <a name="processing-a-specified-number-of-jobs"></a>
+
 #### Xử lý Số Lượng Job Cụ Thể
 
 Tùy chọn `--once` có thể được sử dụng để hướng dẫn worker chỉ xử lý một job duy nhất từ queue:
@@ -2471,6 +2553,7 @@ php artisan queue:work --max-jobs=1000
 ```
 
 <a name="processing-all-queued-jobs-then-exiting"></a>
+
 #### Xử lý Tất Cả Job Trong Queue và Sau Đó Thoát
 
 Tùy chọn `--stop-when-empty` có thể được sử dụng để hướng dẫn worker xử lý tất cả các job và sau đó thoát một cách êm đẹp. Tùy chọn này có thể hữu ích khi xử lý các queue Laravel trong một container Docker nếu bạn muốn tắt container sau khi queue trống:
@@ -2480,6 +2563,7 @@ php artisan queue:work --stop-when-empty
 ```
 
 <a name="processing-jobs-for-a-given-number-of-seconds"></a>
+
 #### Xử lý Job Trong Một Số Giây Cụ Thể
 
 Tùy chọn `--max-time` có thể được sử dụng để hướng dẫn worker xử lý các job trong số giây nhất định và sau đó thoát. Tùy chọn này có thể hữu ích khi kết hợp với [Supervisor](#supervisor-configuration) để các worker của bạn được tự động khởi động lại sau khi xử lý các job trong một khoảng thời gian nhất định, giải phóng bất kỳ bộ nhớ nào mà chúng có thể đã tích lũy:
@@ -2490,6 +2574,7 @@ php artisan queue:work --max-time=3600
 ```
 
 <a name="worker-sleep-duration"></a>
+
 #### Thời Gian Sleep Của Worker
 
 Khi các job có sẵn trên queue, worker sẽ tiếp tục xử lý các job mà không có độ trễ giữa các job. Tuy nhiên, tùy chọn `sleep` xác định số giây mà worker sẽ "ngủ" nếu không có job nào có sẵn. Tất nhiên, trong khi ngủ, worker sẽ không xử lý bất kỳ job mới nào:
@@ -2499,6 +2584,7 @@ php artisan queue:work --sleep=3
 ```
 
 <a name="maintenance-mode-queues"></a>
+
 #### Chế Độ Bảo Trì và Queues
 
 Trong khi ứng dụng của bạn ở trong [chế độ bảo trì](/docs/{{version}}/configuration#maintenance-mode), không có job nào trong queue sẽ được xử lý. Các job sẽ tiếp tục được xử lý như bình thường khi ứng dụng thoát khỏi chế độ bảo trì.
@@ -2510,11 +2596,13 @@ php artisan queue:work --force
 ```
 
 <a name="resource-considerations"></a>
+
 #### Xem Xét Tài Nguyên
 
 Queue workers daemon không "khởi động lại" framework trước khi xử lý mỗi job. Do đó, bạn nên giải phóng bất kỳ tài nguyên nặng nào sau khi mỗi job hoàn thành. Ví dụ, nếu bạn đang thao tác hình ảnh với [thư viện GD](https://www.php.net/manual/en/book.image.php), bạn nên giải phóng bộ nhớ với `imagedestroy` khi bạn hoàn tất xử lý hình ảnh.
 
 <a name="queue-priorities"></a>
+
 ### Ưu Tiên Queue
 
 Đôi khi bạn có thể muốn ưu tiên cách các queue của bạn được xử lý. Ví dụ, trong tệp cấu hình `config/queue.php` của bạn, bạn có thể đặt `queue` mặc định cho kết nối `redis` của bạn thành `low`. Tuy nhiên, đôi khi bạn có thể muốn đẩy một job vào một queue ưu tiên `high` như sau:
@@ -2530,6 +2618,7 @@ php artisan queue:work --queue=high,low
 ```
 
 <a name="queue-workers-and-deployment"></a>
+
 ### Queue Workers và Triển Khai
 
 Vì queue workers là các tiến trình chạy lâu dài, chúng sẽ không nhận thấy các thay đổi đối với mã của bạn nếu không được khởi động lại. Vì vậy, cách đơn giản nhất để triển khai một ứng dụng sử dụng queue workers là khởi động lại các worker trong quá trình triển khai của bạn. Bạn có thể khởi động lại một cách êm đẹp tất cả các worker bằng cách phát hành lệnh `queue:restart`:
@@ -2544,6 +2633,7 @@ Lệnh này sẽ hướng dẫn tất cả queue workers thoát một cách êm 
 > Queue sử dụng [cache](/docs/{{version}}/cache) để lưu trữ các tín hiệu khởi động lại, vì vậy bạn nên xác minh rằng một cache driver được cấu hình đúng cho ứng dụng của bạn trước khi sử dụng tính năng này.
 
 <a name="reacting-to-worker-signals"></a>
+
 ### Phản Hồi Với Tín Hiệu Worker
 
 Khi một queue worker nhận được tín hiệu chấm dứt như `SIGQUIT`, `SIGTERM`, hoặc `SIGINT` trong khi xử lý một job, worker sẽ hoàn thành job hiện tại của nó trước khi thoát. Tuy nhiên, job của bạn có thể cần phản hồi với tín hiệu trước khi tiến trình bị dừng bởi máy chủ hoặc trình điều phối container của bạn. Ví dụ, một job nhập khẩu chạy dài có thể cần dừng kéo các bản ghi mới và lưu tiến trình hiện tại của nó.
@@ -2602,9 +2692,11 @@ class ImportProducts implements ShouldQueue, Interruptible
 Phương thức `interrupted` chỉ được gọi khi worker nhận được tín hiệu tiến trình trong khi job hiện đang chạy. Nó không thay thế cho [timeouts](#worker-timeouts) hoặc [phương thức `failed`](#cleaning-up-after-failed-jobs) của job.
 
 <a name="job-expirations-and-timeouts"></a>
+
 ### Hết Hạn Job và Timeouts
 
 <a name="job-expiration"></a>
+
 #### Hết Hạn Job
 
 Trong tệp cấu hình `config/queue.php` của bạn, mỗi kết nối queue định nghĩa một tùy chọn `retry_after`. Tùy chọn này chỉ định số giây mà kết nối queue nên đợi trước khi thử lại một job đang được xử lý. Ví dụ, nếu giá trị của `retry_after` được đặt thành `90`, job sẽ được giải phóng trở lại queue nếu nó đã được xử lý trong 90 giây mà không được giải phóng hoặc xóa. Thông thường, bạn nên đặt giá trị `retry_after` thành số giây tối đa mà các job của bạn nên mất để hoàn tất xử lý một cách hợp lý.
@@ -2613,6 +2705,7 @@ Trong tệp cấu hình `config/queue.php` của bạn, mỗi kết nối queue 
 > Kết nối queue duy nhất không chứa giá trị `retry_after` là Amazon SQS. SQS sẽ thử lại job dựa trên [Default Visibility Timeout](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/AboutVT.html) được quản lý trong bảng điều khiển AWS.
 
 <a name="worker-timeouts"></a>
+
 #### Worker Timeouts
 
 Lệnh Artisan `queue:work` cung cấp tùy chọn `--timeout`. Theo mặc định, giá trị `--timeout` là 60 giây. Nếu một job đang được xử lý lâu hơn số giây được chỉ định bởi giá trị timeout, worker xử lý job sẽ thoát với lỗi. Thông thường, worker sẽ được tự động khởi động lại bởi [trình quản lý tiến trình được cấu hình trên máy chủ của bạn](#supervisor-configuration):
@@ -2627,6 +2720,7 @@ Tùy chọn cấu hình `retry_after` và tùy chọn CLI `--timeout` khác nhau
 > Giá trị `--timeout` phải luôn ngắn hơn ít nhất vài giây so với giá trị cấu hình `retry_after` của bạn. Điều này sẽ đảm bảo rằng một worker xử lý một job bị đóng băng luôn bị chấm dứt trước khi job được thử lại. Nếu tùy chọn `--timeout` của bạn dài hơn giá trị cấu hình `retry_after` của bạn, các job của bạn có thể được xử lý hai lần.
 
 <a name="pausing-and-resuming-queue-workers"></a>
+
 ### Tạm Dừng và Tiếp Tục Queue Workers
 
 Đôi khi bạn có thể cần tạm thời ngăn chặn một queue worker xử lý các job mới mà không dừng worker hoàn toàn. Ví dụ, bạn có thể muốn tạm dừng xử lý job trong quá trình bảo trì hệ thống. Laravel cung cấp các lệnh Artisan `queue:pause` và `queue:continue` để tạm dừng và tiếp tục queue workers.
@@ -2648,6 +2742,7 @@ php artisan queue:continue database:default
 Sau khi tiếp tục một queue, các worker sẽ bắt đầu xử lý các job mới từ queue đó ngay lập tức. Lưu ý rằng việc tạm dừng một queue không dừng chính tiến trình worker - nó chỉ ngăn chặn worker xử lý các job mới từ queue được chỉ định.
 
 <a name="worker-restart-and-pause-signals"></a>
+
 #### Tín Hiệu Khởi Động Lại và Tạm Dừng Worker
 
 Theo mặc định, queue workers kiểm tra cache driver để tìm các tín hiệu khởi động lại và tạm dừng trên mỗi lần lặp job. Mặc dù việc kiểm tra này rất cần thiết để phản hồi với các lệnh `queue:restart` và `queue:pause`, nó có giới thiệu một chi phí hiệu suất nhỏ.
@@ -2685,6 +2780,7 @@ public function boot(): void
 > Khi kiểm tra gián đoạn bị vô hiệu hóa, workers sẽ không phản hồi với các lệnh `queue:restart` hoặc `queue:pause` (tùy thuộc vào tính năng nào bị vô hiệu hóa).
 
 <a name="supervisor-configuration"></a>
+
 ## Cấu Hình Supervisor
 
 Trong môi trường sản xuất, bạn cần một cách để giữ cho các tiến trình `queue:work` của bạn chạy. Một tiến trình `queue:work` có thể dừng chạy vì nhiều lý do, chẳng hạn như timeout worker bị vượt quá hoặc thực thi lệnh `queue:restart`.
@@ -2692,6 +2788,7 @@ Trong môi trường sản xuất, bạn cần một cách để giữ cho các 
 Vì lý do này, bạn cần cấu hình một trình giám sát tiến trình có thể phát hiện khi các tiến trình `queue:work` của bạn thoát và tự động khởi động lại chúng. Ngoài ra, trình giám sát tiến trình có thể cho phép bạn chỉ định số lượng tiến trình `queue:work` mà bạn muốn chạy đồng thời. Supervisor là một trình giám sát tiến trình thường được sử dụng trong môi trường Linux và chúng ta sẽ thảo luận cách cấu hình nó trong tài liệu sau.
 
 <a name="installing-supervisor"></a>
+
 #### Cài Đặt Supervisor
 
 Supervisor là một trình giám sát tiến trình cho hệ điều hành Linux và sẽ tự động khởi động lại các tiến trình `queue:work` của bạn nếu chúng thất bại. Để cài đặt Supervisor trên Ubuntu, bạn có thể sử dụng lệnh sau:
@@ -2704,6 +2801,7 @@ sudo apt-get install supervisor
 > Nếu việc cấu hình và quản lý Supervisor nghe có vẻ quá phức tạp, hãy cân nhắc sử dụng [Laravel Cloud](https://cloud.laravel.com), cung cấp một nền tảng được quản lý hoàn toàn để chạy Laravel queue workers.
 
 <a name="configuring-supervisor"></a>
+
 #### Cấu Hình Supervisor
 
 Các tệp cấu hình Supervisor thường được lưu trữ trong thư mục `/etc/supervisor/conf.d`. Trong thư mục này, bạn có thể tạo bất kỳ số lượng tệp cấu hình nào hướng dẫn supervisor cách các tiến trình của bạn nên được giám sát. Ví dụ, hãy tạo một tệp `laravel-worker.conf` khởi động và giám sát các tiến trình `queue:work`:
@@ -2729,6 +2827,7 @@ Trong ví dụ này, chỉ thị `numprocs` sẽ hướng dẫn Supervisor chạ
 > Bạn nên đảm bảo rằng giá trị của `stopwaitsecs` lớn hơn số giây tiêu thụ bởi job chạy dài nhất của bạn. Nếu không, Supervisor có thể giết job trước khi nó hoàn tất xử lý.
 
 <a name="starting-supervisor"></a>
+
 #### Khởi Động Supervisor
 
 Sau khi tệp cấu hình đã được tạo, bạn có thể cập nhật cấu hình Supervisor và khởi động các tiến trình bằng cách sử dụng các lệnh sau:
@@ -2744,6 +2843,7 @@ sudo supervisorctl start "laravel-worker:*"
 Để biết thêm thông tin về Supervisor, hãy tham khảo [tài liệu Supervisor](http://supervisord.org/index.html).
 
 <a name="dealing-with-failed-jobs"></a>
+
 ## Xử Lý Các Job Thất Bại
 
 Đôi khi các job trong queue của bạn sẽ thất bại. Đừng lo lắng, mọi thứ không luôn đi theo kế hoạch! Laravel bao gồm một cách thuận tiện để [chỉ định số lần tối đa mà một job nên được thử](#max-job-attempts-and-timeout). Sau khi một job không đồng bộ đã vượt quá số lần này, nó sẽ được chèn vào bảng cơ sở dữ liệu `failed_jobs`. [Các job được dispatch đồng bộ](/docs/{{version}}/queues#synchronous-dispatching) thất bại không được lưu trữ trong bảng này và các ngoại lệ của chúng được xử lý ngay lập tức bởi ứng dụng.
@@ -2813,6 +2913,7 @@ class ProcessPodcast implements ShouldQueue
 ```
 
 <a name="cleaning-up-after-failed-jobs"></a>
+
 ### Dọn Dẹp Sau Khi Job Thất Bại
 
 Khi một job cụ thể thất bại, bạn có thể muốn gửi cảnh báo cho người dùng của mình hoặc hoàn tác bất kỳ hành động nào đã được hoàn thành một phần bởi job. Để thực hiện điều này, bạn có thể định nghĩa một phương thức `failed` trên lớp job của bạn. Thể hiện `Throwable` gây ra job thất bại sẽ được chuyển cho phương thức `failed`:
@@ -2873,6 +2974,7 @@ Một job thất bại không nhất thiết là một job gặp ngoại lệ kh
 Nếu lần thử cuối cùng thất bại do một ngoại lệ được ném trong quá trình thực thi job, ngoại lệ đó sẽ được chuyển cho phương thức `failed` của job. Tuy nhiên, nếu job thất bại vì nó đã đạt đến số lần tối đa được phép, `$exception` sẽ là một thể hiện của `Illuminate\Queue\MaxAttemptsExceededException`. Tương tự, nếu job thất bại do vượt quá timeout được cấu hình, `$exception` sẽ là một thể hiện của `Illuminate\Queue\TimeoutExceededException`.
 
 <a name="retrying-failed-jobs"></a>
+
 ### Thử Lại Các Job Thất Bại
 
 Để xem tất cả các job thất bại đã được chèn vào bảng cơ sở dữ liệu `failed_jobs` của bạn, bạn có thể sử dụng lệnh Artisan `queue:failed`:
@@ -2927,6 +3029,7 @@ php artisan queue:flush --hours=48
 ```
 
 <a name="ignoring-missing-models"></a>
+
 ### Bỏ Qua Các Model Bị Thiếu
 
 Khi tiêm một model Eloquent vào một job, model được tuần tự hóa tự động trước khi được đặt vào queue và được truy xuất lại từ cơ sở dữ liệu khi job được xử lý. Tuy nhiên, nếu model đã bị xóa trong khi job đang chờ được xử lý bởi một worker, job của bạn có thể thất bại với `ModelNotFoundException`.
@@ -2948,6 +3051,7 @@ class ProcessPodcast implements ShouldQueue
 ```
 
 <a name="pruning-failed-jobs"></a>
+
 ### Dọn Dẹp Các Job Thất Bại
 
 Bạn có thể dọn dẹp các bản ghi trong bảng `failed_jobs` của ứng dụng của bạn bằng cách gọi lệnh Artisan `queue:prune-failed`:
@@ -2963,6 +3067,7 @@ php artisan queue:prune-failed --hours=48
 ```
 
 <a name="storing-failed-jobs-in-dynamodb"></a>
+
 ### Lưu Trữ Các Job Thất Bại Trong DynamoDB
 
 Laravel cũng cung cấp hỗ trợ để lưu trữ các bản ghi job thất bại của bạn trong [DynamoDB](https://aws.amazon.com/dynamodb) thay vì một bảng cơ sở dữ liệu quan hệ. Tuy nhiên, bạn phải tạo thủ công một bảng DynamoDB để lưu trữ tất cả các bản ghi job thất bại. Thông thường, bảng này nên được đặt tên là `failed_jobs`, nhưng bạn nên đặt tên bảng dựa trên giá trị cấu hình `queue.failed.table` trong tệp cấu hình `queue` của ứng dụng của bạn.
@@ -2988,6 +3093,7 @@ Tiếp theo, đặt giá trị tùy chọn cấu hình `queue.failed.driver` th�
 ```
 
 <a name="disabling-failed-job-storage"></a>
+
 ### Vô Hiệu Hóa Lưu Trữ Job Thất Bại
 
 Bạn có thể hướng dẫn Laravel loại bỏ các job thất bại mà không lưu trữ chúng bằng cách đặt giá trị tùy chọn cấu hình `queue.failed.driver` thành `null`. Thông thường, điều này có thể được thực hiện thông qua biến môi trường `QUEUE_FAILED_DRIVER`:
@@ -2997,6 +3103,7 @@ QUEUE_FAILED_DRIVER=null
 ```
 
 <a name="failed-job-events"></a>
+
 ### Sự Kiện Job Thất Bại
 
 Nếu bạn muốn đăng ký một trình lắng nghe sự kiện sẽ được gọi khi một job thất bại, bạn có thể sử dụng phương thức `failing` của facade `Queue`. Ví dụ, chúng ta có thể đính kèm một closure vào sự kiện này từ phương thức `boot` của `AppServiceProvider` được bao gồm với Laravel:
@@ -3035,6 +3142,7 @@ class AppServiceProvider extends ServiceProvider
 ```
 
 <a name="clearing-jobs-from-queues"></a>
+
 ## Xóa Các Job Khỏi Queues
 
 > [!NOTE]
@@ -3056,6 +3164,7 @@ php artisan queue:clear redis --queue=emails
 > Việc xóa các job khỏi queues chỉ có sẵn cho các driver queue SQS, Redis và cơ sở dữ liệu. Ngoài ra, quá trình xóa tin nhắn SQS mất đến 60 giây, vì vậy các job được gửi đến queue SQS lên đến 60 giây sau khi bạn xóa queue cũng có thể bị xóa.
 
 <a name="monitoring-your-queues"></a>
+
 ## Giám Sát Các Queue Của Bạn
 
 Nếu queue của bạn nhận được một lượng lớn job đột ngột, nó có thể bị quá tải, dẫn đến thời gian chờ dài để các job hoàn tất. Nếu bạn muốn, Laravel có thể cảnh báo bạn khi số lượng job queue của bạn vượt quá ngưỡng được chỉ định.
@@ -3091,13 +3200,14 @@ public function boot(): void
 ```
 
 <a name="testing"></a>
+
 ## Kiểm Thử
 
 Khi kiểm tra mã dispatch các job, bạn có thể muốn hướng dẫn Laravel không thực sự thực thi job đó, vì mã của job có thể được kiểm tra trực tiếp và riêng biệt với mã dispatch nó. Tất nhiên, để kiểm tra chính job đó, bạn có thể khởi tạo một thể hiện job và gọi phương thức `handle` trực tiếp trong kiểm tra của bạn.
 
 Bạn có thể sử dụng phương thức `fake` của facade `Queue` để ngăn chặn các job trong queue thực sự được đẩy vào queue. Sau khi gọi phương thức `fake` của facade `Queue`, bạn có thể sau đó xác nhận rằng ứng dụng đã cố gắng đẩy các job vào queue:
 
-```php tab=Pest
+```php
 <?php
 
 use App\Jobs\AnotherJob;
@@ -3138,7 +3248,7 @@ test('orders can be shipped', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 <?php
 
 namespace Tests\Feature;
@@ -3201,11 +3311,12 @@ Queue::assertClosurePushed(function (CallQueuedClosure $job) {
 ```
 
 <a name="faking-a-subset-of-jobs"></a>
+
 ### Faking a Subset of Jobs
 
 Nếu bạn chỉ cần fake các job cụ thể trong khi cho phép các job khác của bạn thực thi bình thường, bạn có thể truyền tên class của các job cần fake vào phương thức `fake`:
 
-```php tab=Pest
+```php
 test('orders can be shipped', function () {
     Queue::fake([
         ShipOrder::class,
@@ -3218,7 +3329,7 @@ test('orders can be shipped', function () {
 });
 ```
 
-```php tab=PHPUnit
+```php
 public function test_orders_can_be_shipped(): void
 {
     Queue::fake([
@@ -3241,6 +3352,7 @@ Queue::fake()->except([
 ```
 
 <a name="testing-job-chains"></a>
+
 ### Testing Job Chains
 
 Để kiểm tra chuỗi job, bạn sẽ cần sử dụng khả năng fake của facade `Bus`. Phương thức `assertChained` của facade `Bus` có thể được sử dụng để xác nhận rằng một [chuỗi job](/docs/{{version}}/queues#job-chaining) đã được dispatch. Phương thức `assertChained` chấp nhận một mảng các job được nối chuỗi làm đối số đầu tiên:
@@ -3279,6 +3391,7 @@ Bus::assertDispatchedWithoutChain(ShipOrder::class);
 ```
 
 <a name="testing-chain-modifications"></a>
+
 #### Testing Chain Modifications
 
 Nếu một job được nối chuỗi [thêm job vào đầu hoặc cuối một chuỗi hiện có](#adding-jobs-to-the-chain), bạn có thể sử dụng phương thức `assertHasChain` của job để xác nhận rằng job có chuỗi job còn lại như mong đợi:
@@ -3302,6 +3415,7 @@ $job->assertDoesntHaveChain();
 ```
 
 <a name="testing-chained-batches"></a>
+
 #### Testing Chained Batches
 
 Nếu chuỗi job của bạn [chứa một batch job](#chains-and-batches), bạn có thể xác nhận rằng batch được nối chuỗi khớp với kỳ vọng của bạn bằng cách chèn định nghĩa `Bus::chainedBatch` trong xác nhận chuỗi của bạn:
@@ -3322,6 +3436,7 @@ Bus::assertChained([
 ```
 
 <a name="testing-job-batches"></a>
+
 ### Testing Job Batches
 
 Phương thức `assertBatched` của facade `Bus` có thể được sử dụng để xác nhận rằng một [batch job](/docs/{{version}}/queues#job-batching) đã được dispatch. Closure được truyền cho phương thức `assertBatched` nhận một instance của `Illuminate\Bus\PendingBatch`, có thể được sử dụng để kiểm tra các job trong batch:
@@ -3377,6 +3492,7 @@ Bus::assertNothingBatched();
 ```
 
 <a name="testing-job-batch-interaction"></a>
+
 #### Testing Job / Batch Interaction
 
 Ngoài ra, đôi khi bạn có thể cần kiểm tra tương tác của một job riêng lẻ với batch cơ bản của nó. Ví dụ, bạn có thể cần kiểm tra xem một job có hủy xử lý tiếp theo cho batch của nó hay không. Để thực hiện việc này, bạn cần gán một batch giả cho job thông qua phương thức `withFakeBatch`. Phương thức `withFakeBatch` trả về một tuple chứa instance job và batch giả:
@@ -3391,6 +3507,7 @@ $this->assertEmpty($batch->added);
 ```
 
 <a name="testing-job-queue-interactions"></a>
+
 ### Testing Job / Queue Interactions
 
 Đôi khi, bạn có thể cần kiểm tra rằng một job trong hàng đợi [giải phóng chính nó trở lại hàng đợi](#manually-releasing-a-job). Hoặc, bạn có thể cần kiểm tra rằng job đã tự xóa chính nó. Bạn có thể kiểm tra các tương tác hàng đợi này bằng cách khởi tạo job và gọi phương thức `withFakeQueueInteractions`.
@@ -3414,6 +3531,7 @@ $job->assertNotFailed();
 ```
 
 <a name="job-events"></a>
+
 ## Job Events
 
 Sử dụng các phương thức `before` và `after` trên facade `Queue` [facade](/docs/{{version}}/facades), bạn có thể chỉ định các callback sẽ được thực thi trước hoặc sau khi một job trong hàng đợi được xử lý. Các callback này là cơ hội tuyệt vời để thực hiện ghi nhật ký bổ sung hoặc tăng thống kê cho bảng điều khiển. Thông thường, bạn nên gọi các phương thức này từ phương thức `boot` của một [service provider](/docs/{{version}}/providers). Ví dụ, chúng ta có thể sử dụng `AppServiceProvider` được đi kèm với Laravel:
